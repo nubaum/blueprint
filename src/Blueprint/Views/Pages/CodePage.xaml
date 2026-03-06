@@ -6,7 +6,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:services="clr-namespace:Blueprint.Services"
-      xmlns:vm="clr-namespace:Blueprint.ViewModels.UserControls"
+      xmlns:vm="clr-namespace:Blueprint.ViewModels.Pages"
       xmlns:helpers="clr-namespace:Blueprint.Helpers"
       xmlns:ad="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
       xmlns:dock="clr-namespace:AvalonDock;assembly=AvalonDock"

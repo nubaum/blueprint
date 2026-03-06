@@ -1,7 +1,7 @@
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.ViewModels;
+namespace Blueprint.ViewModels.Primitives;
 
 public class AsyncCommand<T>(Func<T?, Task> execute, Func<T?, bool>? canExecute = null) : ICommand
 {

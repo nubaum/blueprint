@@ -1,4 +1,4 @@
-﻿namespace Blueprint.ViewModels;
+﻿namespace Blueprint.ViewModels.Primitives;
 
 public interface ICommandManager
 {

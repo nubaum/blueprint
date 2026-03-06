@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using Blueprint.ViewModels.Primitives;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Appearance;
 

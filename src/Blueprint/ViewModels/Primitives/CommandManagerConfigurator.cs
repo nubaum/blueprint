@@ -1,4 +1,4 @@
-﻿namespace Blueprint.ViewModels;
+﻿namespace Blueprint.ViewModels.Primitives;
 
 public static class CommandManagerConfigurator
 {

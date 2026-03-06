@@ -1,4 +1,5 @@
-﻿using Wpf.Ui.Controls;
+﻿using Blueprint.ViewModels.Primitives;
+using Wpf.Ui.Controls;
 
 namespace Blueprint.ViewModels.Windows;
 

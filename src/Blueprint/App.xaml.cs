@@ -2,7 +2,6 @@
 using System.Windows.Threading;
 using Blueprint.Services;
 using Blueprint.ViewModels.Pages;
-using Blueprint.ViewModels.UserControls;
 using Blueprint.ViewModels.Windows;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

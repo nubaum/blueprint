@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Blueprint.ViewModels;
+namespace Blueprint.ViewModels.Primitives;
 
 public class NotifyPropertyChangedBase : INotifyPropertyChanged
 {
