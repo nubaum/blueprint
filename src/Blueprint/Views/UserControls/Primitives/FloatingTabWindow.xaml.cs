@@ -1,7 +1,5 @@
 using System.Windows.Controls;
 using System.Windows.Documents;
-using Blueprint.Views.UserControls;
-using Blueprint.Views.UserControls.Primitives;
 
 namespace Blueprint.Views.UserControls.Primitives;
 
@@ -13,6 +11,17 @@ public partial class FloatingTabWindow
     public FloatingTabWindow()
     {
         InitializeComponent();
+    }
+
+    public void AddTab(TabItem tab)
+    {
+        FloatingTabCtrl.AddTab(tab);
+        Title = tab.Header?.ToString() ?? "Floating Tab";
+    }
+
+    protected override void OnInitialized(EventArgs e)
+    {
+        base.OnInitialized(e);
 
         WeakEventManager<UIElement, DragEventArgs>.AddHandler(
             this,
@@ -35,15 +44,12 @@ public partial class FloatingTabWindow
             FloatingTabWindow_Closed);
     }
 
-    public void AddTab(TabItem tab)
-    {
-        FloatingTabCtrl.AddTab(tab);
-        Title = tab.Header?.ToString() ?? "Floating Tab";
-    }
-
     private void FloatingTabWindow_DragOver(object? sender, DragEventArgs e)
     {
-        if (!TabDragManager.IsDragging) return;
+        if (!TabDragManager.IsDragging)
+        {
+            return;
+        }
 
         e.Effects = DragDropEffects.Move;
         e.Handled = true;
@@ -60,10 +66,13 @@ public partial class FloatingTabWindow
     {
         RemoveAdorner();
 
-        if (!TabDragManager.IsDragging) return;
+        if (!TabDragManager.IsDragging)
+        {
+            return;
+        }
 
-        var tab = TabDragManager.DraggedTab!;
-        var source = TabDragManager.SourceTabControl;
+        TabItem tab = TabDragManager.DraggedTab!;
+        TearableTabControl? source = TabDragManager.SourceTabControl;
 
         source?.RemoveTab(tab);
 
@@ -74,7 +83,9 @@ public partial class FloatingTabWindow
         e.Handled = true;
 
         if (source?.TabCount == 0 && source.GetOwnerWindow() is FloatingTabWindow fw && fw != this)
+        {
             fw.Close();
+        }
     }
 
     private void FloatingTabWindow_Closed(object? sender, System.EventArgs e)
@@ -91,10 +102,16 @@ public partial class FloatingTabWindow
     {
         if (_adornerLayer == null)
         {
-            if (Content is not UIElement contentElement) return;
+            if (Content is not UIElement contentElement)
+            {
+                return;
+            }
 
             _adornerLayer = AdornerLayer.GetAdornerLayer(contentElement);
-            if (_adornerLayer == null) return;
+            if (_adornerLayer == null)
+            {
+                return;
+            }
 
             var ghost = new TextBlock
             {

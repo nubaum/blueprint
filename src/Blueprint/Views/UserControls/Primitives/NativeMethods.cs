@@ -9,15 +9,22 @@ namespace Blueprint.Views.UserControls.Primitives;
 /// </summary>
 internal static class NativeMethods
 {
-    [StructLayout(LayoutKind.Sequential)]
-    private struct POINT { public int X; public int Y; }
+    public static System.Windows.Point GetCursorPosition()
+    {
+        GetCursorPos(out Point pt);
+        return new System.Windows.Point(pt.X, pt.Y);
+    }
 
     [DllImport("user32.dll")]
-    private static extern bool GetCursorPos(out POINT pt);
+    private static extern bool GetCursorPos(out Point pt);
 
-    public static Point GetCursorPosition()
+    [StructLayout(LayoutKind.Sequential)]
+    private struct Point : IEquatable<Point>
     {
-        GetCursorPos(out var pt);
-        return new Point(pt.X, pt.Y);
+        public int X;
+        public int Y;
+
+        public readonly bool Equals(Point other)
+            => other.X == X && other.Y == Y;
     }
 }

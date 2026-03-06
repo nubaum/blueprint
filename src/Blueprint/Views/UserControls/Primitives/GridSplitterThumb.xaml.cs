@@ -5,14 +5,17 @@ namespace Blueprint.Views.UserControls.Primitives;
 
 public class GridSplitterThumb : Thumb
 {
+    public static readonly DependencyProperty LeftColumnProperty =
+        DependencyProperty.Register(nameof(LeftColumn), typeof(ColumnDefinition), typeof(GridSplitterThumb));
+
+    public static readonly DependencyProperty RightColumnProperty =
+        DependencyProperty.Register(nameof(RightColumn), typeof(ColumnDefinition), typeof(GridSplitterThumb));
+
     public ColumnDefinition? LeftColumn
     {
         get => (ColumnDefinition?)GetValue(LeftColumnProperty);
         set => SetValue(LeftColumnProperty, value);
     }
-
-    public static readonly DependencyProperty LeftColumnProperty =
-        DependencyProperty.Register(nameof(LeftColumn), typeof(ColumnDefinition), typeof(GridSplitterThumb));
 
     public ColumnDefinition? RightColumn
     {
@@ -20,43 +23,34 @@ public class GridSplitterThumb : Thumb
         set => SetValue(RightColumnProperty, value);
     }
 
-    public static readonly DependencyProperty RightColumnProperty =
-        DependencyProperty.Register(nameof(RightColumn), typeof(ColumnDefinition), typeof(GridSplitterThumb));
-
-    private double _lastLeftPx = 260;
-
-    public GridSplitterThumb()
+    protected override void OnInitialized(EventArgs e)
     {
-        DragStarted += OnDragStarted;
-        DragDelta += OnDragDelta;
+        base.OnInitialized(e);
+        WeakEventManager<Thumb, DragDeltaEventArgs>.AddHandler(
+            this,
+            nameof(DragDelta),
+            OnDragDelta);
     }
 
-    private void OnDragStarted(object sender, DragStartedEventArgs e)
-    {
-        if (LeftColumn?.ActualWidth > 1)
-            _lastLeftPx = LeftColumn.ActualWidth;
-    }
-
-    private void OnDragDelta(object sender, DragDeltaEventArgs e)
+    private void OnDragDelta(object? sender, DragDeltaEventArgs e)
     {
         if (LeftColumn == null || RightColumn == null)
+        {
             return;
+        }
 
-        var newLeft = LeftColumn.ActualWidth + e.HorizontalChange;
+        double newLeft = LeftColumn.ActualWidth + e.HorizontalChange;
 
-        var total = LeftColumn.ActualWidth + RightColumn.ActualWidth + ActualWidth;
+        double total = LeftColumn.ActualWidth + RightColumn.ActualWidth + ActualWidth;
 
-        var minLeft = LeftColumn.MinWidth;
-        var minRight = RightColumn.MinWidth;
+        double minLeft = LeftColumn.MinWidth;
+        double minRight = RightColumn.MinWidth;
 
-        var maxLeft = Math.Max(minLeft, total - minRight - ActualWidth);
+        double maxLeft = Math.Max(minLeft, total - minRight - ActualWidth);
 
         newLeft = Math.Max(minLeft, Math.Min(maxLeft, newLeft));
 
         LeftColumn.Width = new GridLength(newLeft, GridUnitType.Pixel);
         RightColumn.Width = new GridLength(1, GridUnitType.Star);
-
-        if (newLeft > 1)
-            _lastLeftPx = newLeft;
     }
 }

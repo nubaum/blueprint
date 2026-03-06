@@ -1,9 +1,8 @@
 ﻿using System.Windows.Media;
 
-namespace Blueprint.Models
+namespace Blueprint.Models;
+
+public record DataColor
 {
-    public struct DataColor
-    {
-        public Brush Color { get; set; }
-    }
+    public required Brush Color { get; set; }
 }

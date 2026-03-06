@@ -1,22 +1,25 @@
 ﻿using Wpf.Ui.Appearance;
 
-namespace Blueprint.Views.Windows
+namespace Blueprint.Views.Windows;
+
+public partial class MainWindow
 {
-    public partial class MainWindow
+    public MainWindow()
     {
-        public MainWindow()
-        {
-            SystemThemeWatcher.Watch(this);
-            InitializeComponent();
-        }
+        InitializeComponent();
+    }
 
-        public bool Navigate(Type pageType) => RootNavigation.Navigate(pageType);
+    public bool Navigate(Type pageType) => RootNavigation.Navigate(pageType);
 
-        protected override void OnClosed(EventArgs e)
-        {
-            base.OnClosed(e);
-            Application.Current.Shutdown();
-        }
+    protected override void OnClosed(EventArgs e)
+    {
+        base.OnClosed(e);
+        Application.Current.Shutdown();
+    }
 
+    protected override void OnInitialized(EventArgs e)
+    {
+        base.OnInitialized(e);
+        SystemThemeWatcher.Watch(this);
     }
 }

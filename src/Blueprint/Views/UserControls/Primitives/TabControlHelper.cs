@@ -1,4 +1,3 @@
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 
@@ -7,13 +6,27 @@ namespace Blueprint.Views.UserControls.Primitives;
 public static class TabControlHelper
 {
     public static readonly RoutedUICommand CloseTabCommand =
-        new RoutedUICommand("CloseTab", "CloseTab", typeof(TabControlHelper));
+        new("CloseTab", "CloseTab", typeof(TabControlHelper));
 
     public static readonly RoutedUICommand PinTabCommand =
-        new RoutedUICommand("PinTab", "PinTab", typeof(TabControlHelper));
+        new("PinTab", "PinTab", typeof(TabControlHelper));
 
     public static readonly RoutedUICommand UnpinTabCommand =
-        new RoutedUICommand("UnpinTab", "UnpinTab", typeof(TabControlHelper));
+        new("UnpinTab", "UnpinTab", typeof(TabControlHelper));
+
+    public static readonly DependencyProperty IsPinnedProperty =
+        DependencyProperty.RegisterAttached(
+            "IsPinned",
+            typeof(bool),
+            typeof(TabControlHelper),
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
+
+    public static readonly DependencyProperty IsDirtyProperty =
+        DependencyProperty.RegisterAttached(
+            "IsDirty",
+            typeof(bool),
+            typeof(TabControlHelper),
+            new PropertyMetadata(false));
 
     static TabControlHelper()
     {
@@ -30,6 +43,18 @@ public static class TabControlHelper
             new CommandBinding(UnpinTabCommand, ExecuteUnpinTab, CanExecuteUnpinTab));
     }
 
+    public static void SetIsPinned(DependencyObject element, bool value)
+        => element.SetValue(IsPinnedProperty, value);
+
+    public static bool GetIsPinned(DependencyObject element)
+        => (bool)element.GetValue(IsPinnedProperty);
+
+    public static void SetIsDirty(DependencyObject element, bool value)
+        => element.SetValue(IsDirtyProperty, value);
+
+    public static bool GetIsDirty(DependencyObject element)
+        => (bool)element.GetValue(IsDirtyProperty);
+
     private static void CanExecuteCloseTab(object sender, CanExecuteRoutedEventArgs e)
     {
         e.CanExecute = e.Parameter is TabItem;
@@ -39,13 +64,19 @@ public static class TabControlHelper
     private static void ExecuteCloseTab(object sender, ExecutedRoutedEventArgs e)
     {
         if (e.Parameter is not TabItem tab)
+        {
             return;
+        }
 
         if (tab.Parent is not TabControl tabControl)
+        {
             return;
+        }
 
         if (GetIsPinned(tab))
+        {
             return;
+        }
 
         tabControl.Items.Remove(tab);
         e.Handled = true;
@@ -60,7 +91,9 @@ public static class TabControlHelper
     private static void ExecutePinTab(object sender, ExecutedRoutedEventArgs e)
     {
         if (e.Parameter is not TabItem tab)
+        {
             return;
+        }
 
         SetIsPinned(tab, true);
         e.Handled = true;
@@ -75,35 +108,11 @@ public static class TabControlHelper
     private static void ExecuteUnpinTab(object sender, ExecutedRoutedEventArgs e)
     {
         if (e.Parameter is not TabItem tab)
+        {
             return;
+        }
 
         SetIsPinned(tab, false);
         e.Handled = true;
     }
-
-    public static readonly DependencyProperty IsPinnedProperty =
-        DependencyProperty.RegisterAttached(
-            "IsPinned",
-            typeof(bool),
-            typeof(TabControlHelper),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault));
-
-    public static void SetIsPinned(DependencyObject element, bool value)
-        => element.SetValue(IsPinnedProperty, value);
-
-    public static bool GetIsPinned(DependencyObject element)
-        => (bool)element.GetValue(IsPinnedProperty);
-
-    public static readonly DependencyProperty IsDirtyProperty =
-        DependencyProperty.RegisterAttached(
-            "IsDirty",
-            typeof(bool),
-            typeof(TabControlHelper),
-            new PropertyMetadata(false));
-
-    public static void SetIsDirty(DependencyObject element, bool value)
-        => element.SetValue(IsDirtyProperty, value);
-
-    public static bool GetIsDirty(DependencyObject element)
-        => (bool)element.GetValue(IsDirtyProperty);
 }

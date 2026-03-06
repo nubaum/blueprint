@@ -32,6 +32,8 @@ public class DragAdorner : Adorner
         };
     }
 
+    protected override int VisualChildrenCount => 1;
+
     public void UpdatePosition(Point position)
     {
         _left = position.X + 10;
@@ -39,7 +41,13 @@ public class DragAdorner : Adorner
         InvalidateArrange();
     }
 
-    protected override int VisualChildrenCount => 1;
+    public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
+    {
+        var result = new GeneralTransformGroup();
+        result.Children.Add(base.GetDesiredTransform(transform));
+        result.Children.Add(new TranslateTransform(_left, _top));
+        return result;
+    }
 
     protected override Visual GetVisualChild(int index) => _child;
 
@@ -53,13 +61,5 @@ public class DragAdorner : Adorner
     {
         _child.Arrange(new Rect(_child.DesiredSize));
         return finalSize;
-    }
-
-    public override GeneralTransform GetDesiredTransform(GeneralTransform transform)
-    {
-        var result = new GeneralTransformGroup();
-        result.Children.Add(base.GetDesiredTransform(transform));
-        result.Children.Add(new TranslateTransform(_left, _top));
-        return result;
     }
 }

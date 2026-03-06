@@ -1,69 +1,64 @@
-﻿using Wpf.Ui.Abstractions.Controls;
+﻿using System.Windows.Input;
+using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Appearance;
 
-namespace Blueprint.ViewModels.Pages
+namespace Blueprint.ViewModels.Pages;
+
+public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
 {
-    public partial class SettingsViewModel : ObservableObject, INavigationAware
+    private bool _isInitialized;
+    private string _appVersion = string.Empty;
+    private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
+
+    public SettingsViewModel()
     {
-        public SettingsViewModel()
+        ChangeThemeCommand = new DelegateCommand<string>(OnChangeTheme!);
+    }
+
+    public ApplicationTheme CurrentTheme
+    {
+        get => _currentTheme;
+        set => SetField(ref _currentTheme, value);
+    }
+
+    public string AppVersion => _appVersion;
+
+    public ICommand ChangeThemeCommand { get; }
+
+    public Task OnNavigatedToAsync()
+    {
+        if (!_isInitialized)
         {
-            
-        }
-        private bool _isInitialized = false;
-
-        [ObservableProperty]
-        private string _appVersion = string.Empty;
-
-        [ObservableProperty]
-        private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
-
-        public Task OnNavigatedToAsync()
-        {
-            if (!_isInitialized)
-                InitializeViewModel();
-
-            return Task.CompletedTask;
-        }
-
-        public Task OnNavigatedFromAsync() => Task.CompletedTask;
-
-        private void InitializeViewModel()
-        {
-            CurrentTheme = ApplicationThemeManager.GetAppTheme();
-            AppVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
-
-            _isInitialized = true;
+            InitializeViewModel();
         }
 
-        private string GetAssemblyVersion()
+        return Task.CompletedTask;
+    }
+
+    public Task OnNavigatedFromAsync() => Task.CompletedTask;
+
+    private static string GetAssemblyVersion() =>
+        typeof(SettingsViewModel).Assembly.GetName().Version?.ToString() ?? string.Empty;
+
+    private void InitializeViewModel()
+    {
+        CurrentTheme = ApplicationThemeManager.GetAppTheme();
+        _appVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
+        OnPropertyChanged(nameof(AppVersion));
+        _isInitialized = true;
+    }
+
+    private void OnChangeTheme(string parameter)
+    {
+        if (parameter == "theme_light")
         {
-            return System.Reflection.Assembly.GetExecutingAssembly().GetName().Version?.ToString()
-                ?? String.Empty;
+            ApplicationThemeManager.Apply(ApplicationTheme.Light);
+            CurrentTheme = ApplicationTheme.Light;
         }
-
-        [RelayCommand]
-        private void OnChangeTheme(string parameter)
+        else
         {
-            switch (parameter)
-            {
-                case "theme_light":
-                    if (CurrentTheme == ApplicationTheme.Light)
-                        break;
-
-                    ApplicationThemeManager.Apply(ApplicationTheme.Light);
-                    CurrentTheme = ApplicationTheme.Light;
-
-                    break;
-
-                default:
-                    if (CurrentTheme == ApplicationTheme.Dark)
-                        break;
-
-                    ApplicationThemeManager.Apply(ApplicationTheme.Dark);
-                    CurrentTheme = ApplicationTheme.Dark;
-
-                    break;
-            }
+            ApplicationThemeManager.Apply(ApplicationTheme.Dark);
+            CurrentTheme = ApplicationTheme.Dark;
         }
     }
 }

@@ -1,6 +1,7 @@
 <Solution>
   <Folder Name="/src/">
     <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
+    <Project Path="src/Blueprint.Analyzers/Blueprint.Analyzers.csproj" />
     <Project Path="src/Blueprint.Application/Blueprint.Application.csproj" />
     <Project Path="src/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
     <Project Path="src/Blueprint.Languages.Adapaters.Monaco/Blueprint.Languages.Adapaters.Monaco.csproj" />

@@ -2,58 +2,34 @@
 using System.Windows.Data;
 using Wpf.Ui.Appearance;
 
-namespace Blueprint.Helpers
+namespace Blueprint.Helpers;
+
+internal class EnumToBooleanConverter : IValueConverter
 {
-    internal class EnumToBooleanConverter : IValueConverter
+    public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        if (parameter is not string enumString)
         {
-            if (parameter is not String enumString)
-            {
-                throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
-            }
-
-            if (!Enum.IsDefined(typeof(ApplicationTheme), value))
-            {
-                throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum");
-            }
-
-            var enumValue = Enum.Parse(typeof(ApplicationTheme), enumString);
-
-            return enumValue.Equals(value);
+            throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        if (!Enum.IsDefined(typeof(ApplicationTheme), value))
         {
-            if (parameter is not String enumString)
-            {
-                throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
-            }
-
-            return Enum.Parse(typeof(ApplicationTheme), enumString);
+            throw new ArgumentException("ExceptionEnumToBooleanConverterValueMustBeAnEnum");
         }
+
+        var enumValue = Enum.Parse(typeof(ApplicationTheme), enumString);
+
+        return enumValue.Equals(value);
     }
 
-    internal class BooleanToVisibilityConverter : IValueConverter
+    public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
     {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        if (parameter is not string enumString)
         {
-            if (value is not bool boolValue)
-            {
-                throw new ArgumentException("ExceptionBooleanToVisibilityConverterValueMustBeABoolean");
-            }
-
-            return boolValue ? System.Windows.Visibility.Visible : System.Windows.Visibility.Collapsed;
+            throw new ArgumentException("ExceptionEnumToBooleanConverterParameterMustBeAnEnumName");
         }
 
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            if (value is not System.Windows.Visibility visibility)
-            {
-                throw new ArgumentException("ExceptionBooleanToVisibilityConverterValueMustBeAVisibility");
-            }
-
-            return visibility == System.Windows.Visibility.Visible;
-        }
+        return Enum.Parse(typeof(ApplicationTheme), enumString);
     }
 }

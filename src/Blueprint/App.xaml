@@ -4,9 +4,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
              xmlns:services="clr-namespace:Blueprint.Services"
-             DispatcherUnhandledException="OnDispatcherUnhandledException"
-             Exit="OnExit"
-             Startup="OnStartup">
+             DispatcherUnhandledException="OnDispatcherUnhandledException">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -15,7 +13,6 @@
                 <ResourceDictionary Source="Assets/Styles/TabStyles.xaml" />
                 <ResourceDictionary Source="Assets/Styles/ThumbStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
-            <services:ServiceLocator x:Key="Locator" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>
