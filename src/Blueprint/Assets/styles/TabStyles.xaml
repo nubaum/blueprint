@@ -1,0 +1,445 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Blueprint.Views.UserControls.Primitives">
+    <Style x:Key="BlueprintTabHeaderButtonStyle"
+           TargetType="{x:Type Button}">
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="Width"
+                Value="18" />
+        <Setter Property="Height"
+                Value="18" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="Margin"
+                Value="4,0,0,0" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="Opacity"
+                Value="0.85" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Button}">
+                    <Border x:Name="ButtonBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="4">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                            <Setter Property="Opacity"
+                                    Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BlueprintTabHeaderToggleButtonStyle"
+           TargetType="{x:Type ToggleButton}">
+        <Setter Property="Focusable"
+                Value="False" />
+        <Setter Property="Width"
+                Value="18" />
+        <Setter Property="Height"
+                Value="18" />
+        <Setter Property="Padding"
+                Value="0" />
+        <Setter Property="Margin"
+                Value="4,0,0,0" />
+        <Setter Property="Background"
+                Value="Transparent" />
+        <Setter Property="BorderThickness"
+                Value="0" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="HorizontalAlignment"
+                Value="Center" />
+        <Setter Property="VerticalAlignment"
+                Value="Center" />
+        <Setter Property="Cursor"
+                Value="Hand" />
+        <Setter Property="Opacity"
+                Value="0.85" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ToggleButton}">
+                    <Border x:Name="ButtonBorder"
+                            Background="{TemplateBinding Background}"
+                            CornerRadius="4">
+                        <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center" />
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                            <Setter Property="Opacity"
+                                    Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsPressed"
+                                 Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource SubtleFillColorTertiaryBrush}" />
+                        </Trigger>
+                        <Trigger Property="IsChecked"
+                                 Value="True">
+                            <Setter TargetName="ButtonBorder"
+                                    Property="Background"
+                                    Value="{DynamicResource SubtleFillColorSecondaryBrush}" />
+                            <Setter Property="Opacity"
+                                    Value="1" />
+                        </Trigger>
+                        <Trigger Property="IsEnabled"
+                                 Value="False">
+                            <Setter Property="Opacity"
+                                    Value="0.45" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="BlueprintTabItemStyle"
+           TargetType="{x:Type TabItem}">
+        <Setter Property="Background"
+                Value="{DynamicResource ApplicationBackgroundBrush}" />
+        <Setter Property="Foreground"
+                Value="{DynamicResource TextFillColorPrimaryBrush}" />
+        <Setter Property="Padding"
+                Value="14,8,14,6" />
+        <Setter Property="MinHeight"
+                Value="40" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="BorderBrush"
+                Value="{DynamicResource ControlStrokeColorDefaultBrush}" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Center" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Center" />
+        <Setter Property="ContextMenu">
+            <Setter.Value>
+                <ContextMenu>
+                    <MenuItem Header="Pin"
+                              Command="{x:Static local:TabControlHelper.PinTabCommand}"
+                              CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                    <MenuItem Header="Unpin"
+                              Command="{x:Static local:TabControlHelper.UnpinTabCommand}"
+                              CommandParameter="{Binding PlacementTarget, RelativeSource={RelativeSource AncestorType=ContextMenu}}" />
+                </ContextMenu>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type TabItem}">
+                    <Grid x:Name="Root"
+                          SnapsToDevicePixels="True"
+                          Margin="0,2,0,0">
+                        <Border x:Name="HeaderBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="10,10,0,0"
+                                Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="22" />
+                                </Grid.ColumnDefinitions>
+
+                                <ContentPresenter x:Name="HeaderIconPresenter"
+                                                  Grid.Column="0"
+                                                  Margin="0,0,8,0"
+                                                  VerticalAlignment="Center"
+                                                  HorizontalAlignment="Center"
+                                                  Content="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Tag}" />
+
+                                <TextBlock x:Name="HeaderText"
+                                           Grid.Column="1"
+                                           Text="{TemplateBinding Header}"
+                                           TextTrimming="CharacterEllipsis"
+                                           Foreground="{TemplateBinding Foreground}"
+                                           HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                           VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+
+                                <Grid Grid.Column="2">
+                                    <Button x:Name="UnpinButton"
+                                            Style="{StaticResource BlueprintTabHeaderButtonStyle}"
+                                            ToolTip="Unpin tab"
+                                            Visibility="Hidden"
+                                            IsHitTestVisible="False"
+                                            Margin="0"
+                                            Command="{x:Static local:TabControlHelper.UnpinTabCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                        <TextBlock Text="📌"
+                                                   FontSize="11"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" />
+                                    </Button>
+
+                                    <Button x:Name="CloseButton"
+                                            Style="{StaticResource BlueprintTabHeaderButtonStyle}"
+                                            ToolTip="Close tab"
+                                            Visibility="Hidden"
+                                            IsHitTestVisible="False"
+                                            Margin="0"
+                                            Command="{x:Static local:TabControlHelper.CloseTabCommand}"
+                                            CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}">
+                                        <TextBlock Text="✕"
+                                                   FontSize="11"
+                                                   FontWeight="SemiBold"
+                                                   VerticalAlignment="Center"
+                                                   HorizontalAlignment="Center" />
+                                    </Button>
+                                </Grid>
+
+                                <Border x:Name="DirtyIndicator"
+                                        Grid.Column="3"
+                                        Width="4"
+                                        Height="4"
+                                        CornerRadius="4"
+                                        HorizontalAlignment="Right"
+                                        VerticalAlignment="Top"
+                                        Margin="0,0,0,0"
+                                        Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                        Visibility="Collapsed" />
+
+                                <Border x:Name="SelectedUnderline"
+                                        Grid.ColumnSpan="3"
+                                        Height="2"
+                                        Opacity="0"
+                                        Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Stretch"
+                                        CornerRadius="3"
+                                        Margin="0,0,0,-2"
+                                        RenderTransformOrigin="0.5,0.5"
+                                        Panel.ZIndex="10">
+                                    <Border.RenderTransform>
+                                        <ScaleTransform ScaleY="0.6" />
+                                    </Border.RenderTransform>
+                                </Border>
+
+                                <Border x:Name="HoverUnderline"
+                                        Grid.ColumnSpan="3"
+                                        Height="2"
+                                        Opacity="0"
+                                        Background="{DynamicResource AccentFillColorDefaultBrush}"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Stretch"
+                                        CornerRadius="3"
+                                        Margin="0,0,0,-2"
+                                        RenderTransformOrigin="0.5,0.5"
+                                        Panel.ZIndex="9">
+                                    <Border.RenderTransform>
+                                        <ScaleTransform ScaleY="0.6" />
+                                    </Border.RenderTransform>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <Border x:Name="BottomCover"
+                                Height="2"
+                                Background="{TemplateBinding Background}"
+                                VerticalAlignment="Bottom"
+                                HorizontalAlignment="Stretch"
+                                Margin="1,0,1,0"
+                                Opacity="0" />
+
+                        <VisualStateManager.VisualStateGroups>
+                            <VisualStateGroup x:Name="CommonStates">
+                                <VisualState x:Name="Normal">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.22" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="0.6"
+                                                         Duration="0:0:0.22" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="MouseOver">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.55"
+                                                         Duration="0:0:0.18" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="0.8"
+                                                         Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Disabled">
+                                    <Storyboard>
+                                        <DoubleAnimation Storyboard.TargetName="Root"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0.55"
+                                                         Duration="0:0:0.10" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.10" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                            <VisualStateGroup x:Name="SelectionStates">
+                                <VisualState x:Name="Unselected">
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="Root"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            To="0,2,0,0"
+                                                            Duration="0:0:0.15" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderText"
+                                                                       Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{DynamicResource TextFillColorPrimaryBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="BottomCover"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.15" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.18" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedUnderline"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="0.6"
+                                                         Duration="0:0:0.18" />
+                                    </Storyboard>
+                                </VisualState>
+                                <VisualState x:Name="Selected">
+                                    <Storyboard>
+                                        <ThicknessAnimation Storyboard.TargetName="Root"
+                                                            Storyboard.TargetProperty="Margin"
+                                                            To="0,0,0,0"
+                                                            Duration="0:0:0.15" />
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderText"
+                                                                       Storyboard.TargetProperty="Foreground">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{DynamicResource AccentFillColorDefaultBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderBorder"
+                                                                       Storyboard.TargetProperty="Background">
+                                            <DiscreteObjectKeyFrame KeyTime="0"
+                                                                    Value="{DynamicResource BorderBrush}" />
+                                        </ObjectAnimationUsingKeyFrames>
+                                        <DoubleAnimation Storyboard.TargetName="BottomCover"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.15" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="1"
+                                                         Duration="0:0:0.12" />
+                                        <DoubleAnimation Storyboard.TargetName="SelectedUnderline"
+                                                         Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)"
+                                                         To="1"
+                                                         Duration="0:0:0.12" />
+                                        <DoubleAnimation Storyboard.TargetName="HoverUnderline"
+                                                         Storyboard.TargetProperty="Opacity"
+                                                         To="0"
+                                                         Duration="0:0:0.01" />
+                                    </Storyboard>
+                                </VisualState>
+                            </VisualStateGroup>
+                        </VisualStateManager.VisualStateGroups>
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Tag"
+                                 Value="{x:Null}">
+                            <Setter TargetName="HeaderIconPresenter"
+                                    Property="Visibility"
+                                    Value="Collapsed" />
+                        </Trigger>
+
+                        <Trigger Property="IsSelected"
+                                 Value="True">
+                            <Setter TargetName="CloseButton"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="CloseButton"
+                                    Property="IsHitTestVisible"
+                                    Value="True" />
+                        </Trigger>
+
+                        <Trigger Property="IsMouseOver"
+                                 Value="True">
+                            <Setter TargetName="CloseButton"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="CloseButton"
+                                    Property="IsHitTestVisible"
+                                    Value="True" />
+                        </Trigger>
+
+                        <Trigger Property="local:TabControlHelper.IsDirty"
+                                 Value="True">
+                            <Setter TargetName="DirtyIndicator"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                        </Trigger>
+
+                        <Trigger Property="local:TabControlHelper.IsPinned"
+                                 Value="True">
+                            <Setter TargetName="UnpinButton"
+                                    Property="Visibility"
+                                    Value="Visible" />
+                            <Setter TargetName="UnpinButton"
+                                    Property="IsHitTestVisible"
+                                    Value="True" />
+                            <Setter TargetName="UnpinButton"
+                                    Property="Opacity"
+                                    Value="1" />
+
+                            <Setter TargetName="CloseButton"
+                                    Property="Visibility"
+                                    Value="Hidden" />
+                            <Setter TargetName="CloseButton"
+                                    Property="IsHitTestVisible"
+                                    Value="False" />
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+</ResourceDictionary>
