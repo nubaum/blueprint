@@ -1,10 +1,8 @@
-using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using Blueprint.Views.UserControls;
 
 namespace Blueprint.Views.UserControls.Primitives;
 
@@ -51,6 +49,11 @@ public partial class TearableTabControl : UserControl
             MainTabControl,
             nameof(UIElement.DragLeave),
             TabControl_DragLeave);
+
+        WeakEventManager<ItemContainerGenerator, ItemsChangedEventArgs>.AddHandler(
+            MainTabControl.ItemContainerGenerator,
+            nameof(ItemContainerGenerator.ItemsChanged),
+            TabControl_ItemsChanged);
     }
 
     public int TabCount => MainTabControl.Items.Count;
@@ -196,6 +199,17 @@ public partial class TearableTabControl : UserControl
     private void TabControl_DragLeave(object? sender, DragEventArgs e)
     {
         RemoveAdorner();
+    }
+
+    private void TabControl_ItemsChanged(object? sender, ItemsChangedEventArgs e)
+    {
+        var source = TabDragManager.SourceTabControl;
+
+        if (sender is ItemContainerGenerator containerGenerator)
+        {
+            if (containerGenerator?.Items.Count == 0 && Window.GetWindow(this) is FloatingTabWindow fw)
+                fw.Close();
+        }
     }
 
     private void TabControl_Drop(object? sender, DragEventArgs e)
