@@ -131,13 +131,22 @@
                 <Grid Grid.Column="1"
                       Background="Transparent">
                     <prim:GridSplitterThumb Grid.Column="1"
-                        Margin="-2,0,0,0"
-                                                Cursor="SizeWE"
-                                                LeftColumn="{Binding ElementName=LeftColumn}"
-                                                RightColumn="{Binding ElementName=RightColumn}" />
+                                            Margin="-2,0,0,0"
+                                            Cursor="SizeWE"
+                                            LeftColumn="{Binding ElementName=LeftColumn}"
+                                            RightColumn="{Binding ElementName=RightColumn}" />
                 </Grid>
                 <Grid Grid.Column="2">
-                    <prim:TearableTabControl x:Name="MainTabs" />
+                    <prim:TearableTabControl ItemsSource="{Binding Tabs}"
+                                             SelectedItem="{Binding SelectedTab}">
+                        <prim:TearableTabControl.ContentTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <TextBlock Text="{Binding Content}" />
+                                </Grid>
+                            </DataTemplate>
+                        </prim:TearableTabControl.ContentTemplate>
+                    </prim:TearableTabControl>
                 </Grid>
             </Grid>
         </Grid>
