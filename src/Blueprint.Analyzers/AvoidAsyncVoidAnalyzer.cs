@@ -16,7 +16,7 @@ public sealed class AvoidAsyncVoidAnalyzer : DiagnosticAnalyzer
         id: DiagnosticId,
         title: "Avoid 'async void'",
         messageFormat: "'async void' detected on {0}. Use 'Task' (or 'Task<T>') instead.",
-        category: "Reliability",
+        category: "Design",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true,
         description: _description);

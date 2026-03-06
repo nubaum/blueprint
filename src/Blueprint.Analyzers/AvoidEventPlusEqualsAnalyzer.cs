@@ -14,7 +14,7 @@ public sealed class AvoidEventPlusEqualsAnalyzer : DiagnosticAnalyzer
         id: DiagnosticId,
         title: "Avoid subscribing to events with '+='",
         messageFormat: "Event subscription detected ('+=') on '{0}'. Prefer WeakEventManager instead of direct event subscription.",
-        category: "Reliability",
+        category: "Design",
         defaultSeverity: DiagnosticSeverity.Error,
         isEnabledByDefault: true);
 
