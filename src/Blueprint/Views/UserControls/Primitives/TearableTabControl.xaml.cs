@@ -203,8 +203,6 @@ public partial class TearableTabControl : UserControl
 
     private void TabControl_ItemsChanged(object? sender, ItemsChangedEventArgs e)
     {
-        var source = TabDragManager.SourceTabControl;
-
         if (sender is ItemContainerGenerator containerGenerator)
         {
             if (containerGenerator?.Items.Count == 0 && Window.GetWindow(this) is FloatingTabWindow fw)
