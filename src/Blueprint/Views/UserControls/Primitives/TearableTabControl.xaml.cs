@@ -1,29 +1,27 @@
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using Blueprint.Views.UserControls;
-using Blueprint.Views.UserControls.Primitives;
 
 namespace Blueprint.Views.UserControls.Primitives;
 
 public partial class TearableTabControl : UserControl
 {
-    // ── drag state ────────────────────────────────────────────
     private Point _dragStartPoint;
     private bool _isDragging;
     private TabItem? _draggingTab;
     private DragAdorner? _adorner;
     private AdornerLayer? _adornerLayer;
 
-    // Minimum distance before we treat a mouse move as a drag
     private const double DragThreshold = 6.0;
 
     public TearableTabControl()
     {
         InitializeComponent();
 
-        // Use WeakEventManager instead of direct subscriptions
         WeakEventManager<UIElement, MouseButtonEventArgs>.AddHandler(
             MainTabControl,
             nameof(UIElement.PreviewMouseLeftButtonDown),
@@ -39,7 +37,6 @@ public partial class TearableTabControl : UserControl
             nameof(UIElement.PreviewMouseLeftButtonUp),
             Tab_MouseLeftButtonUp);
 
-        // Drop: accept tabs from other windows / tab-controls
         WeakEventManager<UIElement, DragEventArgs>.AddHandler(
             MainTabControl,
             nameof(UIElement.Drop),
@@ -56,13 +53,10 @@ public partial class TearableTabControl : UserControl
             TabControl_DragLeave);
     }
 
-    // ── public helpers ────────────────────────────────────────
-
     public int TabCount => MainTabControl.Items.Count;
 
     public void AddTab(TabItem tab)
     {
-        // Re-parent correctly (WPF requires the item not to have a logical parent)
         if (tab.Parent is TabControl oldOwner)
             oldOwner.Items.Remove(tab);
 
@@ -74,19 +68,21 @@ public partial class TearableTabControl : UserControl
     public void RemoveTab(TabItem tab)
     {
         MainTabControl.Items.Remove(tab);
-        MainTabControl.Items.Remove(tab);
         CloseOwnerFloatingWindowIfEmpty();
     }
 
-    /// <summary>Returns the Window that hosts this control (could be FloatingTabWindow).</summary>
     public Window? GetOwnerWindow() => Window.GetWindow(this);
-
-    // ── mouse events on the tab headers ──────────────────────
 
     private void Tab_MouseLeftButtonDown(object? sender, MouseButtonEventArgs e)
     {
-        var tab = GetTabItemFromPoint(e.GetPosition(MainTabControl));
-        if (tab == null) return;
+        var originalSource = e.OriginalSource as DependencyObject;
+
+        if (IsHeaderButtonClick(originalSource))
+            return;
+
+        var tab = GetTabItemFromSource(originalSource);
+        if (tab == null)
+            return;
 
         _dragStartPoint = e.GetPosition(null);
         _draggingTab = tab;
@@ -95,7 +91,8 @@ public partial class TearableTabControl : UserControl
 
     private void Tab_MouseMove(object? sender, MouseEventArgs e)
     {
-        if (_draggingTab == null || e.LeftButton != MouseButtonState.Pressed) return;
+        if (_draggingTab == null || e.LeftButton != MouseButtonState.Pressed)
+            return;
 
         var pos = e.GetPosition(null);
         var diff = pos - _dragStartPoint;
@@ -104,7 +101,7 @@ public partial class TearableTabControl : UserControl
             (Math.Abs(diff.X) > DragThreshold || Math.Abs(diff.Y) > DragThreshold))
         {
             _isDragging = true;
-            BeginTabDrag(_draggingTab, e);
+            BeginTabDrag(_draggingTab);
         }
     }
 
@@ -114,22 +111,15 @@ public partial class TearableTabControl : UserControl
         _isDragging = false;
     }
 
-    // ── drag initiation ───────────────────────────────────────
-
-    private void BeginTabDrag(TabItem tab, MouseEventArgs e)
+    private void BeginTabDrag(TabItem tab)
     {
-        // Register in the shared manager so other windows can see it
         TabDragManager.DraggedTab = tab;
         TabDragManager.SourceTabControl = this;
 
-        // Fullscreen transparent overlay — renders the ghost anywhere on screen,
-        // including outside the source window.
         var overlay = GlobalDragAdornerWindow.Show(
-            tab.Header?.ToString() ?? "Tab",
+            GetTabHeaderText(tab),
             NativeMethods.GetCursorPosition());
 
-        // GiveFeedback fires continuously during DoDragDrop.
-        // We hide the default cursor and reposition the overlay ghost instead.
         void GiveFeedbackHandler(object? _, GiveFeedbackEventArgs fe)
         {
             fe.UseDefaultCursors = false;
@@ -145,12 +135,11 @@ public partial class TearableTabControl : UserControl
 
         try
         {
-            var data = new DataObject("TearableTab", tab.Header?.ToString() ?? "");
+            var data = new DataObject("TearableTab", GetTabHeaderText(tab));
             DragDrop.DoDragDrop(MainTabControl, data, DragDropEffects.Move);
         }
         finally
         {
-            // Cleanup after drop or cancel
             WeakEventManager<UIElement, GiveFeedbackEventArgs>.RemoveHandler(
                 MainTabControl,
                 nameof(GiveFeedback),
@@ -161,7 +150,6 @@ public partial class TearableTabControl : UserControl
 
             RemoveAdorner();
 
-            // If the drag wasn't handled by any drop target, tear out into a new window
             if (TabDragManager.IsDragging)
             {
                 TearOutToNewWindow(tab);
@@ -173,23 +161,13 @@ public partial class TearableTabControl : UserControl
         }
     }
 
-    // ── tear-out ──────────────────────────────────────────────
-
     private void TearOutToNewWindow(TabItem tab)
     {
-        if (TabCount <= 1)
-        {
-            // Don't tear if it's the only tab — optionally you can allow it
-            // Comment out this guard to allow tearing the last tab too.
-            // return;
-        }
-
         RemoveTab(tab);
 
         var win = new FloatingTabWindow();
-        win.Show(); // HWND must exist before PresentationSource is available
+        win.Show();
 
-        // Convert raw screen pixels -> DIPs using the new window's own DPI context
         var pixelPos = NativeMethods.GetCursorPosition();
         var source = PresentationSource.FromVisual(win);
         var dip = source?.CompositionTarget != null
@@ -204,11 +182,10 @@ public partial class TearableTabControl : UserControl
         win.Focus();
     }
 
-    // ── drop-target: accept tabs dragged from another window ──
-
     private void TabControl_DragOver(object? sender, DragEventArgs e)
     {
-        if (!TabDragManager.IsDragging) return;
+        if (!TabDragManager.IsDragging)
+            return;
 
         e.Effects = DragDropEffects.Move;
         e.Handled = true;
@@ -225,9 +202,11 @@ public partial class TearableTabControl : UserControl
     {
         RemoveAdorner();
 
-        if (!TabDragManager.IsDragging) return;
-        // Don't drop onto the same control
-        if (TabDragManager.SourceTabControl == this) return;
+        if (!TabDragManager.IsDragging)
+            return;
+
+        if (TabDragManager.SourceTabControl == this)
+            return;
 
         var tab = TabDragManager.DraggedTab!;
         var source = TabDragManager.SourceTabControl;
@@ -238,19 +217,17 @@ public partial class TearableTabControl : UserControl
         TabDragManager.Clear();
         e.Handled = true;
 
-        // If source floating window is now empty, close it
         if (source?.TabCount == 0 && source.GetOwnerWindow() is FloatingTabWindow fw)
             fw.Close();
     }
-
-    // ── adorner helpers ───────────────────────────────────────
 
     private void ShowAdorner(TabItem tab, Point pos)
     {
         if (_adornerLayer == null)
         {
             _adornerLayer = AdornerLayer.GetAdornerLayer(this);
-            if (_adornerLayer == null) return;
+            if (_adornerLayer == null)
+                return;
 
             var ghost = new Border
             {
@@ -258,7 +235,10 @@ public partial class TearableTabControl : UserControl
                 BorderBrush = Brushes.Gray,
                 BorderThickness = new Thickness(1),
                 Padding = new Thickness(6, 2, 6, 2),
-                Child = new TextBlock { Text = tab.Header?.ToString() ?? "Tab" }
+                Child = new TextBlock
+                {
+                    Text = GetTabHeaderText(tab)
+                }
             };
 
             _adorner = new DragAdorner(this, ghost);
@@ -284,17 +264,47 @@ public partial class TearableTabControl : UserControl
             floatingWindow.Close();
     }
 
-    // ── hit-test helper ───────────────────────────────────────
-
-    private static TabItem? GetTabItemFromPoint(Point point)
+    private void TabCloseButton_Click(object sender, RoutedEventArgs e)
     {
-        var element = Mouse.DirectlyOver as DependencyObject;
-        while (element != null)
+        if (sender is not DependencyObject dependencyObject)
+            return;
+
+        var tab = FindAncestor<TabItem>(dependencyObject);
+        if (tab == null)
+            return;
+
+        RemoveTab(tab);
+        e.Handled = true;
+    }
+
+    private static bool IsHeaderButtonClick(DependencyObject? source)
+    {
+        return FindAncestor<Button>(source) != null
+            || FindAncestor<ToggleButton>(source) != null;
+    }
+
+    private static string GetTabHeaderText(TabItem tab)
+    {
+        return tab.Header?.ToString() ?? "Tab";
+    }
+
+    private static TabItem? GetTabItemFromSource(DependencyObject? source)
+    {
+        return FindAncestor<TabItem>(source);
+    }
+
+    private static T? FindAncestor<T>(DependencyObject? current)
+        where T : DependencyObject
+    {
+        while (current != null)
         {
-            if (element is TabItem ti) return ti;
-            element = VisualTreeHelper.GetParent(element)
-                   ?? LogicalTreeHelper.GetParent(element);
+            if (current is T match)
+                return match;
+
+            current = VisualTreeHelper.GetParent(current)
+                   ?? LogicalTreeHelper.GetParent(current);
         }
+
         return null;
     }
 }
