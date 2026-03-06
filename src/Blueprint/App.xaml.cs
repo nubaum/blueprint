@@ -19,7 +19,7 @@ namespace Blueprint
     {
         private static readonly IHost _host = Host
             .CreateDefaultBuilder()
-            .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)); })
+            .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!); })
             .ConfigureServices((context, services) =>
             {
                 services.AddNavigationViewPageProvider();
