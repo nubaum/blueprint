@@ -67,11 +67,14 @@ namespace TearableTab
 
             MainTabControl.Items.Add(tab);
             MainTabControl.SelectedItem = tab;
+            tab.Focus();
         }
 
         public void RemoveTab(TabItem tab)
         {
             MainTabControl.Items.Remove(tab);
+            MainTabControl.Items.Remove(tab);
+            CloseOwnerFloatingWindowIfEmpty();
         }
 
         /// <summary>Returns the Window that hosts this control (could be FloatingTabWindow).</summary>
@@ -196,6 +199,8 @@ namespace TearableTab
             win.Top = dip.Y - 10;
 
             win.AddTab(tab);
+            win.Activate();
+            win.Focus();
         }
 
         // ── drop-target: accept tabs dragged from another window ──
@@ -270,6 +275,12 @@ namespace TearableTab
                 _adorner = null;
                 _adornerLayer = null;
             }
+        }
+
+        private void CloseOwnerFloatingWindowIfEmpty()
+        {
+            if (TabCount == 0 && GetOwnerWindow() is FloatingTabWindow floatingWindow)
+                floatingWindow.Close();
         }
 
         // ── hit-test helper ───────────────────────────────────────
