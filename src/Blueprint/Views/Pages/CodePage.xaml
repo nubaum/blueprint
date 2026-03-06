@@ -71,7 +71,7 @@
                 </Setter.Value>
             </Setter>
         </Style>
-        <Style TargetType="TreeViewItem">
+        <!-- <Style TargetType="TreeViewItem">
             <Setter Property="Foreground"
                     Value="{DynamicResource TextFillColorPrimaryBrush}" />
             <Setter Property="Margin"
@@ -151,7 +151,7 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
+        </Style> -->
     </Page.Resources>
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <Grid MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Window}}"
