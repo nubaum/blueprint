@@ -8,11 +8,10 @@
       xmlns:services="clr-namespace:Blueprint.Services"
       xmlns:vm="clr-namespace:Blueprint.ViewModels.UserControls"
       xmlns:helpers="clr-namespace:Blueprint.Helpers"
-      xmlns:primitives="clr-namespace:System.Windows.Controls.Primitives;assembly=PresentationFramework"
       xmlns:ad="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
       xmlns:dock="clr-namespace:AvalonDock;assembly=AvalonDock"
       xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
-      xmlns:controls="clr-namespace:TearableTab"
+      xmlns:prim="clr-namespace:Blueprint.Views.UserControls.Primitives"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -131,64 +130,14 @@
                 </DockPanel>
                 <Grid Grid.Column="1"
                       Background="Transparent">
-                    <primitives:Thumb x:Name="SplitThumb"
-                                      Cursor="SizeWE"
-                                      HorizontalAlignment="Stretch"
-                                      VerticalAlignment="Stretch"
-                                      DragDelta="SplitThumb_OnDragDelta"
-                                      DragStarted="SplitThumb_OnDragStarted"
-                                      DragCompleted="SplitThumb_OnDragCompleted">
-                        <primitives:Thumb.Template>
-                            <ControlTemplate TargetType="{x:Type primitives:Thumb}">
-                                <Grid Background="Transparent">
-                                    <Border x:Name="Handle"
-                                            Width="1"
-                                            HorizontalAlignment="Center"
-                                            VerticalAlignment="Stretch"
-                                            Margin="0,6"
-                                            CornerRadius="2"
-                                            Opacity="0.2"
-                                            Background="{DynamicResource TextFillColorPrimaryBrush}">
-                                        <Border.Effect>
-                                            <DropShadowEffect x:Name="Glow"
-                                                              BlurRadius="12"
-                                                              ShadowDepth="0"
-                                                              Opacity="0" />
-                                        </Border.Effect>
-                                    </Border>
-                                </Grid>
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsMouseOver"
-                                             Value="True">
-                                        <Setter TargetName="Handle"
-                                                Property="Width"
-                                                Value="4" />
-                                        <Setter TargetName="Handle"
-                                                Property="Opacity"
-                                                Value="0.7" />
-                                        <Setter TargetName="Handle"
-                                                Property="Background"
-                                                Value="{DynamicResource AccentFillColorSecondaryBrush}" />
-                                    </Trigger>
-                                    <Trigger Property="IsDragging"
-                                             Value="True">
-                                        <Setter TargetName="Handle"
-                                                Property="Width"
-                                                Value="4" />
-                                        <Setter TargetName="Handle"
-                                                Property="Opacity"
-                                                Value="1" />
-                                        <Setter TargetName="Handle"
-                                                Property="Background"
-                                                Value="{DynamicResource AccentFillColorSecondaryBrush}" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </primitives:Thumb.Template>
-                    </primitives:Thumb>
+                    <prim:GridSplitterThumb Grid.Column="1"
+                        Margin="-2,0,0,0"
+                                                Cursor="SizeWE"
+                                                LeftColumn="{Binding ElementName=LeftColumn}"
+                                                RightColumn="{Binding ElementName=RightColumn}" />
                 </Grid>
                 <Grid Grid.Column="2">
-                    <controls:TearableTabControl x:Name="MainTabs" />
+                    <prim:TearableTabControl x:Name="MainTabs" />
                 </Grid>
             </Grid>
         </Grid>

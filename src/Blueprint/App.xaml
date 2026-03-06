@@ -13,6 +13,7 @@
                 <ui:ThemesDictionary Theme="Light" />
                 <ui:ControlsDictionary />
                 <ResourceDictionary Source="Assets/Styles/TabStyles.xaml" />
+                <ResourceDictionary Source="Assets/Styles/ThumbStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <services:ServiceLocator x:Key="Locator" />
         </ResourceDictionary>

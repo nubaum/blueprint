@@ -4,7 +4,7 @@ using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Effects;
 
-namespace Blueprint.Views.UserControls;
+namespace Blueprint.Views.UserControls.Primitives;
 
 public class GlobalDragAdornerWindow : Window
 {

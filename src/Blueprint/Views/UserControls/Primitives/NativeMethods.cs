@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-namespace Blueprint.Views.UserControls;
+namespace Blueprint.Views.UserControls.Primitives;
 
 /// <summary>
 /// Small P/Invoke wrapper to get the real screen-space cursor position,

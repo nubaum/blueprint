@@ -1,7 +1,6 @@
 using System.Windows.Controls;
-using TearableTab;
 
-namespace Blueprint.Views.UserControls;
+namespace Blueprint.Views.UserControls.Primitives;
 
 /// <summary>
 /// Holds shared state for an ongoing tab drag operation.
