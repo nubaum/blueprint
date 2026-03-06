@@ -160,6 +160,14 @@
                                                 <DiscreteObjectKeyFrame KeyTime="0"
                                                                         Value="{DynamicResource AccentFillColorDefaultBrush}" />
                                             </ObjectAnimationUsingKeyFrames>
+
+                                            <!-- Changes background of the header  -->
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="HeaderBorder"
+                                                                           Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0"
+                                                                        Value="{DynamicResource BorderBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            
                                             <!-- Paint over the bottom border so the tab merges with content panel -->
                                             <DoubleAnimation Storyboard.TargetName="BottomCover"
                                                              Storyboard.TargetProperty="Opacity"
