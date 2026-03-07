@@ -10,7 +10,7 @@ public class MainWindowViewModel : NotifyPropertyChangedBase
         new MenuItem { Header = "Home", Tag = "tray_home" }
     ];
 
-    private readonly string _applicationTitle = "WPF UI - Blueprint";
+    private readonly string _applicationTitle = "Bllueprint";
     private readonly List<object> _footerMenuItems =
     [
         new NavigationViewItem

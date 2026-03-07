@@ -44,7 +44,7 @@ public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
     private void InitializeViewModel()
     {
         CurrentTheme = ApplicationThemeManager.GetAppTheme();
-        _appVersion = $"UiDesktopApp1 - {GetAssemblyVersion()}";
+        _appVersion = $"Bllueprint - {GetAssemblyVersion()}";
         OnPropertyChanged(nameof(AppVersion));
         _isInitialized = true;
     }

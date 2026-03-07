@@ -71,84 +71,148 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Window}}"
-              Margin="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0"
-                        Margin="0,0,0,10">
-                <TextBlock FontSize="20"
-                           FontWeight="Medium"
-                           Text="Coding" />
-                <TextBlock Opacity="0.8"
-                           Margin="0,4,0,0"
-                           Text="Tree on the left, tabs on the right. Resize or collapse sections as needed." />
-            </StackPanel>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="LeftColumn"
-                                      Width="260"
-                                      MinWidth="160" />
-                    <ColumnDefinition Width="6" />
-                    <ColumnDefinition x:Name="RightColumn"
-                                      Width="*"
-                                      MinWidth="260" />
-                </Grid.ColumnDefinitions>
-                <DockPanel Grid.Column="0"
-                           LastChildFill="True">
-                    <Border DockPanel.Dock="Top"
-                            Padding="0,0,0,8" />
-                    <Border Padding="10"
-                            CornerRadius="8">
-                        <TreeView>
-                            <TreeViewItem Header="Workspace">
-                                <TreeViewItem Header="src">
-                                    <TreeViewItem Header="Blueprint.App" />
-                                    <TreeViewItem Header="Blueprint.Domain" />
-                                    <TreeViewItem Header="Blueprint.Application" />
-                                    <TreeViewItem Header="Blueprint.Infrastructure" />
-                                    <TreeViewItem Header="Blueprint.Presentation.Wpf" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="docs">
-                                    <TreeViewItem Header="architecture.md" />
-                                    <TreeViewItem Header="readme-notes.md" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="assets">
-                                    <TreeViewItem Header="icons" />
-                                    <TreeViewItem Header="themes" />
-                                </TreeViewItem>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Margin="0,0,0,10">
+            <TextBlock FontSize="20"
+                       FontWeight="Medium"
+                       Text="Coding" />
+            <TextBlock Opacity="0.8"
+                       Margin="0,4,0,0"
+                       Text="Tree on the left, tabs on the right. Resize or collapse sections as needed." />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftColumn"
+                                  Width="260"
+                                  MinWidth="160" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition x:Name="RightColumn"
+                                  Width="*"
+                                  MinWidth="260" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0"
+                       LastChildFill="True">
+                <Border DockPanel.Dock="Top"
+                        Padding="0,0,0,8" />
+                <Border Padding="10"
+                        CornerRadius="8">
+                    <TreeView>
+                        <TreeViewItem Header="Workspace">
+                            <TreeViewItem Header="src">
+                                <TreeViewItem Header="Blueprint.App" />
+                                <TreeViewItem Header="Blueprint.Domain" />
+                                <TreeViewItem Header="Blueprint.Application" />
+                                <TreeViewItem Header="Blueprint.Infrastructure" />
+                                <TreeViewItem Header="Blueprint.Presentation.Wpf" />
                             </TreeViewItem>
-                            <TreeViewItem Header="Favorites">
-                                <TreeViewItem Header="Current File" />
-                                <TreeViewItem Header="Recent" />
+                            <TreeViewItem Header="docs">
+                                <TreeViewItem Header="architecture.md" />
+                                <TreeViewItem Header="readme-notes.md" />
                             </TreeViewItem>
-                        </TreeView>
-                    </Border>
-                </DockPanel>
-                <Grid Grid.Column="1"
-                      Background="Transparent">
-                    <prim:GridSplitterThumb Grid.Column="1"
-                                            Margin="-2,0,0,0"
-                                            Cursor="SizeWE"
-                                            LeftColumn="{Binding ElementName=LeftColumn}"
-                                            RightColumn="{Binding ElementName=RightColumn}" />
-                </Grid>
-                <Grid Grid.Column="2">
-                    <prim:TearableTabControl ItemsSource="{Binding Tabs}"
-                                             SelectedItem="{Binding SelectedTab}">
-                        <prim:TearableTabControl.ContentTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <TextBlock Text="{Binding Content}" />
-                                </Grid>
-                            </DataTemplate>
-                        </prim:TearableTabControl.ContentTemplate>
-                    </prim:TearableTabControl>
-                </Grid>
+                            <TreeViewItem Header="assets">
+                                <TreeViewItem Header="icons" />
+                                <TreeViewItem Header="themes" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Favorites">
+                            <TreeViewItem Header="Current File" />
+                            <TreeViewItem Header="Recent" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Workspace">
+                            <TreeViewItem Header="src">
+                                <TreeViewItem Header="Blueprint.App" />
+                                <TreeViewItem Header="Blueprint.Domain" />
+                                <TreeViewItem Header="Blueprint.Application" />
+                                <TreeViewItem Header="Blueprint.Infrastructure" />
+                                <TreeViewItem Header="Blueprint.Presentation.Wpf" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="docs">
+                                <TreeViewItem Header="architecture.md" />
+                                <TreeViewItem Header="readme-notes.md" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="assets">
+                                <TreeViewItem Header="icons" />
+                                <TreeViewItem Header="themes" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Favorites">
+                            <TreeViewItem Header="Current File" />
+                            <TreeViewItem Header="Recent" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Workspace">
+                            <TreeViewItem Header="src">
+                                <TreeViewItem Header="Blueprint.App" />
+                                <TreeViewItem Header="Blueprint.Domain" />
+                                <TreeViewItem Header="Blueprint.Application" />
+                                <TreeViewItem Header="Blueprint.Infrastructure" />
+                                <TreeViewItem Header="Blueprint.Presentation.Wpf" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="docs">
+                                <TreeViewItem Header="architecture.md" />
+                                <TreeViewItem Header="readme-notes.md" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="assets">
+                                <TreeViewItem Header="icons" />
+                                <TreeViewItem Header="themes" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Favorites">
+                            <TreeViewItem Header="Current File" />
+                            <TreeViewItem Header="Recent" />
+                        </TreeViewItem>
+                        <TreeViewItem Header="Workspace">
+                            <TreeViewItem Header="src">
+                                <TreeViewItem Header="Blueprint.App" />
+                                <TreeViewItem Header="Blueprint.Domain" />
+                                <TreeViewItem Header="Blueprint.Application" />
+                                <TreeViewItem Header="Blueprint.Infrastructure" />
+                                <TreeViewItem Header="Blueprint.Presentation.Wpf" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="docs">
+                                <TreeViewItem Header="architecture.md" />
+                                <TreeViewItem Header="readme-notes.md" />
+                            </TreeViewItem>
+                            <TreeViewItem Header="assets">
+                                <TreeViewItem Header="icons" />
+                                <TreeViewItem Header="themes" />
+                            </TreeViewItem>
+                        </TreeViewItem>
+                        <TreeViewItem Header="Favorites">
+                            <TreeViewItem Header="Current File" />
+                            <TreeViewItem Header="Recent" />
+                        </TreeViewItem>
+                    </TreeView>
+                </Border>
+            </DockPanel>
+            <Grid Grid.Column="1"
+                  Background="Transparent">
+                <prim:GridSplitterThumb Grid.Column="1"
+                                        Margin="-2,0,0,0"
+                                        Cursor="SizeWE"
+                                        LeftColumn="{Binding ElementName=LeftColumn}"
+                                        RightColumn="{Binding ElementName=RightColumn}" />
+            </Grid>
+            <Grid Grid.Column="2">
+                <prim:TearableTabControl ItemsSource="{Binding Tabs}"
+                                         SelectedItem="{Binding SelectedTab}">
+                    <prim:TearableTabControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <ContentControl Content="{Binding Content}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch" />
+                            </Grid>
+                        </DataTemplate>
+                    </prim:TearableTabControl.ContentTemplate>
+                </prim:TearableTabControl>
             </Grid>
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </Page>

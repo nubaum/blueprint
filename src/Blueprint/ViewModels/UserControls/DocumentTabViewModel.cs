@@ -35,5 +35,5 @@ public class DocumentTabViewModel : NotifyPropertyChangedBase, ITabViewModel
 
     public string FilePath { get; set; } = string.Empty;
 
-    public string Content { get; set; } = string.Empty;
+    public object Content { get; set; } = string.Empty;
 }

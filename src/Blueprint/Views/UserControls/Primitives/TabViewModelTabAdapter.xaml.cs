@@ -36,6 +36,8 @@ internal sealed class TabViewModelTabAdapter
         {
             Content = viewModel,
             ContentTemplate = _owner.ContentTemplate,
+            HorizontalContentAlignment = HorizontalAlignment.Stretch,
+            VerticalContentAlignment = VerticalAlignment.Stretch,
         };
 
         SetViewModel(tab, viewModel);

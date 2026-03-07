@@ -1,9 +1,6 @@
-﻿using System.IO;
-using System.Windows.Threading;
+﻿using System.Windows.Threading;
 using Blueprint.Services;
-using Blueprint.ViewModels.Pages;
-using Blueprint.ViewModels.Windows;
-using Microsoft.Extensions.Configuration;
+using Blueprint.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
@@ -18,7 +15,6 @@ public partial class App
 {
     private static readonly IHost _host = Host
         .CreateDefaultBuilder()
-        .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!); })
         .ConfigureServices((_, services) =>
         {
             services.AddNavigationViewPageProvider();
@@ -31,11 +27,7 @@ public partial class App
 
             services.AddSingleton<INavigationService, NavigationService>();
 
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<SettingsViewModel>();
-            services.AddSingleton<DashboardViewModel>();
-            services.AddSingleton<DataViewModel>();
-            services.AddSingleton<CodeViewModel>();
+            services.ConfigureViewModels();
         }).Build();
 
     public static IServiceProvider Services
