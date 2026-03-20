@@ -1,6 +1,6 @@
 ﻿using System.Runtime.CompilerServices;
 
-namespace Blueprint.ViewModels.Core;
+namespace Blueprint.Presentation.ViewModels.Core;
 
 internal static class CommandManagerHelper
 {

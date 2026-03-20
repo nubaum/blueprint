@@ -1,6 +1,6 @@
 using System.Collections;
 using System.Windows.Controls;
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Views.UserControls.Core;
 
 namespace Blueprint.Views.UserControls.Core;

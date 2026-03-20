@@ -10,7 +10,7 @@
                  Title="{Binding ApplicationTitle, Mode=OneWay}"
                  Width="1100"
                  Height="650"
-                 xmlns:vm="clr-namespace:Blueprint.ViewModels.Windows"
+                 xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Windows;assembly=Blueprint.Presentation.ViewModels"
                  DataContext="{services:Resolve Type={x:Type vm:MainWindowViewModel}}"
                  d:DesignHeight="450"
                  d:DesignWidth="800"

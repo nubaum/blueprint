@@ -1,9 +1,9 @@
 ﻿using System.Windows.Media;
-using Blueprint.Models;
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Models;
 using Wpf.Ui.Abstractions.Controls;
 
-namespace Blueprint.ViewModels.Pages;
+namespace Blueprint.Presentation.ViewModels.Pages;
 
 public class DataViewModel : NotifyPropertyChangedBase, INavigationAware
 {

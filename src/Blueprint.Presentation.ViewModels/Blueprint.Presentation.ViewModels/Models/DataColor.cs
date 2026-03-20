@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 
-namespace Blueprint.Models;
+namespace Blueprint.Presentation.ViewModels.Models;
 
 public record DataColor
 {

@@ -1,6 +1,6 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Views.UserControls.Core;
 

@@ -1,10 +1,9 @@
-﻿namespace Blueprint.Views.Pages
+﻿namespace Blueprint.Views.Pages;
+
+public partial class DataPage
 {
-    public partial class DataPage
+    public DataPage()
     {
-        public DataPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

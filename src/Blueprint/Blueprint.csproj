@@ -23,6 +23,10 @@
         <None Remove="Assets\icons\AppLight.ico" />
     </ItemGroup>
     <ItemGroup>
+      <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
+      <ProjectReference Include="..\Blueprint.Presentation.ViewModels\Blueprint.Presentation.ViewModels\Blueprint.Presentation.ViewModels.csproj" />
+    </ItemGroup>
+    <ItemGroup>
         <Resource Include="Assets\AppIcoDark.png" />
         <Resource Include="Assets\AppIcoDark.svg" />
         <Resource Include="Assets\AppIcoLight.svg" />

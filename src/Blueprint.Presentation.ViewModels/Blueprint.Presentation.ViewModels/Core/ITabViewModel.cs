@@ -1,6 +1,6 @@
 using System.ComponentModel;
 
-namespace Blueprint.ViewModels.Core;
+namespace Blueprint.Presentation.ViewModels.Core;
 
 public interface ITabViewModel : INotifyPropertyChanged
 {

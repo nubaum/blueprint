@@ -1,9 +1,8 @@
 using System.Collections.ObjectModel;
-using Blueprint.ViewModels.Core;
-using Blueprint.ViewModels.UserControls;
-using Blueprint.Views.UserControls;
+using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.UserControls;
 
-namespace Blueprint.ViewModels.Pages;
+namespace Blueprint.Presentation.ViewModels.Pages;
 
 public class CodeViewModel : NotifyPropertyChangedBase
 {
@@ -13,8 +12,8 @@ public class CodeViewModel : NotifyPropertyChangedBase
     {
         Tabs.Add(new DocumentTabViewModel { Caption = "Welcome", IsPinned = true, Content = "Content 1" });
         Tabs.Add(new DocumentTabViewModel { Caption = "Document 1", IsDirty = true, Content = "Content 2" });
-        Tabs.Add(new DocumentTabViewModel { Caption = "Document 2", Content = new CodeEditor() });
-        Tabs.Add(new DocumentTabViewModel { Caption = "Document 4", Content = new CodeEditor() });
+        Tabs.Add(new DocumentTabViewModel { Caption = "Document 2" });
+        Tabs.Add(new DocumentTabViewModel { Caption = "Document 4" });
         SelectedTab = Tabs[0];
     }
 

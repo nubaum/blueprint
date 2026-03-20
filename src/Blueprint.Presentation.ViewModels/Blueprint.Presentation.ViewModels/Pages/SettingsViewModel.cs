@@ -1,9 +1,9 @@
 ﻿using System.Windows.Input;
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Appearance;
 
-namespace Blueprint.ViewModels.Pages;
+namespace Blueprint.Presentation.ViewModels.Pages;
 
 public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
 {

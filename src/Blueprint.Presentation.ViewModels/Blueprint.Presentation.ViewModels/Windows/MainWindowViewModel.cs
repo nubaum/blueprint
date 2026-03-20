@@ -1,7 +1,7 @@
-﻿using Blueprint.ViewModels.Core;
+﻿using Blueprint.Presentation.ViewModels.Core;
 using Wpf.Ui.Controls;
 
-namespace Blueprint.ViewModels.Windows;
+namespace Blueprint.Presentation.ViewModels.Windows;
 
 public class MainWindowViewModel : NotifyPropertyChangedBase
 {
@@ -17,7 +17,7 @@ public class MainWindowViewModel : NotifyPropertyChangedBase
         {
             Content = "Settings",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
-            TargetPageType = typeof(Views.Pages.SettingsPage)
+            ////TargetPageType = typeof(Views.Pages.SettingsPage)
         }
     ];
 
@@ -27,19 +27,19 @@ public class MainWindowViewModel : NotifyPropertyChangedBase
         {
             Content = "Home",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
-            TargetPageType = typeof(Views.Pages.DashboardPage)
+            ////TargetPageType = typeof(Views.Pages.DashboardPage)
         },
         new NavigationViewItem
         {
             Content = "Data",
             Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
-            TargetPageType = typeof(Views.Pages.DataPage)
+            ////TargetPageType = typeof(Views.Pages.DataPage)
         },
         new NavigationViewItem
         {
             Content = "Code",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Code16 },
-            TargetPageType = typeof(Views.Pages.CodePage)
+            ////TargetPageType = typeof(Views.Pages.CodePage)
         }
     ];
 

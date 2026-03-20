@@ -1,13 +1,13 @@
 using System.Windows.Input;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.ViewModels.Core;
+namespace Blueprint.Presentation.ViewModels.Core;
 
-public class AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null) : ICommand
+public class AsyncCommand<T>(Func<T?, Task> execute, Func<T?, bool>? canExecute = null) : ICommand
 {
-    private readonly ILogger _logger = LoggerFactory.Create(builder => builder.AddConsole().AddDebug()).CreateLogger<AsyncCommand>();
-    private readonly Func<Task> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-    private readonly Func<bool>? _canExecuteMethod = canExecute;
+    private readonly ILogger _logger = LoggerFactory.Create(builder => builder.AddConsole().AddDebug()).CreateLogger<AsyncCommand<T>>();
+    private readonly Func<T?, Task> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    private readonly Func<T?, bool>? _canExecuteMethod = canExecute;
     private bool _isExecuting;
 
     public event EventHandler? CanExecuteChanged
@@ -16,7 +16,7 @@ public class AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null) : I
         remove => CommandManagerHelper.Unsubscribe(value!);
     }
 
-    public bool CanExecute(object? parameter) => !_isExecuting && (_canExecuteMethod?.Invoke() ?? true);
+    public bool CanExecute(object? parameter) => !_isExecuting && (_canExecuteMethod?.Invoke((T?)parameter) ?? true);
 
     public void Execute(object? parameter)
     {
@@ -28,16 +28,16 @@ public class AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null) : I
         _isExecuting = true;
         RaiseCanExecuteChanged();
 
-        _ = ExecuteCoreAsync();
+        _ = ExecuteCoreAsync(parameter);
     }
 
     private static void RaiseCanExecuteChanged() => CommandManagerHelper.InvalidateRequerySuggested();
 
-    private async Task ExecuteCoreAsync()
+    private async Task ExecuteCoreAsync(object? parameter)
     {
         try
         {
-            await _execute().ConfigureAwait(false);
+            await _execute((T?)parameter).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
@@ -45,7 +45,7 @@ public class AsyncCommand(Func<Task> execute, Func<bool>? canExecute = null) : I
         }
         finally
         {
-            await App.Current.Dispatcher.BeginInvoke(async () =>
+            await UiDispatcher.InvokeAsync(async () =>
             {
                 _isExecuting = false;
                 RaiseCanExecuteChanged();

@@ -2,27 +2,22 @@
 
 This project follows Clean Architecture, DDD principles, and strict separation of concerns.
 
-- It is designed to support:
+It is designed to support:
 
 - A rich WPF desktop application
-
 - A custom language platform (AST, semantic analysis, diagnostics)
-
 - Multiple editor technologies (Actipro)
-
 - Docking system via AvalonDock
-
 - Modern UI styling via WPF UI
-
 - Vendor isolation through adapters
-
 
 The goal is long-term maintainability, vendor independence, and clean boundaries.
 
 
 # 🧱 Architecture Overview
 
-```Solution
+```
+Solution
 │
 ├─ MyApp.Domain
 │
@@ -33,6 +28,8 @@ The goal is long-term maintainability, vendor independence, and clean boundaries
 ├─ MyApp.Infrastructure
 │
 ├─ MyApp.Languages.Adapters.Actipro
+│
+├─ MyApp.Presentation.ViewModels
 │
 └─ MyApp.Presentation.Wpf
 ```
@@ -46,17 +43,12 @@ The goal is long-term maintainability, vendor independence, and clean boundaries
 Contains:
 
 - Entities
-
 - Value Objects
-
 - Aggregates
-
 - Domain services
-
 - Invariants
 
-🚫 Must NOT reference Anything:
-
+🚫 Must NOT reference anything.
 
 This is the core of your system.
 
@@ -67,24 +59,20 @@ This is the core of your system.
 Contains:
 
 - Commands
-
 - Queries
-
 - Handlers
-
 - Orchestrators
-
 - Ports (interfaces)
-
 - Application models / DTOs
 
-
 **Example Ports**
-``` csharp
+```csharp
 public interface IRepository<T> { }
 public interface IClock { }
 public interface ILanguageParser { }
 public interface ILanguageService { }
+public interface IProjectStore { }
+public interface IDocumentLoader { }
 ```
 
 Application depends on:
@@ -94,11 +82,8 @@ Application depends on:
 It does NOT depend on:
 
 - Infrastructure
-
 - WPF
-
 - WPF UI
-
 - Actipro
 
 This is where business workflows live.
@@ -112,42 +97,27 @@ It is fully platform-agnostic.
 Contains:
 
 - AST model
-
 - Semantic analysis
-
 - Symbol tables
-
 - Validators
-
 - Diagnostics model
-
 - Text primitives (TextSpan, TextRange, etc.)
-
 - Parser logic (if independent)
 
 🚫 Must NOT reference:
 
 - WPF UI
-
 - Actipro
-
 - WPF
-
 - Infrastructure
 
-This allows:
-
-Using the language engine in:
+This allows using the language engine in:
 
 - WPF
-
 - Web
-
 - CLI
-
 - Tests
-
-Future platforms
+- Future platforms
 
 This is extremely important for long-term flexibility.
 
@@ -158,117 +128,119 @@ This is extremely important for long-term flexibility.
 Contains:
 
 - EF Core / database
-
 - File storage
-
 - HTTP clients
-
 - External services
-
 - OS integrations
 
 Implements:
 
 - Repositories
-
 - File store
-
 - Clock
-
 - Other external ports
 
 Depends on:
 
 - Application
-
 - Domain
 
 🚫 Does NOT depend on:
 
 - Presentation
-
 - Actipro
-
 
 ## 5️⃣ MyApp.Languages.Adapters.Actipro
 
 *Actipro-specific adapter.*
 
-Purpose:
-
-Bridge Actipro editor to your core language engine.
+Purpose: Bridge Actipro editor to your core language engine.
 
 Contains:
 
 - ActiproLanguageParser : ILanguageParser
-
 - Diagnostic mapping (Core → Actipro markers)
-
 - Completion provider mapping
-
 - Actipro ↔ TextSpan converters
-
 - WebView2 interop layer
+- IDocumentLoader implementation (Actipro-specific)
 
 Depends on:
 
 - Actipro integration
-
 - MyApp.Languages.Core
-
 - MyApp.Application (interfaces only)
 
 This keeps Actipro isolated and replaceable.
-
 If one day you swap editors, only this project changes.
 
-## 6️⃣ MyApp.Presentation.Wpf
+## 6️⃣ MyApp.Presentation.ViewModels
 
-*UI Layer.*
+*ViewModel layer — UI-aware but store-blind.*
+
+Contains:
+
+- All ViewModels
+- ObservableObject / INotifyPropertyChanged base classes
+- RelayCommands
+- ObservableCollections (for display state owned by the VM)
+
+Depends on:
+
+- MyApp.Application (use cases and store interfaces/ports)
+- MyApp.Domain (read models, value objects)
+- WPF binding infrastructure (INPC, commands)
+
+🚫 Must NOT reference:
+
+- MyApp.Presentation.Wpf
+- Concrete Store implementations
+- Actipro
+- AvalonDock
+
+**Why this assembly exists:**
+
+ViewModels may only interact with Stores through the interfaces defined in the Application layer (`IProjectStore`, `IProjectStoreReader`, etc.). Because the concrete Store implementations live in `MyApp.Presentation.Wpf`, which this assembly does not reference, it is **structurally impossible** for a ViewModel to bypass Application services and mutate a Store directly. The compiler enforces this — no discipline required.
+
+## 7️⃣ MyApp.Presentation.Wpf
+
+*Composition and rendering layer.*
 
 Built with:
 
 - WPF
-
 - WPF UI
-
 - AvalonDock
-
 - Actipro
 
 Contains:
 
 - Views (XAML)
+- Concrete Store implementations (INotifyPropertyChanged, ObservableCollection)
+- Composition Root (App.xaml.cs) — the only place that knows about everything
+- UI Services (Navigation, Docking, Tabs, Window management)
 
-- ViewModels
+**This is the only place that touches concrete Stores.**
+DI wires the concrete stores to the Application interfaces at startup.
+Nothing outside this assembly can resolve the concrete store types.
 
-- Stores (shared INPC state)
-
-UI services:
-
-- Navigation
-
-- Docking
-
-- Tabs
-
-- Window management
-
-- Composition root (App.xaml.cs)
-
-## 💥 Important Rule
+## 💥 Important Rules
 
 ViewModels depend on:
 
-- Application
+- Application (use cases + store interfaces)
+- Domain (value objects, read models)
 
-- Languages.Core (if necessary)
+ViewModels do NOT depend on:
+
+- Concrete Stores
+- Actipro
+- AvalonDock
 
 Views depend on:
 
-- UI frameworks only
-
-- No business logic in Views.
+- ViewModels only
+- No business logic in Views
 
 
 ```mermaid
@@ -296,7 +268,7 @@ subgraph Application["MyApp.Application"]
     A2["Queries"]
     A3["Handlers"]
     A4["Orchestrators"]
-    A5["Ports / Interfaces"]
+    A5["Ports / Interfaces<br/>(IProjectStore, IDocumentLoader, ...)"]
     A6["Application DTOs"]
 
     A1 --> A3
@@ -322,10 +294,6 @@ subgraph LangCore["MyApp.Languages.Core"]
     LC2 --> LC4
     LC4 --> LC5
 end
-
-%% Core is independent
-LangCore -. NO UI .- Domain
-LangCore -. NO UI .- Application
 
 %% =========================
 %% INFRASTRUCTURE
@@ -353,6 +321,7 @@ subgraph ActiproAdapter["MyApp.Languages.Adapters.Actipro"]
     M3["Diagnostics Mapping<br/>(Core → Actipro Markers)"]
     M4["TextSpan Converters"]
     M5["WebView2 Interop"]
+    M6["IDocumentLoader Implementation"]
 
     M1 --> M2
     M1 --> M3
@@ -363,125 +332,232 @@ ActiproAdapter --> LangCore
 ActiproAdapter --> Application
 
 %% =========================
-%% PRESENTATION (WPF)
+%% PRESENTATION — ViewModels
 %% =========================
-subgraph Presentation["MyApp.Presentation.Wpf"]
-    P1["Views (XAML)"]
-    P2["ViewModels"]
-    P3["Stores (INotifyPropertyChanged)"]
-    P4["UI Services<br/>(Navigation, Docking, Tabs)"]
-    P5["AvalonDock"]
-    P6["Actipro"]
-    P7["WPF UI (Styling)"]
-    P8["Composition Root<br/>App.xaml.cs"]
+subgraph ViewModels["MyApp.Presentation.ViewModels"]
+    VM1["ViewModels"]
+    VM2["ObservableObject / INPC"]
+    VM3["RelayCommands"]
 
-    P1 --> P2
-    P2 --> P3
-    P2 --> P4
-    P1 --> P5
-    P1 --> P6
-    P1 --> P7
+    VM1 --> VM2
+    VM1 --> VM3
 end
 
-Presentation --> Application
-Presentation --> LangCore
-Presentation --> ActiproAdapter
+ViewModels --> Application
+ViewModels --> Domain
 
 %% =========================
-%% DEPENDENCY FLOW SUMMARY
+%% PRESENTATION — WPF
 %% =========================
+subgraph PresentationWpf["MyApp.Presentation.Wpf"]
+    P1["Views (XAML)"]
+    P2["Concrete Stores<br/>(INotifyPropertyChanged)"]
+    P3["UI Services<br/>(Navigation, Docking, Tabs)"]
+    P4["AvalonDock"]
+    P5["Actipro"]
+    P6["WPF UI (Styling)"]
+    P7["Composition Root<br/>App.xaml.cs"]
 
-Presentation --> Application
-Application --> Domain
+    P1 --> P3
+    P1 --> P4
+    P1 --> P5
+    P1 --> P6
+    P7 --> P2
+end
+
+PresentationWpf --> ViewModels
+PresentationWpf --> Application
+PresentationWpf --> LangCore
+PresentationWpf --> ActiproAdapter
 
 %% =========================
 %% STRICT RULE NOTES
 %% =========================
 
-Domain -. NO Frameworks .- Presentation
-Domain -. NO Persistence .- Infrastructure
+Domain -. NO Frameworks .- PresentationWpf
 LangCore -. NO Actipro .- ActiproAdapter
-LangCore -. NO WPF .- Presentation
-Application -. NO UI .- Presentation
+LangCore -. NO WPF .- PresentationWpf
+Application -. NO UI .- PresentationWpf
+ViewModels -. NO Concrete Stores .- PresentationWpf
+```
+
+---
+
+## 🔒 Store Boundary Pattern
+
+Stores hold shared observable UI state (open files, current project, etc.). They are the UI's equivalent of Infrastructure — they implement Application ports, but live in the Presentation layer.
+
+### Why the Split Matters
+
+Without the assembly split, a ViewModel could bypass `ProjectService` and mutate the store directly:
+
+```csharp
+// ❌ Possible without the split — ViewModel reaching into the store
+_projectStore.OpenFiles.Add(file);
+```
+
+With the split, `MyApp.Presentation.ViewModels` does not reference `MyApp.Presentation.Wpf`, so the concrete `ProjectStore` type is simply invisible. The ViewModel can only interact through the Application interface:
+
+```csharp
+// ✅ The only path available to a ViewModel
+await _projectService.OpenProjectAsync(path);
+```
+
+### Store Interface (Application layer)
+
+```csharp
+// MyApp.Application — defines the contract
+public interface IProjectStore
+{
+    IReadOnlyList<ProjectFile> OpenFiles { get; }
+    Project? CurrentProject { get; }
+    void AddFile(ProjectFile file);
+    void RemoveFile(string path);
+    void SetCurrentProject(Project? project);
+}
+
+// Optional read-only view for VMs that only display state
+public interface IProjectStoreReader
+{
+    IReadOnlyList<ProjectFile> OpenFiles { get; }
+    Project? CurrentProject { get; }
+}
+```
+
+### Store Implementation (Presentation.Wpf)
+
+```csharp
+// MyApp.Presentation.Wpf — UI-aware, invisible to ViewModels
+public class ProjectStore : ObservableObject, IProjectStore
+{
+    private readonly ObservableCollection<ProjectFile> _openFiles = new();
+    private Project? _currentProject;
+
+    public IReadOnlyList<ProjectFile> OpenFiles => _openFiles;
+    public Project? CurrentProject => _currentProject;
+
+    public void AddFile(ProjectFile file) => _openFiles.Add(file);
+    public void RemoveFile(string path) =>
+        _openFiles.Remove(_openFiles.First(f => f.Path == path));
+
+    public void SetCurrentProject(Project? project)
+    {
+        _currentProject = project;
+        OnPropertyChanged();
+    }
+}
+```
+
+### Application Service (Application layer)
+
+```csharp
+// MyApp.Application — orchestrates the use case
+public class ProjectService
+{
+    private readonly IProjectStore _store;
+    private readonly IDocumentLoader _loader;
+
+    public ProjectService(IProjectStore store, IDocumentLoader loader)
+    {
+        _store = store;
+        _loader = loader;
+    }
+
+    public async Task OpenProjectAsync(string projectPath)
+    {
+        var project = Project.Load(projectPath);
+        _store.SetCurrentProject(project);
+
+        foreach (var file in project.Files)
+            await _loader.LoadDocumentAsync(file.Path);
+    }
+
+    public Task CloseProjectAsync()
+    {
+        foreach (var file in _store.OpenFiles.ToList())
+            _store.RemoveFile(file.Path);
+
+        _store.SetCurrentProject(null);
+        return Task.CompletedTask;
+    }
+}
+```
+
+### Document Loader Port (Application layer)
+
+```csharp
+// MyApp.Application — editor-agnostic port
+public interface IDocumentLoader
+{
+    Task LoadDocumentAsync(string path);
+    Task CloseDocumentAsync(string path);
+}
+
+// MyApp.Languages.Adapters.Actipro — Actipro implementation
+public class ActiproDocumentLoader : IDocumentLoader
+{
+    public Task LoadDocumentAsync(string path) { /* Actipro-specific */ }
+    public Task CloseDocumentAsync(string path) { /* Actipro-specific */ }
+}
 ```
 
 ---
 
 ## 🖥 Editor Architecture (Actipro)
+
 Why Actipro?
 
 - Modern editor experience
-
 - Rich IntelliSense model
 
-- Integration Strategy
-
-Flow:
+Integration Strategy Flow:
 
 - User edits text
-
 - Text is sent to Core language engine
-
 - AST + semantic analysis run
-
 - Diagnostics returned
-
 - Adapter converts diagnostics → Actipro markers
-
 - Actipro renders errors/warnings
 
 Completion flow:
 
 - Actipro triggers completion event
-
 - Adapter maps position → TextSpan
-
 - Core engine returns suggestions
-
 - Adapter maps to Actipro completion items
 
+---
 
 ## 🧼 Clean Architecture Principles Enforced
 
-Domain is pure.
-
-Application orchestrates.
-
-Infrastructure implements.
-
-Actipro is isolated behind adapter.
-
-UI can be replaced.
-
-Language engine is reusable.
+- Domain is pure.
+- Application orchestrates.
+- Infrastructure implements.
+- Actipro is isolated behind adapter.
+- Stores are hidden behind Application interfaces.
+- ViewModels cannot bypass use cases — enforced by assembly boundaries.
+- UI can be replaced.
+- Language engine is reusable.
 
 ## 🎯 Design Goals
+
 This structure allows:
 
-Vendor independence
-
-Clean DDD boundaries
-
-Testable language engine
-
-Replaceable UI/editor
-
-Scalable architecture
-
-Long-term product evolution
+- Vendor independence
+- Clean DDD boundaries
+- Testable language engine
+- Replaceable UI/editor
+- Scalable architecture
+- Long-term product evolution
 
 ## 🚀 Long-Term Vision
-Because the language engine is isolated:
 
-It can power:
+Because the language engine is isolated, it can power:
 
-A Web IDE
-
-A CLI compiler
-
-A Cloud LSP service
-
-A future MAUI or web front-end
+- A Web IDE
+- A CLI compiler
+- A Cloud LSP service
+- A future MAUI or web front-end
 
 The WPF UI is just one presentation layer.
 
@@ -492,32 +568,31 @@ The solution is structured to ensure:
 - ✔ Explicit dependency direction
 - ✔ Vendor isolation (Actipro)
 - ✔ Reusable language engine
+- ✔ Store mutations enforced through Application services (compiler-enforced, not convention)
 - ✔ Long-term maintainability
 
-## 🧭 Page & Navigation Strategy
-🖥 Top-Level Modes
+---
 
-In Blueprint, Page is used exclusively for large application modes.
+## 🧭 Page & Navigation Strategy
+
+### 🖥 Top-Level Modes
+
+In Blueprint, `Page` is used exclusively for large application modes.
 
 Examples:
 
 - CodingPage
-
 - DatabasePage
-
 - SettingsPage
 
 Each Page represents a major functional context of the application, not a workflow step.
-
 
 ## 📦 Page Lifetime Policy
 
 Blueprint intentionally relies on the default behavior of WPF UI navigation, where:
 
 - Pages are created once
-
 - Pages are cached
-
 - Pages behave effectively as singletons within the application lifetime
 
 This behavior is intentional and aligned with the design.
@@ -525,89 +600,66 @@ This behavior is intentional and aligned with the design.
 Pages are considered:
 
 - Long-lived
-
 - State-preserving
-
 - Mode containers
 
-- This avoids unnecessary recreation and preserves internal UI state (tabs, selections, layout, etc.).
+This avoids unnecessary recreation and preserves internal UI state (tabs, selections, layout, etc.).
 
 ## 🧠 What Lives Inside a Page?
 
 Each Page acts as a mode container.
 
-For example:
-
-- Coding Mode
+Coding Mode example:
 
 - TabControl for open files
-
 - Actipro editor host
-
 - TreeView for file system navigation
-
 - Tool panels (errors, output, etc.)
 
-## 📈 Database Mode
+Database Mode example:
 
-TabControl for queries
+- TabControl for queries
+- Results grid
+- Connection explorer
 
-Results grid
+Settings Mode example:
 
-Connection explorer
+- Configuration panels
+- No tab system required
 
-Settings Mode
-
-Configuration panels
-
-No tab system required
-
-The Page itself provides structure.
-All dynamic content is composed using UserControls.
+The Page itself provides structure. All dynamic content is composed using UserControls.
 
 ## 🧩 UserControls for Everything Else
 
-All secondary UI components must be implemented as:
+All secondary UI components must be implemented as UserControls:
 
-
-UserControl
-
-    Dockable panels
-    Editor views
-    Tool windows
-    Settings panels
-    Tree components
-    Grids
-    Forms
+- Dockable panels
+- Editor views
+- Tool windows
+- Settings panels
+- Tree components
+- Grids
+- Forms
 
 UserControls:
 
 - Do NOT use navigation
-
 - Do NOT rely on Page lifetime
-
 - Are composed inside Pages
-
 - Can be created and destroyed freely
 
-### 🚫 What Pages Are NOT Used For
+## 🚫 What Pages Are NOT Used For
 
 Pages are NOT:
 
 - Workflow screens
-
 - Temporary views
-
 - Dialog-style navigation targets
-
 - Recreated per action
 
-- Transient UI flows should be:
+Transient UI flows should be:
 
 - UserControls
-
 - Dialogs
-
 - Dockable views
-
 - ViewModel-driven state changes

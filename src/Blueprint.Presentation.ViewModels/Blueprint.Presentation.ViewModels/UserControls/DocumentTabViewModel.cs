@@ -1,6 +1,6 @@
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
 
-namespace Blueprint.ViewModels.UserControls;
+namespace Blueprint.Presentation.ViewModels.UserControls;
 
 public class DocumentTabViewModel : NotifyPropertyChangedBase, ITabViewModel
 {

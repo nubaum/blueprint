@@ -1,7 +1,7 @@
 ﻿using System.Windows.Input;
-using Blueprint.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Core;
 
-namespace Blueprint.ViewModels.Pages;
+namespace Blueprint.Presentation.ViewModels.Pages;
 
 public class DashboardViewModel : NotifyPropertyChangedBase
 {

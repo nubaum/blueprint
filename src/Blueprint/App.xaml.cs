@@ -1,6 +1,6 @@
 ﻿using System.Windows.Threading;
+using Blueprint.Presentation.ViewModels;
 using Blueprint.Services;
-using Blueprint.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
