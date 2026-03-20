@@ -12,7 +12,6 @@
     <ItemGroup>
         <PackageReference Include="Dirkster.AvalonDock" />
         <PackageReference Include="WPF-UI" />
-        <PackageReference Include="WPF-UI.DependencyInjection" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
         <PackageReference Include="CommunityToolkit.Mvvm" />
     </ItemGroup>

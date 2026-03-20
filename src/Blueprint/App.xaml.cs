@@ -4,7 +4,6 @@ using Blueprint.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wpf.Ui;
-using Wpf.Ui.DependencyInjection;
 
 namespace Blueprint;
 
@@ -17,8 +16,6 @@ public partial class App
         .CreateDefaultBuilder()
         .ConfigureServices((_, services) =>
         {
-            services.AddNavigationViewPageProvider();
-
             services.AddHostedService<ApplicationHostService>();
 
             services.AddSingleton<IThemeService, ThemeService>();
