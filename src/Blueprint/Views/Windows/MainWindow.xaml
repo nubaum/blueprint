@@ -31,11 +31,11 @@
                            Grid.Row="1"
                            Padding="30,0,30,10"
                            BreadcrumbBar="{Binding ElementName=BreadcrumbBar}"
-                           FooterMenuItemsSource="{Binding FooterMenuItems, Mode=OneWay}"
+                           FooterMenuItemsSource="{Binding FooterMenuItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            FrameMargin="0"
                            IsBackButtonVisible="Visible"
                            IsPaneToggleVisible="True"
-                           MenuItemsSource="{Binding MenuItems, Mode=OneWay}"
+                           MenuItemsSource="{Binding MenuItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            PaneDisplayMode="LeftFluent">
                     <ui:NavigationView.Header>
                         <ui:BreadcrumbBar x:Name="BreadcrumbBar"
