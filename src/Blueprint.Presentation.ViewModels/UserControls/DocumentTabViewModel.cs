@@ -2,7 +2,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Presentation.ViewModels.UserControls;
 
-public class DocumentTabViewModel : NotifyPropertyChangedBase, ITabViewModel
+internal class DocumentTabViewModel : NotifyPropertyChangedBase, ITabViewModel
 {
     private string _caption = "Untitled";
     private object? _icon;

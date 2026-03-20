@@ -4,7 +4,7 @@ using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 
-public class MainWindowViewModel : NotifyPropertyChangedBase
+public class MainWindowViewModel : NotifyPropertyChangedBase, IMainWindowViewModel
 {
     public string ApplicationTitle { get; } = "Bllueprint";
 

@@ -11,7 +11,7 @@
                  Width="1100"
                  Height="650"
                  xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Windows;assembly=Blueprint.Presentation.ViewModels"
-                 DataContext="{services:Resolve Type={x:Type vm:MainWindowViewModel}}"
+                 DataContext="{services:Resolve Type={x:Type vm:IMainWindowViewModel}}"
                  d:DesignHeight="450"
                  d:DesignWidth="800"
                  ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"

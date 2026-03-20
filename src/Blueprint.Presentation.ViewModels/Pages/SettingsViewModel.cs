@@ -1,11 +1,11 @@
 ﻿using System.Windows.Input;
 using Blueprint.Presentation.ViewModels.Core;
-using Wpf.Ui.Abstractions.Controls;
+using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 using Wpf.Ui.Appearance;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
+internal class SettingsViewModel : NotifyPropertyChangedBase, ISettingsViewModel
 {
     private bool _isInitialized;
 

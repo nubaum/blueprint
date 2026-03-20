@@ -1,11 +1,11 @@
 ﻿using System.Windows.Media;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Models;
-using Wpf.Ui.Abstractions.Controls;
+using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-public class DataViewModel : NotifyPropertyChangedBase, INavigationAware
+internal class DataViewModel : NotifyPropertyChangedBase, IDataViewModel
 {
     private readonly List<DataColor> _colors = [];
     private bool _isInitialized;

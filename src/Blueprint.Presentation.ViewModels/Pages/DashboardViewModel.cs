@@ -1,9 +1,10 @@
 ﻿using System.Windows.Input;
 using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-public class DashboardViewModel : NotifyPropertyChangedBase
+internal class DashboardViewModel : NotifyPropertyChangedBase, IDashboardViewModel
 {
     private int _counter;
 
