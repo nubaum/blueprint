@@ -8,7 +8,7 @@ This project follows Clean Architecture, DDD principles, and strict separation o
 
 - A custom language platform (AST, semantic analysis, diagnostics)
 
-- Multiple editor technologies (Monaco, Actipro)
+- Multiple editor technologies (Actipro)
 
 - Docking system via AvalonDock
 
@@ -33,8 +33,6 @@ The goal is long-term maintainability, vendor independence, and clean boundaries
 ├─ MyApp.Infrastructure
 │
 ├─ MyApp.Languages.Adapters.Actipro
-│
-├─ MyApp.Languages.Adapters.Monaco
 │
 └─ MyApp.Presentation.Wpf
 ```
@@ -101,7 +99,7 @@ It does NOT depend on:
 
 - WPF UI
 
-- Monaco
+- Actipro
 
 This is where business workflows live.
 
@@ -131,7 +129,7 @@ Contains:
 
 - WPF UI
 
-- Monaco
+- Actipro
 
 - WPF
 
@@ -191,38 +189,36 @@ Depends on:
 
 - Actipro
 
-- Monaco
 
+## 5️⃣ MyApp.Languages.Adapters.Actipro
 
-## 5️⃣ MyApp.Languages.Adapters.Monaco
-
-*Monaco-specific adapter.*
+*Actipro-specific adapter.*
 
 Purpose:
 
-Bridge Monaco editor to your core language engine.
+Bridge Actipro editor to your core language engine.
 
 Contains:
 
-- MonacoLanguageParser : ILanguageParser
+- ActiproLanguageParser : ILanguageParser
 
-- Diagnostic mapping (Core → Monaco markers)
+- Diagnostic mapping (Core → Actipro markers)
 
 - Completion provider mapping
 
-- Monaco ↔ TextSpan converters
+- Actipro ↔ TextSpan converters
 
 - WebView2 interop layer
 
 Depends on:
 
-- Monaco integration
+- Actipro integration
 
 - MyApp.Languages.Core
 
 - MyApp.Application (interfaces only)
 
-This keeps Monaco isolated and replaceable.
+This keeps Actipro isolated and replaceable.
 
 If one day you swap editors, only this project changes.
 
@@ -238,7 +234,7 @@ Built with:
 
 - AvalonDock
 
-- Monaco (WebView2 host)
+- Actipro
 
 Contains:
 
@@ -349,12 +345,12 @@ Infrastructure --> Application
 Infrastructure --> Domain
 
 %% =========================
-%% MONACO ADAPTER
+%% Actipro ADAPTER
 %% =========================
-subgraph MonacoAdapter["MyApp.Languages.Adapters.Monaco"]
-    M1["MonacoLanguageParser<br/>: ILanguageParser"]
+subgraph ActiproAdapter["MyApp.Languages.Adapters.Actipro"]
+    M1["ActiproLanguageParser<br/>: ILanguageParser"]
     M2["Completion Provider Mapping"]
-    M3["Diagnostics Mapping<br/>(Core → Monaco Markers)"]
+    M3["Diagnostics Mapping<br/>(Core → Actipro Markers)"]
     M4["TextSpan Converters"]
     M5["WebView2 Interop"]
 
@@ -363,8 +359,8 @@ subgraph MonacoAdapter["MyApp.Languages.Adapters.Monaco"]
     M3 --> M4
 end
 
-MonacoAdapter --> LangCore
-MonacoAdapter --> Application
+ActiproAdapter --> LangCore
+ActiproAdapter --> Application
 
 %% =========================
 %% PRESENTATION (WPF)
@@ -375,7 +371,7 @@ subgraph Presentation["MyApp.Presentation.Wpf"]
     P3["Stores (INotifyPropertyChanged)"]
     P4["UI Services<br/>(Navigation, Docking, Tabs)"]
     P5["AvalonDock"]
-    P6["Monaco Host (WebView2)"]
+    P6["Actipro"]
     P7["WPF UI (Styling)"]
     P8["Composition Root<br/>App.xaml.cs"]
 
@@ -389,7 +385,7 @@ end
 
 Presentation --> Application
 Presentation --> LangCore
-Presentation --> MonacoAdapter
+Presentation --> ActiproAdapter
 
 %% =========================
 %% DEPENDENCY FLOW SUMMARY
@@ -404,29 +400,21 @@ Application --> Domain
 
 Domain -. NO Frameworks .- Presentation
 Domain -. NO Persistence .- Infrastructure
-LangCore -. NO Monaco .- MonacoAdapter
+LangCore -. NO Actipro .- ActiproAdapter
 LangCore -. NO WPF .- Presentation
 Application -. NO UI .- Presentation
 ```
 
 ---
 
-## 🖥 Editor Architecture (Monaco)
-Why Monaco?
+## 🖥 Editor Architecture (Actipro)
+Why Actipro?
 
 - Modern editor experience
 
 - Rich IntelliSense model
 
-- Web-based flexibility
-
-- Future cloud compatibility
-
 - Integration Strategy
-
-Monaco runs inside:
-
-- WebView2
 
 Flow:
 
@@ -438,19 +426,19 @@ Flow:
 
 - Diagnostics returned
 
-- Adapter converts diagnostics → Monaco markers
+- Adapter converts diagnostics → Actipro markers
 
-- Monaco renders errors/warnings
+- Actipro renders errors/warnings
 
 Completion flow:
 
-- Monaco triggers completion event
+- Actipro triggers completion event
 
 - Adapter maps position → TextSpan
 
 - Core engine returns suggestions
 
-- Adapter maps to Monaco completion items
+- Adapter maps to Actipro completion items
 
 
 ## 🧼 Clean Architecture Principles Enforced
@@ -461,7 +449,7 @@ Application orchestrates.
 
 Infrastructure implements.
 
-Monaco is isolated behind adapter.
+Actipro is isolated behind adapter.
 
 UI can be replaced.
 
@@ -502,7 +490,7 @@ The WPF UI is just one presentation layer.
 The solution is structured to ensure:
 - ✔ Clean separation of concerns
 - ✔ Explicit dependency direction
-- ✔ Vendor isolation (Monaco)
+- ✔ Vendor isolation (Actipro)
 - ✔ Reusable language engine
 - ✔ Long-term maintainability
 
@@ -554,7 +542,7 @@ For example:
 
 - TabControl for open files
 
-- Monaco editor host
+- Actipro editor host
 
 - TreeView for file system navigation
 

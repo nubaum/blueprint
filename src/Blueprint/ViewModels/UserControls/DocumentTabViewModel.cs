@@ -1,4 +1,4 @@
-using Blueprint.ViewModels.Primitives;
+using Blueprint.ViewModels.Core;
 
 namespace Blueprint.ViewModels.UserControls;
 

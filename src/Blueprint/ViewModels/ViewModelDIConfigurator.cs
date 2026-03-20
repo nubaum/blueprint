@@ -8,11 +8,11 @@ public static class ViewModelDIConfigurator
 {
     public static IServiceCollection ConfigureViewModels(this IServiceCollection services)
     {
-        services.AddSingleton<MainWindowViewModel>();
-        services.AddSingleton<SettingsViewModel>();
-        services.AddSingleton<DashboardViewModel>();
-        services.AddSingleton<DataViewModel>();
-        services.AddSingleton<CodeViewModel>();
+        services.AddTransient<MainWindowViewModel>();
+        services.AddTransient<SettingsViewModel>();
+        services.AddTransient<DashboardViewModel>();
+        services.AddTransient<DataViewModel>();
+        services.AddTransient<CodeViewModel>();
         return services;
     }
 }

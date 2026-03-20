@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <UserControl x:Class="Blueprint.Views.UserControls.CodeEditor"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:wv2="clr-namespace:Microsoft.Web.WebView2.Wpf;assembly=Microsoft.Web.WebView2.Wpf">
-    <wv2:WebView2 x:Name="Browser"/>
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <Grid>
+        <ContentControl Name="Editor"
+            HorizontalContentAlignment="Stretch" VerticalContentAlignment="Stretch"
+            HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+    </Grid>
 </UserControl>

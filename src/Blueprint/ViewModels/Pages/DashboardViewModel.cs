@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Blueprint.ViewModels.Primitives;
+using Blueprint.ViewModels.Core;
 
 namespace Blueprint.ViewModels.Pages;
 

@@ -1,6 +1,6 @@
 ﻿using System.Windows.Media;
 using Blueprint.Models;
-using Blueprint.ViewModels.Primitives;
+using Blueprint.ViewModels.Core;
 using Wpf.Ui.Abstractions.Controls;
 
 namespace Blueprint.ViewModels.Pages;

@@ -11,7 +11,7 @@
       xmlns:ad="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
       xmlns:dock="clr-namespace:AvalonDock;assembly=AvalonDock"
       xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
-      xmlns:prim="clr-namespace:Blueprint.Views.UserControls.Primitives"
+      xmlns:core="clr-namespace:Blueprint.Views.UserControls.Core"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
@@ -191,16 +191,16 @@
             </DockPanel>
             <Grid Grid.Column="1"
                   Background="Transparent">
-                <prim:GridSplitterThumb Grid.Column="1"
+                <core:GridSplitterThumb Grid.Column="1"
                                         Margin="-2,0,0,0"
                                         Cursor="SizeWE"
                                         LeftColumn="{Binding ElementName=LeftColumn}"
                                         RightColumn="{Binding ElementName=RightColumn}" />
             </Grid>
             <Grid Grid.Column="2">
-                <prim:TearableTabControl ItemsSource="{Binding Tabs}"
+                <core:TearableTabControl ItemsSource="{Binding Tabs}"
                                          SelectedItem="{Binding SelectedTab}">
-                    <prim:TearableTabControl.ContentTemplate>
+                    <core:TearableTabControl.ContentTemplate>
                         <DataTemplate>
                             <Grid>
                                 <ContentControl Content="{Binding Content}"
@@ -210,8 +210,8 @@
                                                 VerticalAlignment="Stretch" />
                             </Grid>
                         </DataTemplate>
-                    </prim:TearableTabControl.ContentTemplate>
-                </prim:TearableTabControl>
+                    </core:TearableTabControl.ContentTemplate>
+                </core:TearableTabControl>
             </Grid>
         </Grid>
     </Grid>

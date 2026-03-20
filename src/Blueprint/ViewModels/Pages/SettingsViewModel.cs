@@ -1,5 +1,5 @@
 ﻿using System.Windows.Input;
-using Blueprint.ViewModels.Primitives;
+using Blueprint.ViewModels.Core;
 using Wpf.Ui.Abstractions.Controls;
 using Wpf.Ui.Appearance;
 
@@ -8,8 +8,6 @@ namespace Blueprint.ViewModels.Pages;
 public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
 {
     private bool _isInitialized;
-    private string _appVersion = string.Empty;
-    private ApplicationTheme _currentTheme = ApplicationTheme.Unknown;
 
     public SettingsViewModel()
     {
@@ -18,11 +16,11 @@ public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
 
     public ApplicationTheme CurrentTheme
     {
-        get => _currentTheme;
-        set => SetField(ref _currentTheme, value);
+        get;
+        set => SetField(ref field, value);
     }
 
-    public string AppVersion => _appVersion;
+    public string AppVersion { get; private set; } = string.Empty;
 
     public ICommand ChangeThemeCommand { get; }
 
@@ -44,7 +42,7 @@ public class SettingsViewModel : NotifyPropertyChangedBase, INavigationAware
     private void InitializeViewModel()
     {
         CurrentTheme = ApplicationThemeManager.GetAppTheme();
-        _appVersion = $"Bllueprint - {GetAssemblyVersion()}";
+        AppVersion = $"Bllueprint - {GetAssemblyVersion()}";
         OnPropertyChanged(nameof(AppVersion));
         _isInitialized = true;
     }

@@ -21,7 +21,6 @@ public class ApplicationHostService : IHostedService
         SplashScreen splashScreen = new("Assets/AppIcoDark.png");
         splashScreen.Show(false);
         MainWindow mainWindow = new();
-        await Task.Delay(1000);
         splashScreen.Close(new TimeSpan(0, 0, 0, 0, 500));
         mainWindow!.Show();
         mainWindow.Navigate(typeof(DashboardPage));
