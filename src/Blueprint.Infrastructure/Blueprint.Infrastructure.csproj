@@ -1,1 +1,5 @@
-<Project Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Blueprint.Application.InfrastructureContracts\Blueprint.Application.InfrastructureContracts.csproj" />
+  </ItemGroup>
+</Project>

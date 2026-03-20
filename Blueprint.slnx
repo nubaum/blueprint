@@ -1,12 +1,15 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
+    <Project Path="src/Blueprint.Application.ViewContracts/Blueprint.Application.ViewContracts.csproj" Id="1cf27ab2-6ccc-4a57-b41a-ae0ff20ea5ac" />
     <Project Path="src/Blueprint.Analyzers/Blueprint.Analyzers.csproj" />
+    <Project Path="src/Blueprint.Application.InfrastructureContracts/Blueprint.Application.InfrastructureContracts.csproj" Id="dedfe117-083f-4a15-9216-17e3522b6d46" />
+    <Project Path="src/Blueprint.Application.ViewModelContracts/Blueprint.Application.ViewModelContracts.csproj" Id="dd5c842e-104b-499a-932c-013dc0cc5562" />
     <Project Path="src/Blueprint.Application/Blueprint.Application.csproj" />
+    <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
     <Project Path="src/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
     <Project Path="src/Blueprint.Languages.Adapaters.Actipro/Blueprint.Languages.Adapaters.Actipro.csproj" />
     <Project Path="src/Blueprint.Languages.Core/Blueprint.Languages.Core.csproj" />
-    <Project Path="src/Blueprint.Presentation.ViewModels/Blueprint.Presentation.ViewModels/Blueprint.Presentation.ViewModels.csproj" Id="4a33922c-91b7-42bf-943a-02c13ac15efe" />
+    <Project Path="src/Blueprint.Presentation.ViewModels/Blueprint.Presentation.ViewModels.csproj" Id="4a33922c-91b7-42bf-943a-02c13ac15efe" />
     <Project Path="src/Blueprint/Blueprint.csproj" />
   </Folder>
 </Solution>

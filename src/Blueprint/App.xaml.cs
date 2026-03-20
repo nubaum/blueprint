@@ -1,9 +1,8 @@
 ﻿using System.Windows.Threading;
+using Blueprint.Application;
 using Blueprint.Presentation.ViewModels;
-using Blueprint.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Wpf.Ui;
 
 namespace Blueprint;
 
@@ -16,15 +15,10 @@ public partial class App
         .CreateDefaultBuilder()
         .ConfigureServices((_, services) =>
         {
-            services.AddHostedService<ApplicationHostService>();
-
-            services.AddSingleton<IThemeService, ThemeService>();
-
-            services.AddSingleton<ITaskBarService, TaskBarService>();
-
-            services.AddSingleton<INavigationService, NavigationService>();
-
-            services.ConfigureViewModels();
+            services
+                .ConfigureUI()
+                .ConfigureViewModels()
+                .ConfigureApplication();
         }).Build();
 
     public static IServiceProvider Services
