@@ -6,45 +6,39 @@ namespace Blueprint.Presentation.ViewModels.Windows;
 
 public class MainWindowViewModel : NotifyPropertyChangedBase
 {
-    private readonly ObservableCollection<MenuItem> _trayMenuItems =
-    [
+    public string ApplicationTitle { get; } = "Bllueprint";
+
+    public ObservableCollection<NavigationViewItem> MenuItems { get; } = [];
+
+    public ObservableCollection<NavigationViewItem> FooterMenuItems { get; } = [];
+
+    public ObservableCollection<MenuItem> TrayMenuItems { get; } = [
         new MenuItem { Header = "Home", Tag = "tray_home" }
     ];
 
-    private readonly ObservableCollection<NavigationViewItem> _footerMenuItems = [];
-    private readonly ObservableCollection<NavigationViewItem> _menuItems = [];
-
-    public string ApplicationTitle { get; } = "Bllueprint";
-
-    public ObservableCollection<NavigationViewItem> MenuItems => _menuItems;
-
-    public ObservableCollection<NavigationViewItem> FooterMenuItems => _footerMenuItems;
-
-    public ObservableCollection<MenuItem> TrayMenuItems => _trayMenuItems;
-
     public void Initialize(Type settingsPageType, Type dashboardPageType, Type dataPageType, Type codePageType)
     {
-        _footerMenuItems.Add(new NavigationViewItem
+        FooterMenuItems.Add(new NavigationViewItem
         {
             Content = "Settings",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
             TargetPageType = settingsPageType
         });
-        _menuItems.Add(
+        MenuItems.Add(
         new NavigationViewItem
         {
             Content = "Home",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
             TargetPageType = dashboardPageType
         });
-        _menuItems.Add(
+        MenuItems.Add(
         new NavigationViewItem
         {
             Content = "Data",
             Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
             TargetPageType = dataPageType
         });
-        _menuItems.Add(
+        MenuItems.Add(
         new NavigationViewItem
         {
             Content = "Code",
