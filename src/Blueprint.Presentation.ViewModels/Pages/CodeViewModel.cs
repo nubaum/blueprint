@@ -1,7 +1,6 @@
 using System.Collections.ObjectModel;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
-using Blueprint.Presentation.ViewModels.UserControls;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
@@ -11,14 +10,14 @@ internal class CodeViewModel : NotifyPropertyChangedBase, ICodeViewModel
 
     public CodeViewModel()
     {
-        Tabs.Add(new DocumentTabViewModel { Caption = "Welcome", IsPinned = true, Content = "Content 1" });
-        Tabs.Add(new DocumentTabViewModel { Caption = "Document 1", IsDirty = true, Content = "Content 2" });
-        Tabs.Add(new DocumentTabViewModel { Caption = "Document 2" });
-        Tabs.Add(new DocumentTabViewModel { Caption = "Document 4" });
+        Tabs.Add(new TabContent { Caption = "Welcome", IsPinned = true, Content = "Content 1" });
+        Tabs.Add(new TabContent { Caption = "Document 1", IsDirty = true, Content = "Content 2" });
+        Tabs.Add(new TabContent { Caption = "Document 2", Content = "Test 001" });
+        Tabs.Add(new TabContent { Caption = "Document 4", Content = "Test 004" });
         SelectedTab = Tabs[0];
     }
 
-    public ObservableCollection<ITabViewModel> Tabs { get; } = [];
+    public ObservableCollection<TabContent> Tabs { get; } = [];
 
     public object? SelectedTab
     {

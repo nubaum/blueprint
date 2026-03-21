@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Specialized;
 using System.Windows.Controls;
-using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Views.UserControls.Core;
 
@@ -9,12 +8,12 @@ internal sealed class TabItemsSourceCoordinator
 {
     private readonly TearableTabControl _owner;
     private readonly TabControl _tabControl;
-    private readonly TabViewModelTabAdapter _tabAdapter;
+    private readonly TabItemAdapter _tabAdapter;
 
     public TabItemsSourceCoordinator(
         TearableTabControl owner,
         TabControl tabControl,
-        TabViewModelTabAdapter tabAdapter)
+        TabItemAdapter tabAdapter)
     {
         _owner = owner;
         _tabControl = tabControl;
@@ -46,7 +45,7 @@ internal sealed class TabItemsSourceCoordinator
     {
         foreach (TabItem existing in _tabControl.Items)
         {
-            TabViewModelTabAdapter.Detach(existing);
+            TabItemAdapter.Detach(existing);
         }
 
         _tabControl.Items.Clear();
@@ -58,10 +57,12 @@ internal sealed class TabItemsSourceCoordinator
 
         foreach (object? item in source)
         {
-            if (item is ITabViewModel viewModel)
+            if (item == null)
             {
-                _tabControl.Items.Add(_tabAdapter.CreateTab(viewModel));
+                continue;
             }
+
+            _tabControl.Items.Add(_tabAdapter.CreateTab(item));
         }
     }
 
@@ -105,12 +106,12 @@ internal sealed class TabItemsSourceCoordinator
 
         foreach (object? item in e.NewItems)
         {
-            if (item is not ITabViewModel viewModel)
+            if (item == null)
             {
                 continue;
             }
 
-            TabItem tab = _tabAdapter.CreateTab(viewModel);
+            TabItem tab = _tabAdapter.CreateTab(item);
 
             if (insertAt < 0 || insertAt >= _tabControl.Items.Count)
             {
@@ -132,18 +133,18 @@ internal sealed class TabItemsSourceCoordinator
 
         foreach (object? item in e.OldItems)
         {
-            if (item is not ITabViewModel viewModel)
+            if (item == null)
             {
                 continue;
             }
 
-            TabItem? tab = _tabAdapter.FindTab(viewModel);
+            TabItem? tab = _tabAdapter.FindTab(item);
             if (tab == null)
             {
                 continue;
             }
 
-            TabViewModelTabAdapter.Detach(tab);
+            TabItemAdapter.Detach(tab);
             _tabControl.Items.Remove(tab);
         }
 
@@ -159,24 +160,23 @@ internal sealed class TabItemsSourceCoordinator
 
         for (int index = 0; index < e.OldItems.Count; index++)
         {
-            if (e.OldItems[index] is not ITabViewModel oldViewModel)
+            object? oldItem = e.OldItems[index];
+            object? newItem = e.NewItems[index];
+
+            if (oldItem == null || newItem == null)
             {
                 continue;
             }
 
-            TabItem? oldTab = _tabAdapter.FindTab(oldViewModel);
+            TabItem? oldTab = _tabAdapter.FindTab(oldItem);
             if (oldTab == null)
             {
                 continue;
             }
 
             int oldTabIndex = _tabControl.Items.IndexOf(oldTab);
-            TabViewModelTabAdapter.Detach(oldTab);
-
-            if (e.NewItems[index] is ITabViewModel newViewModel)
-            {
-                _tabControl.Items[oldTabIndex] = _tabAdapter.CreateTab(newViewModel);
-            }
+            TabItemAdapter.Detach(oldTab);
+            _tabControl.Items[oldTabIndex] = _tabAdapter.CreateTab(newItem);
         }
     }
 

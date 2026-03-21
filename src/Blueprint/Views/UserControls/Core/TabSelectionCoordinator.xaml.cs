@@ -1,6 +1,5 @@
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
-using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Views.UserControls.Core;
 
@@ -8,14 +7,14 @@ internal sealed class TabSelectionCoordinator
 {
     private readonly TearableTabControl _owner;
     private readonly TabControl _tabControl;
-    private readonly TabViewModelTabAdapter _tabAdapter;
+    private readonly TabItemAdapter _tabAdapter;
 
     private bool _selectionChanging;
 
     public TabSelectionCoordinator(
         TearableTabControl owner,
         TabControl tabControl,
-        TabViewModelTabAdapter tabAdapter)
+        TabItemAdapter tabAdapter)
     {
         _owner = owner;
         _tabControl = tabControl;
@@ -30,15 +29,15 @@ internal sealed class TabSelectionCoordinator
             OnInternalSelectionChanged);
     }
 
-    public void OnExternalSelectedItemChanged(ITabViewModel? viewModel)
+    public void OnExternalSelectedItemChanged(object? item)
     {
-        if (viewModel == null)
+        if (item == null)
         {
             _tabControl.SelectedItem = null;
             return;
         }
 
-        TabItem? tab = _tabAdapter.FindTab(viewModel);
+        TabItem? tab = _tabAdapter.FindTab(item);
         if (tab != null)
         {
             _tabControl.SelectedItem = tab;
@@ -58,7 +57,7 @@ internal sealed class TabSelectionCoordinator
         {
             if (_tabControl.SelectedItem is TabItem tab)
             {
-                _owner.SelectedItem = TabViewModelTabAdapter.GetViewModel(tab);
+                _owner.SelectedItem = TabItemAdapter.GetItem(tab);
             }
             else
             {

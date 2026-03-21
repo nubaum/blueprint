@@ -1,7 +1,5 @@
 using System.Collections;
 using System.Windows.Controls;
-using Blueprint.Presentation.ViewModels.Core;
-using Blueprint.Views.UserControls.Core;
 
 namespace Blueprint.Views.UserControls.Core;
 
@@ -17,7 +15,7 @@ public partial class TearableTabControl : UserControl
     public static readonly DependencyProperty SelectedItemProperty =
         DependencyProperty.Register(
             nameof(SelectedItem),
-            typeof(ITabViewModel),
+            typeof(object),
             typeof(TearableTabControl),
             new FrameworkPropertyMetadata(
                 null,
@@ -31,7 +29,42 @@ public partial class TearableTabControl : UserControl
             typeof(TearableTabControl),
             new PropertyMetadata(null, OnContentTemplateChanged));
 
-    private readonly TabViewModelTabAdapter _tabAdapter;
+    public static readonly DependencyProperty CaptionMemberPathProperty =
+        DependencyProperty.Register(
+            nameof(CaptionMemberPath),
+            typeof(string),
+            typeof(TearableTabControl),
+            new PropertyMetadata(null));
+
+    public static readonly DependencyProperty IconMemberPathProperty =
+        DependencyProperty.Register(
+            nameof(IconMemberPath),
+            typeof(string),
+            typeof(TearableTabControl),
+            new PropertyMetadata(null));
+
+    public static readonly DependencyProperty IsPinnedMemberPathProperty =
+        DependencyProperty.Register(
+            nameof(IsPinnedMemberPath),
+            typeof(string),
+            typeof(TearableTabControl),
+            new PropertyMetadata(null));
+
+    public static readonly DependencyProperty IsDirtyMemberPathProperty =
+        DependencyProperty.Register(
+            nameof(IsDirtyMemberPath),
+            typeof(string),
+            typeof(TearableTabControl),
+            new PropertyMetadata(null));
+
+    public static readonly DependencyProperty ContentMemberPathProperty =
+        DependencyProperty.Register(
+            nameof(ContentMemberPath),
+            typeof(string),
+            typeof(TearableTabControl),
+            new PropertyMetadata(null));
+
+    private readonly TabItemAdapter _tabAdapter;
     private readonly TabItemsSourceCoordinator _itemsSourceCoordinator;
     private readonly TabSelectionCoordinator _selectionCoordinator;
     private readonly TabDragDropCoordinator _dragDropCoordinator;
@@ -40,7 +73,7 @@ public partial class TearableTabControl : UserControl
     {
         InitializeComponent();
 
-        _tabAdapter = new TabViewModelTabAdapter(this, MainTabControl);
+        _tabAdapter = new TabItemAdapter(this, MainTabControl);
         _itemsSourceCoordinator = new TabItemsSourceCoordinator(this, MainTabControl, _tabAdapter);
         _selectionCoordinator = new TabSelectionCoordinator(this, MainTabControl, _tabAdapter);
         _dragDropCoordinator = new TabDragDropCoordinator(this, MainTabControl);
@@ -55,9 +88,33 @@ public partial class TearableTabControl : UserControl
         set => SetValue(ItemsSourceProperty, value);
     }
 
-    public ITabViewModel? SelectedItem
+    public string? CaptionMemberPath
     {
-        get => (ITabViewModel?)GetValue(SelectedItemProperty);
+        get => (string?)GetValue(CaptionMemberPathProperty);
+        set => SetValue(CaptionMemberPathProperty, value);
+    }
+
+    public string? IsDirtyMemberPath
+    {
+        get => (string?)GetValue(IsDirtyMemberPathProperty);
+        set => SetValue(IsDirtyMemberPathProperty, value);
+    }
+
+    public string? ContentMemberPath
+    {
+        get => (string?)GetValue(ContentMemberPathProperty);
+        set => SetValue(ContentMemberPathProperty, value);
+    }
+
+    public string? IsPinnedMemberPath
+    {
+        get => (string?)GetValue(IsPinnedMemberPathProperty);
+        set => SetValue(IsPinnedMemberPathProperty, value);
+    }
+
+    public object? SelectedItem
+    {
+        get => (object?)GetValue(SelectedItemProperty);
         set => SetValue(SelectedItemProperty, value);
     }
 
@@ -65,6 +122,12 @@ public partial class TearableTabControl : UserControl
     {
         get => (DataTemplate?)GetValue(ContentTemplateProperty);
         set => SetValue(ContentTemplateProperty, value);
+    }
+
+    public string? IconMemberPath
+    {
+        get => (string?)GetValue(IconMemberPathProperty);
+        set => SetValue(IconMemberPathProperty, value);
     }
 
     public int TabCount => MainTabControl.Items.Count;
@@ -107,7 +170,7 @@ public partial class TearableTabControl : UserControl
     private static void OnSelectedItemChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         var control = (TearableTabControl)d;
-        control._selectionCoordinator.OnExternalSelectedItemChanged(e.NewValue as ITabViewModel);
+        control._selectionCoordinator.OnExternalSelectedItemChanged(e.NewValue);
     }
 
     private static void OnContentTemplateChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)

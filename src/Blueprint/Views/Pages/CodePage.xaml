@@ -199,10 +199,14 @@
             </Grid>
             <Grid Grid.Column="2">
                 <core:TearableTabControl ItemsSource="{Binding Tabs}"
-                                         SelectedItem="{Binding SelectedTab}">
+                                         SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
+                                         CaptionMemberPath="Caption"
+                                         IconMemberPath="Icon"
+                                         IsPinnedMemberPath="IsPinned"
+                                         IsDirtyMemberPath="IsDirty">
                     <core:TearableTabControl.ContentTemplate>
                         <DataTemplate>
-                            <Grid>
+                            <Grid Margin="10">
                                 <ContentControl Content="{Binding Content}"
                                                 HorizontalContentAlignment="Stretch"
                                                 VerticalContentAlignment="Stretch"
