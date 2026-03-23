@@ -1,44 +1,47 @@
-﻿using System.Collections.ObjectModel;
-using Blueprint.Presentation.ViewModels.Core;
+﻿using Blueprint.Presentation.ViewModels.Core;
 using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 
 public class MainWindowViewModel : NotifyPropertyChangedBase, IMainWindowViewModel
 {
+    private readonly BPObservableCollection<NavigationViewItem> _menuItems = [];
+
+    private readonly BPObservableCollection<NavigationViewItem> _footerMenuItems = [];
+
     public string ApplicationTitle { get; } = "Bllueprint";
 
-    public ObservableCollection<NavigationViewItem> MenuItems { get; } = [];
+    public IReadOnlyCollection<NavigationViewItem> MenuItems => _menuItems;
 
-    public ObservableCollection<NavigationViewItem> FooterMenuItems { get; } = [];
+    public IReadOnlyCollection<NavigationViewItem> FooterMenuItems => _footerMenuItems;
 
-    public ObservableCollection<MenuItem> TrayMenuItems { get; } = [
+    public IReadOnlyCollection<MenuItem> TrayMenuItems { get; } = [
         new MenuItem { Header = "Home", Tag = "tray_home" }
     ];
 
     public void Initialize(Type settingsPageType, Type dashboardPageType, Type dataPageType, Type codePageType)
     {
-        FooterMenuItems.Add(new NavigationViewItem
+        _footerMenuItems.Add(new NavigationViewItem
         {
             Content = "Settings",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
             TargetPageType = settingsPageType
         });
-        MenuItems.Add(
+        _menuItems.Add(
         new NavigationViewItem
         {
             Content = "Home",
             Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
             TargetPageType = dashboardPageType
         });
-        MenuItems.Add(
+        _menuItems.Add(
         new NavigationViewItem
         {
             Content = "Data",
             Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
             TargetPageType = dataPageType
         });
-        MenuItems.Add(
+        _menuItems.Add(
         new NavigationViewItem
         {
             Content = "Code",
