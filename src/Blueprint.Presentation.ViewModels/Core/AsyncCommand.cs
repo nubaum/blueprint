@@ -60,7 +60,7 @@ public class AsyncCommand : ICommand
         }
         finally
         {
-            await UiDispatcher.InvokeAsync(() =>
+            await System.Windows.Application.Current.Dispatcher.BeginInvoke(() =>
             {
                 _isExecuting = false;
                 RaiseCanExecuteChanged();
