@@ -4,11 +4,11 @@ public static class UiDispatcher
 {
     public static void Invoke(Action action)
     {
-        Application.Current.Dispatcher.Invoke(action);
+        System.Windows.Application.Current.Dispatcher.Invoke(action);
     }
 
     public static async Task InvokeAsync(Action action)
     {
-        await Application.Current.Dispatcher.BeginInvoke(action);
+        await System.Windows.Application.Current.Dispatcher.BeginInvoke(action);
     }
 }

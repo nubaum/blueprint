@@ -7,7 +7,7 @@ namespace Blueprint.Stores;
 
 internal class WorskpaceStore : NotifyPropertyChangedBase, IReadWorkspaceStore, IWriteWorkspaceStore
 {
-    private readonly List<WorkspaceItem> _openItems = [];
+    private readonly List<IWorkspaceItem> _openItems = [];
     private ProjectInfo? _currentProject;
 
     public ProjectInfo? CurrentProject
@@ -15,14 +15,14 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IReadWorkspaceStore, 
         get => _currentProject;
     }
 
-    public IReadOnlyCollection<WorkspaceItem> OpenItems => _openItems;
+    public IReadOnlyCollection<IWorkspaceItem> OpenItems => _openItems;
 
-    public void AddItem(WorkspaceItem item)
+    public void AddItem(IWorkspaceItem item)
     {
         _openItems.Add(item);
     }
 
-    public void AddItems(IEnumerable<WorkspaceItem> items)
+    public void AddItems(IEnumerable<IWorkspaceItem> items)
     {
         _openItems.AddRange(items);
     }
@@ -32,7 +32,7 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IReadWorkspaceStore, 
         _openItems.Clear();
     }
 
-    public void ClearItems(Predicate<WorkspaceItem> criteria)
+    public void ClearItems(Predicate<IWorkspaceItem> criteria)
     {
         _openItems.RemoveAll(criteria);
     }

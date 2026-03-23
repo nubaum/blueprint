@@ -1,12 +1,16 @@
+using Blueprint.Application.ViewModelContracts.Enums;
+using Blueprint.Application.ViewModelContracts.Models;
 using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-public class TabContent : NotifyPropertyChangedBase
+public class TabContent : NotifyPropertyChangedBase, IWorkspaceItem
 {
     private bool _isDirty;
 
     private bool _isPinned;
+
+    public required WorkspaceItemKind Kind { get; init; }
 
     public required string Caption { get; init; }
 

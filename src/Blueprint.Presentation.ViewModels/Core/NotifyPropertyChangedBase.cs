@@ -9,7 +9,7 @@ public class NotifyPropertyChangedBase : INotifyPropertyChanged
 
     protected void OnPropertyChanged([CallerMemberName] string name = default!)
     {
-        Application.Current.Dispatcher.Invoke(() =>
+        System.Windows.Application.Current.Dispatcher.Invoke(() =>
         {
             PropertyChanged?.Invoke(this, new(name));
         });

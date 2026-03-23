@@ -5,8 +5,4 @@ namespace Blueprint.Presentation.ViewModels.Pages.Interfaces;
 public interface IDataViewModel
 {
     IEnumerable<DataColor> Colors { get; }
-
-    Task OnNavigatedFromAsync();
-
-    Task OnNavigatedToAsync();
 }

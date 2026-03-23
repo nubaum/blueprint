@@ -8,21 +8,13 @@ namespace Blueprint.Presentation.ViewModels.Pages;
 internal class DataViewModel : NotifyPropertyChangedBase, IDataViewModel
 {
     private readonly List<DataColor> _colors = [];
-    private bool _isInitialized;
 
-    public IEnumerable<DataColor> Colors => _colors;
-
-    public Task OnNavigatedToAsync()
+    public DataViewModel()
     {
-        if (!_isInitialized)
-        {
-            InitializeViewModel();
-        }
-
-        return Task.CompletedTask;
+        InitializeViewModel();
     }
 
-    public Task OnNavigatedFromAsync() => Task.CompletedTask;
+    public IEnumerable<DataColor> Colors => _colors;
 
     private void InitializeViewModel()
     {
@@ -45,7 +37,5 @@ internal class DataViewModel : NotifyPropertyChangedBase, IDataViewModel
 
         _colors.Clear();
         _colors.AddRange(colorCollection);
-
-        _isInitialized = true;
     }
 }

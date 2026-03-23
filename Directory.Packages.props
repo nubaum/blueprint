@@ -8,7 +8,6 @@
     <PackageVersion Include="Microsoft.Extensions.Hosting" Version="10.0.1" />
     <PackageVersion Include="Microsoft.Web.WebView2" Version="1.0.3800.47" />
     <PackageVersion Include="WPF-UI" Version="4.2.0" />
-    <PackageVersion Include="WPF-UI.DependencyInjection" Version="4.2.0" />
     <PackageVersion Include="SonarAnalyzer.CSharp" Version="9.32.0.97167" />
     <PackageVersion Include="StyleCop.Analyzers" Version="1.2.0-beta.556" />
     <PackageVersion Include="System.Composition" Version="8.0.0" />

@@ -6,5 +6,5 @@ public interface IReadWorkspaceStore
 {
     public ProjectInfo? CurrentProject { get; }
 
-    public IReadOnlyCollection<WorkspaceItem> OpenItems { get; }
+    public IReadOnlyCollection<IWorkspaceItem> OpenItems { get; }
 }

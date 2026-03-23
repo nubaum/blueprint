@@ -8,9 +8,9 @@ public interface IWriteWorkspaceStore
 
     void ClearItems();
 
-    void ClearItems(Predicate<WorkspaceItem> criteria);
+    void ClearItems(Predicate<IWorkspaceItem> criteria);
 
-    void AddItems(IEnumerable<WorkspaceItem> items);
+    void AddItems(IEnumerable<IWorkspaceItem> items);
 
-    void AddItem(WorkspaceItem item);
+    void AddItem(IWorkspaceItem item);
 }
