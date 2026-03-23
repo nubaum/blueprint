@@ -7,7 +7,6 @@ It is designed to support:
 - A rich WPF desktop application
 - A custom language platform (AST, semantic analysis, diagnostics)
 - Multiple editor technologies (Actipro)
-- Docking system via AvalonDock
 - Modern UI styling via WPF UI
 - Vendor isolation through adapters
 
@@ -196,7 +195,6 @@ Depends on:
 - MyApp.Presentation.Wpf
 - Concrete Store implementations
 - Actipro
-- AvalonDock
 
 **Why this assembly exists:**
 
@@ -210,7 +208,6 @@ Built with:
 
 - WPF
 - WPF UI
-- AvalonDock
 - Actipro
 
 Contains:
@@ -235,7 +232,6 @@ ViewModels do NOT depend on:
 
 - Concrete Stores
 - Actipro
-- AvalonDock
 
 Views depend on:
 
@@ -353,7 +349,6 @@ subgraph PresentationWpf["MyApp.Presentation.Wpf"]
     P1["Views (XAML)"]
     P2["Concrete Stores<br/>(INotifyPropertyChanged)"]
     P3["UI Services<br/>(Navigation, Docking, Tabs)"]
-    P4["AvalonDock"]
     P5["Actipro"]
     P6["WPF UI (Styling)"]
     P7["Composition Root<br/>App.xaml.cs"]

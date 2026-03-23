@@ -10,7 +10,6 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Dirkster.AvalonDock" />
         <PackageReference Include="WPF-UI" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
     </ItemGroup>

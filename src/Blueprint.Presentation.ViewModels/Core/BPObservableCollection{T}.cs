@@ -4,7 +4,7 @@ using System.ComponentModel;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
-public class BPObservableCollection<T> : IReadOnlyCollection<T>
+public class BPObservableCollection<T> : IReadOnlyCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
 where T : class
 {
     private readonly List<T> _items;

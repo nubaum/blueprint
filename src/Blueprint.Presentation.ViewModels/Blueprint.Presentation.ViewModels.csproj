@@ -10,7 +10,6 @@
     <ProjectReference Include="..\Blueprint.Application.ViewModelContracts\Blueprint.Application.ViewModelContracts.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dirkster.AvalonDock" />
     <PackageReference Include="WPF-UI" />
     <PackageReference Include="Microsoft.Extensions.Hosting" />
   </ItemGroup>
