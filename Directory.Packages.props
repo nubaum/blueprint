@@ -17,6 +17,6 @@
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.5" />
         <PackageVersion Include="FluentValidation" Version="12.1.1" />
         <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.1.1" />
-        <PackageVersion Include="ActiproSoftware.Controls.WPF.SyntaxEditor" Version="25.1.4" />
+        <PackageVersion Include="ActiproSoftware.Controls.WPF.SyntaxEditor" Version="24.1.5" />
     </ItemGroup>
 </Project>

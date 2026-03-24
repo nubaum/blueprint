@@ -68,11 +68,11 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
             lexicalPatternGroup.TokenId = BlueTokenId.EqualsSymbol;
             lexicalPatternGroup.Patterns.Add(new DynamicLexicalPattern("="));
             lexicalState.LexicalPatternGroups.Add(lexicalPatternGroup);
-            lexicalPatternGroup = new DynamicLexicalPatternGroup(DynamicLexicalPatternType.Explicit, "OpenCurlyBrace", classificationTypeProvider.Brackets);
+            lexicalPatternGroup = new DynamicLexicalPatternGroup(DynamicLexicalPatternType.Explicit, "OpenCurlyBrace", classificationTypeProvider.Brackets01);
             lexicalPatternGroup.TokenId = BlueTokenId.OpenCurlyBrace;
             lexicalPatternGroup.Patterns.Add(new DynamicLexicalPattern("{"));
             lexicalState.LexicalPatternGroups.Add(lexicalPatternGroup);
-            lexicalPatternGroup = new DynamicLexicalPatternGroup(DynamicLexicalPatternType.Explicit, "CloseCurlyBrace", classificationTypeProvider.Brackets);
+            lexicalPatternGroup = new DynamicLexicalPatternGroup(DynamicLexicalPatternType.Explicit, "CloseCurlyBrace", classificationTypeProvider.Brackets01);
             lexicalPatternGroup.TokenId = BlueTokenId.CloseCurlyBrace;
             lexicalPatternGroup.Patterns.Add(new DynamicLexicalPattern("}"));
             lexicalState.LexicalPatternGroups.Add(lexicalPatternGroup);

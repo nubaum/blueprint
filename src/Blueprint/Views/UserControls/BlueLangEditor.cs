@@ -1,8 +1,8 @@
 namespace Blueprint.Views.UserControls;
 
-public partial class CodeEditor
+public partial class BlueLangEditor
 {
-    public CodeEditor()
+    public BlueLangEditor()
     {
         InitializeComponent();
     }

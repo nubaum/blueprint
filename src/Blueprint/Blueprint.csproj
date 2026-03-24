@@ -12,6 +12,7 @@
     <ItemGroup>
         <PackageReference Include="WPF-UI" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
+        <PackageReference Include="ActiproSoftware.Controls.WPF.SyntaxEditor" />
     </ItemGroup>
     <ItemGroup>
         <None Remove="Assets\AppIcoDark.png" />
@@ -23,6 +24,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
       <ProjectReference Include="..\Blueprint.Presentation.ViewModels\Blueprint.Presentation.ViewModels.csproj" />
+      <ProjectReference Include="..\Blueprint.Languages.Adapaters.Actipro\Blueprint.Languages.Adapaters.Actipro.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Resource Include="Assets\AppIcoDark.png" />

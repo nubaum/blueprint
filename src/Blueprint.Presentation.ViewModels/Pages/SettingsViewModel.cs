@@ -1,4 +1,5 @@
 ﻿using System.Windows.Input;
+using ActiproSoftware.Windows.Themes;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 using Wpf.Ui.Appearance;
@@ -53,11 +54,13 @@ internal class SettingsViewModel : NotifyPropertyChangedBase, ISettingsViewModel
         {
             ApplicationThemeManager.Apply(ApplicationTheme.Light);
             CurrentTheme = ApplicationTheme.Light;
+            ThemeManager.CurrentTheme = ThemeNames.Light;
         }
         else
         {
             ApplicationThemeManager.Apply(ApplicationTheme.Dark);
             CurrentTheme = ApplicationTheme.Dark;
+            ThemeManager.CurrentTheme = ThemeNames.Dark;
         }
     }
 }

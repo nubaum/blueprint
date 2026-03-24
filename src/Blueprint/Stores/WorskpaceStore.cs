@@ -1,17 +1,14 @@
 using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Services.Interfaces;
 
 namespace Blueprint.Stores;
 
 internal class WorskpaceStore : NotifyPropertyChangedBase, IReadWorkspaceStore, IWriteWorkspaceStore
 {
     private readonly List<IWorkspaceItem> _openItems = [];
-    private ProjectInfo? _currentProject;
 
-    public ProjectInfo? CurrentProject
-    {
-        get => _currentProject;
-    }
+    public ProjectInfo? CurrentProject { get; private set; }
 
     public IReadOnlyCollection<IWorkspaceItem> OpenItems => _openItems;
 
@@ -37,6 +34,6 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IReadWorkspaceStore, 
 
     public void SetCurrentProject(ProjectInfo projectInfo)
     {
-        _currentProject = projectInfo;
+        CurrentProject = projectInfo;
     }
 }

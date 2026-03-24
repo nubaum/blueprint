@@ -195,7 +195,7 @@
                                         RightColumn="{Binding ElementName=RightColumn}" />
             </Grid>
             <Grid Grid.Column="2">
-                <core:TearableTabControl ItemsSource="{Binding Tabs}"
+                <core:TearableTabControl ItemsSource="{Binding WorkspaceStore.OpenItems}"
                                          SelectedItem="{Binding SelectedTab, Mode=TwoWay}"
                                          CaptionMemberPath="Caption"
                                          IconMemberPath="Icon"

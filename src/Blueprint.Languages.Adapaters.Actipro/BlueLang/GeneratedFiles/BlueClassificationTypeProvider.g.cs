@@ -21,7 +21,11 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
         
         private IHighlightingStyleRegistry registryValue;
         
-        private IClassificationType bracketsValue;
+        private IClassificationType brackets01Value;
+        
+        private IClassificationType brackets02Value;
+        
+        private IClassificationType brackets03Value;
         
         private IClassificationType columnValue;
         
@@ -62,24 +66,68 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
         }
         
         /// <summary>
-        /// Gets the <c>Brackets</c> classification type.
+        /// Gets the <c>Brackets01</c> classification type.
         /// </summary>
-        /// <value>The <c>Brackets</c> classification type.</value>
-        public IClassificationType Brackets {
+        /// <value>The <c>Brackets01</c> classification type.</value>
+        public IClassificationType Brackets01 {
             get {
-                if ((this.bracketsValue == null)) {
-                    String key = "Brackets";
-                    this.bracketsValue = this.registryValue.GetClassificationType(key);
-                    if ((this.bracketsValue == null)) {
+                if ((this.brackets01Value == null)) {
+                    String key = "Brackets01";
+                    this.brackets01Value = this.registryValue.GetClassificationType(key);
+                    if ((this.brackets01Value == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
                             darkColorPalette.SetForeground(key, Color.FromArgb(255, 255, 144, 0));
                         }
-                        this.bracketsValue = new ClassificationType(key, "Brackets");
-                        this.registryValue.Register(this.bracketsValue, new HighlightingStyle(Color.FromArgb(255, 156, 14, 141)));
+                        this.brackets01Value = new ClassificationType(key, "Brackets01");
+                        this.registryValue.Register(this.brackets01Value, new HighlightingStyle(Color.FromArgb(255, 156, 14, 141)));
                     }
                 }
-                return this.bracketsValue;
+                return this.brackets01Value;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the <c>Brackets02</c> classification type.
+        /// </summary>
+        /// <value>The <c>Brackets02</c> classification type.</value>
+        public IClassificationType Brackets02 {
+            get {
+                if ((this.brackets02Value == null)) {
+                    String key = "Brackets02";
+                    this.brackets02Value = this.registryValue.GetClassificationType(key);
+                    if ((this.brackets02Value == null)) {
+                        IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
+                        if ((darkColorPalette != null)) {
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 176, 159, 219));
+                        }
+                        this.brackets02Value = new ClassificationType(key, "Brackets02");
+                        this.registryValue.Register(this.brackets02Value, new HighlightingStyle(Color.FromArgb(255, 156, 14, 141)));
+                    }
+                }
+                return this.brackets02Value;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the <c>Brackets03</c> classification type.
+        /// </summary>
+        /// <value>The <c>Brackets03</c> classification type.</value>
+        public IClassificationType Brackets03 {
+            get {
+                if ((this.brackets03Value == null)) {
+                    String key = "Brackets03";
+                    this.brackets03Value = this.registryValue.GetClassificationType(key);
+                    if ((this.brackets03Value == null)) {
+                        IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
+                        if ((darkColorPalette != null)) {
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 229, 174, 198));
+                        }
+                        this.brackets03Value = new ClassificationType(key, "Brackets03");
+                        this.registryValue.Register(this.brackets03Value, new HighlightingStyle(Color.FromArgb(255, 156, 14, 141)));
+                    }
+                }
+                return this.brackets03Value;
             }
         }
         
@@ -95,7 +143,7 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
                     if ((this.columnValue == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
-                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 215, 219, 29));
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 233, 198, 57));
                         }
                         this.columnValue = new ClassificationType(key, "Column");
                         this.registryValue.Register(this.columnValue, new HighlightingStyle(Color.FromArgb(255, 149, 14, 173)));
@@ -157,7 +205,7 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
                     if ((this.identifierValue == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
-                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 63, 148, 132));
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 111, 206, 188));
                         }
                         this.identifierValue = new ClassificationType(key, "Identifier");
                         this.registryValue.Register(this.identifierValue, new HighlightingStyle(Color.FromArgb(255, 126, 104, 219)));
@@ -179,7 +227,7 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
                     if ((this.interpolatedStringDelimiterValue == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
-                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 16, 155, 198));
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 189, 141, 233));
                         }
                         this.interpolatedStringDelimiterValue = new ClassificationType(key, "InterpolatedStringDelimiter");
                         this.registryValue.Register(this.interpolatedStringDelimiterValue, new HighlightingStyle(Color.FromArgb(255, 214, 10, 129)));
@@ -201,7 +249,7 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
                     if ((this.keywordValue == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
-                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 75, 148, 208));
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 122, 183, 233));
                         }
                         this.keywordValue = new ClassificationType(key, "Keyword");
                         this.registryValue.Register(this.keywordValue, new HighlightingStyle(Color.FromArgb(255, 14, 92, 156)));
@@ -245,7 +293,7 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
                     if ((this.parenthesisValue == null)) {
                         IHighlightingStyleColorPalette darkColorPalette = this.registryValue.DarkColorPalette;
                         if ((darkColorPalette != null)) {
-                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 167, 79, 60));
+                            darkColorPalette.SetForeground(key, Color.FromArgb(255, 233, 198, 57));
                         }
                         this.parenthesisValue = new ClassificationType(key, "Parenthesis");
                         this.registryValue.Register(this.parenthesisValue, new HighlightingStyle(Color.FromArgb(255, 76, 127, 9)));
@@ -293,7 +341,9 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
         /// <returns>The collection of <see cref="IClassificationType"/> objects that were registered.</returns>
         public IEnumerable<IClassificationType> RegisterAll() {
             return new IClassificationType[] {
-                    Brackets,
+                    Brackets01,
+                    Brackets02,
+                    Brackets03,
                     Column,
                     Comment,
                     Delimiter,

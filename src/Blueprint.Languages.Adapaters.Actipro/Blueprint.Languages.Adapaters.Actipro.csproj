@@ -6,6 +6,7 @@
     </PropertyGroup>
     <ItemGroup>
         <ProjectReference Include="..\Blueprint.Domain\Blueprint.Domain.csproj" />
+        <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
     </ItemGroup>
     <ItemGroup>
         <PackageReference Include="ActiproSoftware.Controls.WPF.SyntaxEditor" />

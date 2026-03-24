@@ -14,10 +14,26 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
     public interface IBlueClassificationTypeProvider {
         
         /// <summary>
-        /// Gets the <c>Brackets</c> classification type.
+        /// Gets the <c>Brackets01</c> classification type.
         /// </summary>
-        /// <value>The <c>Brackets</c> classification type.</value>
-        IClassificationType Brackets {
+        /// <value>The <c>Brackets01</c> classification type.</value>
+        IClassificationType Brackets01 {
+            get;
+        }
+        
+        /// <summary>
+        /// Gets the <c>Brackets02</c> classification type.
+        /// </summary>
+        /// <value>The <c>Brackets02</c> classification type.</value>
+        IClassificationType Brackets02 {
+            get;
+        }
+        
+        /// <summary>
+        /// Gets the <c>Brackets03</c> classification type.
+        /// </summary>
+        /// <value>The <c>Brackets03</c> classification type.</value>
+        IClassificationType Brackets03 {
             get;
         }
         

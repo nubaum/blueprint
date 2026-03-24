@@ -1,6 +1,8 @@
-namespace Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Abstractions.Application.Workspace;
 
-public interface IWriteWorkspaceStore
+namespace Blueprint.Services.Interfaces;
+
+internal interface IWriteWorkspaceStore
 {
     void SetCurrentProject(ProjectInfo projectInfo);
 

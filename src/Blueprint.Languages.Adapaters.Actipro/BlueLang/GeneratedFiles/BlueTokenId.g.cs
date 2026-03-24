@@ -223,11 +223,11 @@ namespace Blueprint.Languages.Adapaters.Actipro.BlueLang {
         }
         
         /// <summary>
-        /// Returns whether the specified ID value is part of the <c>Brackets</c>.
+        /// Returns whether the specified ID value is part of the <c>Brackets01</c>.
         /// </summary>
         /// <param name="id">The token ID to examine.</param>
         /// <returns><c>true</c> if the ID value is in the classification type; otherwise, <c>false</c></returns>
-        public static Boolean IsBracketsClassificationType(Int32 id) {
+        public static Boolean IsBrackets01ClassificationType(Int32 id) {
             return ((id >= OpenCurlyBrace) 
                         && (id <= CloseCurlyBrace));
         }

@@ -12,15 +12,17 @@ Actipro Syntax Language Project (.langproj)
 <LanguageProject LanguageKey="Blue" LanguageDescription="Blue print" OutputLanguageDefinition="False" OutputLanguageKey="CSharp" OutputNamespaceName="Blueprint.Languages.Adapaters.Actipro.BlueLang" OutputPath="GeneratedFiles" OutputPlatformKind="Wpf" Creator="Blueprint" Copyright="Blueprint" xmlns="http://schemas.actiprosoftware.com/langproj/1.0">
 	<!-- Classification types -->
 	<LanguageProject.ClassificationTypes>
-		<ClassificationType Key="Brackets" DefaultStyle="#FF9C0E8D" DarkStyle="#FFFF9000" />
-		<ClassificationType Key="Column" DefaultStyle="#FF950EAD" DarkStyle="#FFD7DB1D" />
+		<ClassificationType Key="Brackets01" DefaultStyle="#FF9C0E8D" DarkStyle="#FFFF9000" />
+		<ClassificationType Key="Brackets02" DefaultStyle="#FF9C0E8D" DarkStyle="#FFB09FDB" />
+		<ClassificationType Key="Brackets03" DefaultStyle="#FF9C0E8D" DarkStyle="#FFE5AEC6" />
+		<ClassificationType Key="Column" DefaultStyle="#FF950EAD" DarkStyle="#FFE9C639" />
 		<ClassificationType Key="Comment" DefaultStyle="#FF008000" DarkStyle="#FF88C47E" />
 		<ClassificationType Key="Delimiter" />
-		<ClassificationType Key="Identifier" Description="Identifier" DefaultStyle="#FF7E68DB" DarkStyle="#FF3F9484" />
-		<ClassificationType Key="InterpolatedStringDelimiter" DefaultStyle="#FFD60A81" DarkStyle="#FF109BC6" />
-		<ClassificationType Key="Keyword" DefaultStyle="#FF0E5C9C" DarkStyle="#FF4B94D0" />
+		<ClassificationType Key="Identifier" Description="Identifier" DefaultStyle="#FF7E68DB" DarkStyle="#FF6FCEBC" />
+		<ClassificationType Key="InterpolatedStringDelimiter" DefaultStyle="#FFD60A81" DarkStyle="#FFBD8DE9" />
+		<ClassificationType Key="Keyword" DefaultStyle="#FF0E5C9C" DarkStyle="#FF7AB7E9" />
 		<ClassificationType Key="Number" Description="Number" DefaultStyle="#FF730C0C" DarkStyle="#FFB5CEA8" />
-		<ClassificationType Key="Parenthesis" DefaultStyle="#FF4C7F09" DarkStyle="#FFA74F3C" />
+		<ClassificationType Key="Parenthesis" DefaultStyle="#FF4C7F09" DarkStyle="#FFE9C639" />
 		<ClassificationType Key="String" Description="String" DefaultStyle="#FFA31515" DarkStyle="#FFD69D85" />
 	</LanguageProject.ClassificationTypes>
 	<!-- Lexer -->
@@ -40,8 +42,8 @@ Actipro Syntax Language Project (.langproj)
 				<ExplicitPatternGroup TokenKey="CloseParenthesis" ClassificationTypeKey="Parenthesis" Pattern=")" />
 				<ExplicitPatternGroup TokenKey="Lambda" ClassificationTypeKey="Parenthesis" Pattern="=&gt;" />
 				<ExplicitPatternGroup TokenKey="EqualsSymbol" ClassificationTypeKey="Column" Pattern="=" />
-				<ExplicitPatternGroup TokenKey="OpenCurlyBrace" ClassificationTypeKey="Brackets" Pattern="{" />
-				<ExplicitPatternGroup TokenKey="CloseCurlyBrace" ClassificationTypeKey="Brackets" Pattern="}" />
+				<ExplicitPatternGroup TokenKey="OpenCurlyBrace" ClassificationTypeKey="Brackets01" Pattern="{" />
+				<ExplicitPatternGroup TokenKey="CloseCurlyBrace" ClassificationTypeKey="Brackets01" Pattern="}" />
 				<ExplicitPatternGroup TokenKey="Keyword" ClassificationTypeKey="Keyword" LookBehindPattern="{NonWord}|\A" LookAheadPattern="{NonWord}|\z" CaseSensitivity="Sensitive">
 					<ExplicitPatterns><![CDATA[
 						at bool controller key max request required resource response rules string notEmpty isEmail input
