@@ -4,7 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Blueprint.Languages.Adapaters.Actipro;
 
-public sealed class LanguageProvider : ILanguageProvider
+internal sealed class LanguageProvider : ILanguageProvider
 {
     private readonly Dictionary<SupportedLanguages, LanguageDescriptor> _languages;
 

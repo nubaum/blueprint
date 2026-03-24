@@ -6,7 +6,7 @@ using System.Windows.Media.Effects;
 
 namespace Blueprint.Views.UserControls.Core;
 
-public class GlobalDragAdornerWindow : Window
+internal class GlobalDragAdornerWindow : Window
 {
     // ── Win32 ─────────────────────────────────────────────────
     private const int _gwl_ext_style = -20;

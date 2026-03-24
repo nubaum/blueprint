@@ -1,8 +1,8 @@
 using Blueprint.Abstractions.Application.Workspace;
 
-namespace Blueprint.Services.Interfaces;
+namespace Blueprint.Application.InternalAbstractions;
 
-internal interface IWriteWorkspaceStore
+internal interface IWriteWorkspaceStore : IReadWorkspaceStore
 {
     void SetCurrentProject(ProjectInfo projectInfo);
 
@@ -13,4 +13,6 @@ internal interface IWriteWorkspaceStore
     void AddItems(IEnumerable<IWorkspaceItem> items);
 
     void AddItem(IWorkspaceItem item);
+
+    void AddDocument(string caption, object document, object language);
 }

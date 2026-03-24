@@ -9,7 +9,7 @@ public partial class MainWindow
     public MainWindow()
     {
         InitializeComponent();
-        if (DataContext is MainWindowViewModel viewModel)
+        if (DataContext is IMainWindowViewModel viewModel)
         {
             viewModel.Initialize(typeof(SettingsPage), typeof(DashboardPage), typeof(DataPage), typeof(CodePage));
         }

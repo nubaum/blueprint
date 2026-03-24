@@ -3,11 +3,7 @@ using System.Windows.Media;
 
 namespace Blueprint.Views.UserControls.Core;
 
-/// <summary>
-/// An adorner that renders a semi-transparent "ghost" of the dragged tab header
-/// with a drop-shadow effect, following the mouse cursor.
-/// </summary>
-public class DragAdorner : Adorner
+internal class DragAdorner : Adorner
 {
     private readonly UIElement _child;
     private double _left;

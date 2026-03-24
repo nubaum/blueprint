@@ -3,7 +3,7 @@ using System.Windows.Markup;
 namespace Blueprint.Services;
 
 [MarkupExtensionReturnType(typeof(object))]
-public sealed class ResolveExtension : MarkupExtension
+internal sealed class ResolveExtension : MarkupExtension
 {
     public Type? Type { get; set; }
 

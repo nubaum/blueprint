@@ -3,7 +3,7 @@ using System.Windows.Input;
 
 namespace Blueprint.Views.UserControls.Core;
 
-public static class TabControlHelper
+internal static class TabControlHelper
 {
     public static readonly RoutedUICommand CloseTabCommand =
         new("CloseTab", "CloseTab", typeof(TabControlHelper));

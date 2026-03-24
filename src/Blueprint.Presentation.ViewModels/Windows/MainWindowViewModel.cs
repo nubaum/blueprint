@@ -3,7 +3,7 @@ using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 
-public class MainWindowViewModel : NotifyPropertyChangedBase, IMainWindowViewModel
+internal class MainWindowViewModel : NotifyPropertyChangedBase, IMainWindowViewModel
 {
     private readonly BPObservableCollection<NavigationViewItem> _menuItems = [];
 

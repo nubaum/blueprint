@@ -1,7 +1,7 @@
 using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
 
-namespace Blueprint.Presentation.ViewModels.Pages;
+namespace Blueprint.Views.Models;
 
 public class TabContent : NotifyPropertyChangedBase, IWorkspaceItem
 {

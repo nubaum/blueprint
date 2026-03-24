@@ -1,6 +1,5 @@
 using System.Windows.Controls;
 using System.Windows.Documents;
-using Blueprint.Views.UserControls.Core;
 
 namespace Blueprint.Views.UserControls.Core;
 

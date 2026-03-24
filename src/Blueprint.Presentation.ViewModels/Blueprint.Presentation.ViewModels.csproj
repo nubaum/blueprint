@@ -10,6 +10,7 @@
         <PackageReference Include="WPF-UI" />
         <PackageReference Include="Microsoft.Extensions.Hosting" />
         <PackageReference Include="ActiproSoftware.Controls.WPF.SyntaxEditor" />
+        <PackageReference Include="MediatR" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />

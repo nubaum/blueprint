@@ -1,6 +1,8 @@
+using ActiproSoftware.Text.Implementation;
+
 namespace Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 
 public interface IBlueLangEditorViewModel
 {
-    object? Document { get; set; }
+    EditorDocument? Document { get; set; }
 }

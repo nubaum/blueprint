@@ -3,7 +3,7 @@ using System.Windows.Controls.Primitives;
 
 namespace Blueprint.Views.UserControls.Core;
 
-public class GridSplitterThumb : Thumb
+internal class GridSplitterThumb : Thumb
 {
     public static readonly DependencyProperty LeftColumnProperty =
         DependencyProperty.Register(nameof(LeftColumn), typeof(ColumnDefinition), typeof(GridSplitterThumb));

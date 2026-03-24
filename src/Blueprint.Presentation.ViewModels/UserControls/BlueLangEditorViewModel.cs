@@ -7,7 +7,7 @@ namespace Blueprint.Presentation.ViewModels.UserControls;
 
 internal class BlueLangEditorViewModel : NotifyPropertyChangedBase, IBlueLangEditorViewModel
 {
-    private object? _document;
+    private EditorDocument? _document;
 
     public BlueLangEditorViewModel(ILanguageProvider languageProvider)
     {
@@ -18,7 +18,7 @@ internal class BlueLangEditorViewModel : NotifyPropertyChangedBase, IBlueLangEdi
         }
     }
 
-    public object? Document
+    public EditorDocument? Document
     {
         get => _document;
         set => SetField(ref _document, value);

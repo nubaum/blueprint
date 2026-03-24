@@ -6,7 +6,7 @@ namespace Blueprint.Views.UserControls.Core;
 /// Holds shared state for an ongoing tab drag operation.
 /// Acts as the bridge between the source TabControl and any FloatingTabWindow.
 /// </summary>
-public static class TabDragManager
+internal static class TabDragManager
 {
     /// <summary>The TabItem currently being dragged.</summary>
     public static TabItem? DraggedTab { get; set; }

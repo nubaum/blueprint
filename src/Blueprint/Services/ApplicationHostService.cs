@@ -4,7 +4,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace Blueprint.Services;
 
-public class ApplicationHostService : IHostedService
+internal class ApplicationHostService : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
