@@ -1,6 +1,4 @@
-using Blueprint.Application.ViewContracts.Workspace;
-using Blueprint.Application.ViewModelContracts;
-using Blueprint.Application.ViewModelContracts.Models;
+using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;

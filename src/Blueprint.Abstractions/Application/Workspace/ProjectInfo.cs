@@ -1,4 +1,4 @@
-namespace Blueprint.Application.ViewModelContracts.Models;
+namespace Blueprint.Abstractions.Application.Workspace;
 
 public record ProjectInfo
 {

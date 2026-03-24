@@ -1,5 +1,4 @@
-using Blueprint.Application.ViewContracts.Workspace;
-using Blueprint.Application.ViewModelContracts.Enums;
+using Blueprint.Abstractions.Application.Workspace;
 
 namespace Blueprint.Application.Services;
 

@@ -1,5 +1,4 @@
-using Blueprint.Application.ViewContracts.Workspace;
-using Blueprint.Application.ViewModelContracts;
+using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Services;
 using Blueprint.Stores;
 using Microsoft.Extensions.DependencyInjection;

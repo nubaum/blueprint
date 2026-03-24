@@ -1,6 +1,4 @@
-using Blueprint.Application.ViewModelContracts.Enums;
-
-namespace Blueprint.Application.ViewModelContracts.Models;
+namespace Blueprint.Abstractions.Application.Workspace;
 
 public interface IWorkspaceItem
 {

@@ -1,6 +1,4 @@
-using Blueprint.Application.ViewModelContracts.Models;
-
-namespace Blueprint.Application.ViewContracts.Workspace;
+namespace Blueprint.Abstractions.Application.Workspace;
 
 public interface IWriteWorkspaceStore
 {

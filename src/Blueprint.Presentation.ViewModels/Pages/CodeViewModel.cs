@@ -1,4 +1,4 @@
-using Blueprint.Application.ViewModelContracts.Enums;
+using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 

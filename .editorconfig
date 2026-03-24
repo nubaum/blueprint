@@ -1,5 +1,10 @@
 # editorconfig.org
 
+# Generated code
+[*{.g.cs}]
+generated_code = true
+
+
 # top-most EditorConfig file
 root = true
 

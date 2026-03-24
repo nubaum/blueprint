@@ -1,4 +1,4 @@
-namespace Blueprint.Application.ViewModelContracts.Enums;
+namespace Blueprint.Abstractions.Application.Workspace;
 
 public enum WorkspaceItemKind
 {

@@ -1,7 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\Blueprint.Application.InfrastructureContracts\Blueprint.Application.InfrastructureContracts.csproj" />
-    <ProjectReference Include="..\Blueprint.Application.ViewContracts\Blueprint.Application.ViewContracts.csproj" />
-    <ProjectReference Include="..\Blueprint.Application.ViewModelContracts\Blueprint.Application.ViewModelContracts.csproj" />
+    <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
   </ItemGroup>
 </Project>

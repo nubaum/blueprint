@@ -22,8 +22,6 @@ Solution
 │
 ├─ MyApp.Application
 │
-├─ MyApp.Languages.Core
-│
 ├─ MyApp.Infrastructure
 │
 ├─ MyApp.Languages.Adapters.Actipro
@@ -87,40 +85,8 @@ It does NOT depend on:
 
 This is where business workflows live.
 
-## 3️⃣ MyApp.Languages.Core
 
-*This is your language engine.*
-
-It is fully platform-agnostic.
-
-Contains:
-
-- AST model
-- Semantic analysis
-- Symbol tables
-- Validators
-- Diagnostics model
-- Text primitives (TextSpan, TextRange, etc.)
-- Parser logic (if independent)
-
-🚫 Must NOT reference:
-
-- WPF UI
-- Actipro
-- WPF
-- Infrastructure
-
-This allows using the language engine in:
-
-- WPF
-- Web
-- CLI
-- Tests
-- Future platforms
-
-This is extremely important for long-term flexibility.
-
-## 4️⃣ MyApp.Infrastructure
+## 3️⃣ MyApp.Infrastructure
 
 *Implements application ports.*
 
@@ -149,7 +115,7 @@ Depends on:
 - Presentation
 - Actipro
 
-## 5️⃣ MyApp.Languages.Adapters.Actipro
+## 4️⃣ MyApp.Languages.Adapters.Actipro
 
 *Actipro-specific adapter.*
 
@@ -161,19 +127,17 @@ Contains:
 - Diagnostic mapping (Core → Actipro markers)
 - Completion provider mapping
 - Actipro ↔ TextSpan converters
-- WebView2 interop layer
 - IDocumentLoader implementation (Actipro-specific)
 
 Depends on:
 
 - Actipro integration
-- MyApp.Languages.Core
 - MyApp.Application (interfaces only)
 
 This keeps Actipro isolated and replaceable.
 If one day you swap editors, only this project changes.
 
-## 6️⃣ MyApp.Presentation.ViewModels
+## 5️⃣ MyApp.Presentation.ViewModels
 
 *ViewModel layer — UI-aware but store-blind.*
 
@@ -200,7 +164,7 @@ Depends on:
 
 ViewModels may only interact with Stores through the interfaces defined in the Application layer (`IProjectStore`, `IProjectStoreReader`, etc.). Because the concrete Store implementations live in `MyApp.Presentation.Wpf`, which this assembly does not reference, it is **structurally impossible** for a ViewModel to bypass Application services and mutate a Store directly. The compiler enforces this — no discipline required.
 
-## 7️⃣ MyApp.Presentation.Wpf
+## 6️⃣ MyApp.Presentation.Wpf
 
 *Composition and rendering layer.*
 
@@ -238,10 +202,8 @@ Views depend on:
 - ViewModels only
 - No business logic in Views
 
-
 ```mermaid
 flowchart TB
-
 %% =========================
 %% DOMAIN
 %% =========================
@@ -251,9 +213,19 @@ subgraph Domain["MyApp.Domain"]
     D3["Aggregates"]
     D4["Domain Services"]
     D5["Invariants"]
+    D6["AST Model"]
+    D7["Semantic Analysis"]
+    D8["Symbol Tables"]
+    D9["Validators"]
+    D10["Diagnostics Model"]
+    D11["Text Primitives<br/>(TextSpan, TextRange)"]
 
     D1 --> D5
     D3 --> D2
+    D6 --> D7
+    D7 --> D8
+    D7 --> D9
+    D9 --> D10
 end
 
 %% =========================
@@ -273,23 +245,6 @@ subgraph Application["MyApp.Application"]
 end
 
 Application --> Domain
-
-%% =========================
-%% LANGUAGE CORE
-%% =========================
-subgraph LangCore["MyApp.Languages.Core"]
-    LC1["AST Model"]
-    LC2["Semantic Analysis"]
-    LC3["Symbol Tables"]
-    LC4["Validators"]
-    LC5["Diagnostics Model"]
-    LC6["Text Primitives<br/>(TextSpan, TextRange)"]
-
-    LC1 --> LC2
-    LC2 --> LC3
-    LC2 --> LC4
-    LC4 --> LC5
-end
 
 %% =========================
 %% INFRASTRUCTURE
@@ -314,7 +269,7 @@ Infrastructure --> Domain
 subgraph ActiproAdapter["MyApp.Languages.Adapters.Actipro"]
     M1["ActiproLanguageParser<br/>: ILanguageParser"]
     M2["Completion Provider Mapping"]
-    M3["Diagnostics Mapping<br/>(Core → Actipro Markers)"]
+    M3["Diagnostics Mapping<br/>(Domain → Actipro Markers)"]
     M4["TextSpan Converters"]
     M5["WebView2 Interop"]
     M6["IDocumentLoader Implementation"]
@@ -324,7 +279,7 @@ subgraph ActiproAdapter["MyApp.Languages.Adapters.Actipro"]
     M3 --> M4
 end
 
-ActiproAdapter --> LangCore
+ActiproAdapter --> Domain
 ActiproAdapter --> Application
 
 %% =========================
@@ -354,7 +309,6 @@ subgraph PresentationWpf["MyApp.Presentation.Wpf"]
     P7["Composition Root<br/>App.xaml.cs"]
 
     P1 --> P3
-    P1 --> P4
     P1 --> P5
     P1 --> P6
     P7 --> P2
@@ -362,7 +316,7 @@ end
 
 PresentationWpf --> ViewModels
 PresentationWpf --> Application
-PresentationWpf --> LangCore
+PresentationWpf --> Domain
 PresentationWpf --> ActiproAdapter
 
 %% =========================
@@ -370,8 +324,8 @@ PresentationWpf --> ActiproAdapter
 %% =========================
 
 Domain -. NO Frameworks .- PresentationWpf
-LangCore -. NO Actipro .- ActiproAdapter
-LangCore -. NO WPF .- PresentationWpf
+Domain -. NO Actipro .- ActiproAdapter
+Domain -. NO WPF .- PresentationWpf
 Application -. NO UI .- PresentationWpf
 ViewModels -. NO Concrete Stores .- PresentationWpf
 ```
