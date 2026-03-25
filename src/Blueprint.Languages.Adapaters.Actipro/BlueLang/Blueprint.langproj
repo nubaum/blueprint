@@ -136,13 +136,13 @@ Actipro Syntax Language Project (.langproj)
 	<!-- Example text -->
 	<LanguageProject.ExampleText><![CDATA[resource Customer
 {
-    key Id: Guid
+    key Id Guid
 
-    required FirstName: string max(100)
-    required LastName: string max(100)
-    required Email: string max(200)
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
 
-    active: bool = true
+    active bool = true
 
     rules
     {
@@ -174,15 +174,1683 @@ controller Customers at "/api/customers"
 {
     post "/"
     {
-        input: CreateCustomerDto
-        output: CustomerDto
+        input CreateCustomerDto
+        output CustomerDto
     }
 
 	// comment
     get "/{id}"
     {
-        input: id
-        output: CustomerDto
+        input id
+        output CustomerDto
     }
-}]]></LanguageProject.ExampleText>
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+
+
+resource Customer
+{
+    key Id Guid
+
+    required FirstName string max(100)
+    required LastName string max(100)
+    required Email string max(200)
+
+    active bool = true
+
+    rules
+    {
+        FirstName notEmpty
+        LastName notEmpty
+        Email notEmpty
+        Email isEmail
+    }
+}
+
+request CreateCustomerDto  (Customer c) =>
+{
+    FirstName,
+    LastName,
+    Email
+}
+
+response CustomerDto ( Customer c ) => 
+{
+    Id,
+    Name => $"{FirstName} 
+	this also allow you to put anything you'd like {LastName}",
+    Email
+    Active
+}
+
+
+controller Customers at "/api/customers"
+{
+    post "/"
+    {
+        input CreateCustomerDto
+        output CustomerDto
+    }
+
+	// comment
+    get "/{id}"
+    {
+        input id
+        output CustomerDto
+    }
+}
+
+]]></LanguageProject.ExampleText>
 </LanguageProject>

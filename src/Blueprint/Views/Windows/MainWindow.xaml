@@ -35,7 +35,7 @@
                            FrameMargin="0"
                            IsBackButtonVisible="Visible"
                            IsPaneToggleVisible="True"
-                           MenuItemsSource="{Binding MenuItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
+                           MenuItemsSource="{Binding WorkspaceStore.MenuItems, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}"
                            PaneDisplayMode="LeftFluent">
                     <ui:NavigationView.Header>
                         <ui:BreadcrumbBar x:Name="BreadcrumbBar"
@@ -46,7 +46,7 @@
                     </ui:NavigationView.ContentOverlay>
                 </ui:NavigationView>
                 <ui:TitleBar x:Name="TitleBar"
-                     Title="{Binding ApplicationTitle}"
+                     Title="{Binding WorkspaceStore.ApplicationTitle}"
                      Grid.Row="0"
                      CloseWindowByDoubleClickOnIcon="True">
                     <ui:TitleBar.Icon>

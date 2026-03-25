@@ -17,6 +17,7 @@ internal static class ServiceCollectionExtension
         services.ConfigureCoreServices();
         services.ConfigureLanguages();
         services.ConfigureStores();
+        services.ConfigureServices();
         return services;
     }
 
@@ -29,7 +30,6 @@ internal static class ServiceCollectionExtension
         services.AddHostedService<ApplicationHostService>();
         services.AddSingleton<IThemeService, ThemeService>();
         services.AddSingleton<ITaskBarService, TaskBarService>();
-        services.AddSingleton<INavigationService, NavigationService>();
     }
 
     private static void ConfigureStores(this IServiceCollection services)
@@ -41,5 +41,10 @@ internal static class ServiceCollectionExtension
         services.AddSingleton<DocumentStore>();
         services.AddSingleton<IReadDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
         services.AddSingleton<IWriteDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
+    }
+
+    private static void ConfigureServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IViewNavigationHost, ViewNavigationHost>();
     }
 }

@@ -1,16 +1,8 @@
-using Wpf.Ui.Controls;
+using Blueprint.Abstractions.Application.Workspace;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 
 public interface IMainWindowViewModel
 {
-    string ApplicationTitle { get; }
-
-    IReadOnlyCollection<NavigationViewItem> MenuItems { get; }
-
-    IReadOnlyCollection<NavigationViewItem> FooterMenuItems { get; }
-
-    IReadOnlyCollection<MenuItem> TrayMenuItems { get; }
-
-    void Initialize(Type settingsPageType, Type dashboardPageType, Type dataPageType, Type codePageType);
+    IReadWorkspaceStore WorkspaceStore { get; }
 }

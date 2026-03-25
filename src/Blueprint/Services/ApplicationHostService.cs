@@ -24,5 +24,6 @@ internal class ApplicationHostService : IHostedService
         splashScreen.Close(new TimeSpan(0, 0, 0, 0, 500));
         mainWindow!.Show();
         mainWindow.Navigate(typeof(DashboardPage));
+        System.Windows.Application.Current.MainWindow = mainWindow;
     }
 }

@@ -4,21 +4,72 @@ using Blueprint.Application.InternalAbstractions;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 using Blueprint.Views.Models;
+using Blueprint.Views.Pages;
 using Blueprint.Views.UserControls;
+using Wpf.Ui.Controls;
 
 namespace Blueprint.Stores;
 
 internal class WorskpaceStore : NotifyPropertyChangedBase, IWriteWorkspaceStore
 {
+    private readonly BPObservableCollection<NavigationViewItem> _menuItems = [];
+
+    private readonly BPObservableCollection<NavigationViewItem> _footerMenuItems = [];
+
     private readonly BPObservableCollection<IWorkspaceItem> _openItems = [];
-    private IWorkspaceItem? _selectedItem;
+
+    private readonly NavigationViewItem _settingsNav = new()
+    {
+        Content = "Settings",
+        Icon = new SymbolIcon { Symbol = SymbolRegular.Settings24 },
+        TargetPageType = typeof(SettingsPage)
+    };
+
+    private readonly NavigationViewItem _homeNav = new()
+    {
+        Content = "Home",
+        Icon = new SymbolIcon { Symbol = SymbolRegular.Home24 },
+        TargetPageType = typeof(DashboardPage)
+    };
+
+    private readonly NavigationViewItem _dataNav = new()
+    {
+        Content = "Data",
+        Icon = new SymbolIcon { Symbol = SymbolRegular.DataHistogram24 },
+        TargetPageType = typeof(DataPage)
+    };
+
+    private readonly NavigationViewItem _codeNav = new()
+    {
+        Content = "Code",
+        Icon = new SymbolIcon { Symbol = SymbolRegular.Code16 },
+        TargetPageType = typeof(CodePage)
+    };
+
+    public WorskpaceStore()
+    {
+        _footerMenuItems.Add(_settingsNav);
+        _menuItems.Add(_homeNav);
+        _menuItems.Add(_dataNav);
+        _menuItems.Add(_codeNav);
+    }
+
+    public string ApplicationTitle { get; } = "Bllueprint";
+
+    public IReadOnlyCollection<object> MenuItems => _menuItems;
+
+    public IReadOnlyCollection<object> FooterMenuItems => _footerMenuItems;
+
+    public IReadOnlyCollection<object> TrayMenuItems { get; } = [
+            new MenuItem { Header = "Home", Tag = "tray_home" }
+        ];
 
     public ProjectInfo? CurrentProject { get; private set; }
 
     public IWorkspaceItem? SelectedItem
     {
-        get => _selectedItem;
-        set => SetField(ref _selectedItem, value);
+        get;
+        set => SetField(ref field, value);
     }
 
     public IReadOnlyCollection<IWorkspaceItem> OpenItems => _openItems;
