@@ -7,9 +7,6 @@ public static class FireForget
     public static void RunAndCrashOnUiThread(Func<Task> action)
         => InternalRunSafely(action, ex => ExceptionDispatchInfo.Capture(ex).Throw(), true);
 
-    public static Task RunAndCrashOnUiThreadAsync(Func<Task> action)
-        => InternalRunSafelyAsync(action, ex => ExceptionDispatchInfo.Capture(ex).Throw(), true);
-
     public static void RunHandlingExceptionsInMainThread(Func<Task> asyncAction, Action<Exception> onException)
         => InternalRunSafely(asyncAction, onException, true);
 

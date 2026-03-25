@@ -41,6 +41,10 @@ internal static class ServiceCollectionExtension
         services.AddSingleton<DocumentStore>();
         services.AddSingleton<IReadDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
         services.AddSingleton<IWriteDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
+
+        services.AddSingleton<ThemeStore>();
+        services.AddSingleton<IReadThemeStore>(sp => sp.GetRequiredService<ThemeStore>());
+        services.AddSingleton<IWriteThemeStore>(sp => sp.GetRequiredService<ThemeStore>());
     }
 
     private static void ConfigureServices(this IServiceCollection services)

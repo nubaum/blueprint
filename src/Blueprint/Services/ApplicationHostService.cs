@@ -18,6 +18,7 @@ internal class ApplicationHostService : IHostedService
 
     private static async Task HandleActivationAsync()
     {
+        serviceProvider.GetRequiredService<IWriteThemeStore>().ChangeThemeCommand.Execute(BlueprintTheme.Dark);
         SplashScreen splashScreen = new("Assets/AppIcoDark.png");
         splashScreen.Show(false);
         MainWindow mainWindow = new();

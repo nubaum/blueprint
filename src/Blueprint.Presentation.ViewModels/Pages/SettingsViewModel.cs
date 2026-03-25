@@ -1,29 +1,16 @@
-﻿using System.Windows.Input;
-using ActiproSoftware.Windows.Themes;
+﻿using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
-using Wpf.Ui.Appearance;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class SettingsViewModel : NotifyPropertyChangedBase, ISettingsViewModel
+internal class SettingsViewModel(IReadThemeStore readThemeStore) : NotifyPropertyChangedBase, ISettingsViewModel
 {
     private bool _isInitialized;
 
-    public SettingsViewModel()
-    {
-        ChangeThemeCommand = new DelegateCommand<string>(OnChangeTheme!);
-    }
-
-    public ApplicationTheme CurrentTheme
-    {
-        get;
-        set => SetField(ref field, value);
-    }
+    public IReadThemeStore ThemeStore => readThemeStore;
 
     public string AppVersion { get; private set; } = string.Empty;
-
-    public ICommand ChangeThemeCommand { get; }
 
     public Task OnNavigatedToAsync()
     {
@@ -35,32 +22,13 @@ internal class SettingsViewModel : NotifyPropertyChangedBase, ISettingsViewModel
         return Task.CompletedTask;
     }
 
-    public Task OnNavigatedFromAsync() => Task.CompletedTask;
-
     private static string GetAssemblyVersion() =>
         typeof(SettingsViewModel).Assembly.GetName().Version?.ToString() ?? string.Empty;
 
     private void InitializeViewModel()
     {
-        CurrentTheme = ApplicationThemeManager.GetAppTheme();
         AppVersion = $"Bllueprint - {GetAssemblyVersion()}";
         OnPropertyChanged(nameof(AppVersion));
         _isInitialized = true;
-    }
-
-    private void OnChangeTheme(string parameter)
-    {
-        if (parameter == "theme_light")
-        {
-            ApplicationThemeManager.Apply(ApplicationTheme.Light);
-            CurrentTheme = ApplicationTheme.Light;
-            ThemeManager.CurrentTheme = ThemeNames.Light;
-        }
-        else
-        {
-            ApplicationThemeManager.Apply(ApplicationTheme.Dark);
-            CurrentTheme = ApplicationTheme.Dark;
-            ThemeManager.CurrentTheme = ThemeNames.Dark;
-        }
     }
 }

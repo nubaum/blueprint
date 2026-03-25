@@ -7,7 +7,15 @@ namespace Blueprint.Services;
 
 internal sealed class ViewNavigationHost : IViewNavigationHost
 {
-    private readonly NavigationView _navigationView = ((MainWindow)System.Windows.Application.Current.MainWindow).RootNavigation;
+    private NavigationView? _navigationView;
+
+    public ViewNavigationHost()
+    {
+        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        {
+            _navigationView = ((MainWindow)System.Windows.Application.Current.MainWindow).RootNavigation;
+        });
+    }
 
     public void NavigateToCode() => Navigate(typeof(CodePage));
 
