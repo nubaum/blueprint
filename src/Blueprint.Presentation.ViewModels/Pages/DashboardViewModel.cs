@@ -12,8 +12,7 @@ internal class DashboardViewModel : BindableObject, IDashboardViewModel
     private readonly IMediator _mediator;
     private int _counter;
 
-    public DashboardViewModel(IUiCoreServices uiCoreServices, IMediator mediator)
-        : base(uiCoreServices)
+    public DashboardViewModel(IMediator mediator)
     {
         _mediator = mediator;
         CounterIncrementCommand = new DelegateCommand(OnCounterIncrement);

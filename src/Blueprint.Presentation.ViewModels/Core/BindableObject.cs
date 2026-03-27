@@ -1,39 +1,26 @@
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using Microsoft.Extensions.Logging;
-using Wpf.Ui;
-using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
-public abstract class BindableObject : NotifyPropertyChangedBase
+public abstract class BindableObject : INotifyPropertyChanged
 {
-    protected BindableObject(IUiCoreServices uiCoreServices)
+    public event PropertyChangedEventHandler? PropertyChanged;
+
+    protected void OnPropertyChanged([CallerMemberName] string name = default!)
     {
-        Logger = uiCoreServices.LoggerFactory.CreateLogger(GetType());
-        SnackbarService = uiCoreServices.SnackbarService;
+        UIDispatcher.RunOnUiThread(() => PropertyChanged?.Invoke(this, new(name)));
     }
 
-    protected ILogger Logger { get; }
-
-    protected ISnackbarService SnackbarService { get; }
-
-    protected void FireAndForget(
-        Func<Task> action,
-        string? errorMessage = null,
-        [CallerMemberName] string caller = "")
+    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string name = null!)
     {
-        FireForget.RunHandlingExceptionsInMainThread(action, (ex) =>
+        if (Equals(field, value))
         {
-            Logger.LogError(ex, "Unhandled exception in FireAndForget call from {Caller}", caller);
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                SnackbarService.Show(
-                    "Error",
-                    errorMessage,
-                    ControlAppearance.Danger,
-                    null,
-                    TimeSpan.FromSeconds(5));
-            }
-        });
+            return false;
+        }
+
+        field = value;
+        OnPropertyChanged(name);
+        return true;
     }
 }

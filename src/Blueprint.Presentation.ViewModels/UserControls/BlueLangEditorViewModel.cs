@@ -9,8 +9,7 @@ internal class BlueLangEditorViewModel : BindableObject, IBlueLangEditorViewMode
 {
     private EditorDocument? _document;
 
-    public BlueLangEditorViewModel(IUiCoreServices uiCoreServices, ILanguageProvider languageProvider)
-        : base(uiCoreServices)
+    public BlueLangEditorViewModel(ILanguageProvider languageProvider)
     {
         object lang = languageProvider.GetLanguage(SupportedLanguages.Blue);
         if (lang is SyntaxLanguage language)

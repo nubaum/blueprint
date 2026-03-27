@@ -3,7 +3,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 
-internal class MainWindowViewModel(IUiCoreServices uiCoreServices, IReadWorkspaceStore workspaceStore) : BindableObject(uiCoreServices), IMainWindowViewModel
+internal class MainWindowViewModel(IReadWorkspaceStore workspaceStore) : BindableObject, IMainWindowViewModel
 {
     public IReadWorkspaceStore WorkspaceStore => workspaceStore;
 }

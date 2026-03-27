@@ -46,8 +46,7 @@ internal class WorskpaceStore : BindableObject, IWriteWorkspaceStore
         TargetPageType = typeof(CodePage)
     };
 
-    public WorskpaceStore(IUiCoreServices uiCoreServices)
-        : base(uiCoreServices)
+    public WorskpaceStore()
     {
         _footerMenuItems.Add(_settingsNav);
         _menuItems.Add(_homeNav);

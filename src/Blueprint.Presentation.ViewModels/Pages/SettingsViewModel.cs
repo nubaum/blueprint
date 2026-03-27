@@ -4,7 +4,7 @@ using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class SettingsViewModel(IUiCoreServices uiCoreServices, IReadThemeStore readThemeStore) : BindableObject(uiCoreServices), ISettingsViewModel
+internal class SettingsViewModel(IReadThemeStore readThemeStore) : BindableObject, ISettingsViewModel
 {
     private bool _isInitialized;
 

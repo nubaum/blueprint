@@ -9,8 +9,7 @@ internal class DataViewModel : BindableObject, IDataViewModel
 {
     private readonly List<DataColor> _colors = [];
 
-    public DataViewModel(IUiCoreServices uiCoreServices)
-        : base(uiCoreServices)
+    public DataViewModel()
     {
         InitializeViewModel();
     }

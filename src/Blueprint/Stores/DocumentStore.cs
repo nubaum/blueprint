@@ -4,7 +4,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 
-internal class DocumentStore(IUiCoreServices uiCoreServices) : BindableObject(uiCoreServices), IWriteDocumentStore
+internal class DocumentStore : BindableObject, IWriteDocumentStore
 {
     private readonly Dictionary<string, EditorDocument> _documents = new(StringComparer.OrdinalIgnoreCase);
 

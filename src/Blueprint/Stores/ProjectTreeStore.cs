@@ -4,7 +4,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 
-internal sealed class ProjectTreeStore(IUiCoreServices uiCoreServices) : BindableObject(uiCoreServices), IWriteProjectTreeStore
+internal sealed class ProjectTreeStore : BindableObject, IWriteProjectTreeStore
 {
     public IProjectTreeNode? Root { get; private set; }
 

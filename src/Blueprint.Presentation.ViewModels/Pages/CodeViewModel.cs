@@ -6,8 +6,7 @@ namespace Blueprint.Presentation.ViewModels.Pages;
 
 internal class CodeViewModel : BindableObject, ICodeViewModel
 {
-    public CodeViewModel(IUiCoreServices uiCoreServices, IReadWorkspaceStore readWorkspaceStore, IReadProjectTreeStore projectTreeStore)
-        : base(uiCoreServices)
+    public CodeViewModel(IReadWorkspaceStore readWorkspaceStore, IReadProjectTreeStore projectTreeStore)
     {
         WorkspaceStore = readWorkspaceStore;
         ProjectTreeStore = projectTreeStore;
