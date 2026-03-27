@@ -1,5 +1,6 @@
 ﻿using ActiproSoftware.Products;
 using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Abstractions.Licensing;
 using Blueprint.Application.InternalAbstractions;
 using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
@@ -20,16 +21,32 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
         await Task.CompletedTask;
     }
 
-    private async Task HandleActivationAsync()
+    private static void InitiateMainWindow()
     {
-        serviceProvider.GetRequiredService<IWriteThemeStore>().ChangeThemeCommand.Execute(BlueprintTheme.Dark);
         SplashScreen splashScreen = new("Assets/AppIcoDark.png");
-        ActiproLicenseManager.RegisterLicense("Remsoft", "WPF241-LPGQK-GQQNR-VWQ54-YKGG");
         splashScreen.Show(false);
-        MainWindow mainWindow = new();
+        MainWindow mainWindow = new() { WindowState = WindowState.Maximized };
         splashScreen.Close(new TimeSpan(0, 0, 0, 0, 500));
-        mainWindow!.Show();
+        mainWindow.Show();
         mainWindow.Navigate(typeof(DashboardPage));
         System.Windows.Application.Current.MainWindow = mainWindow;
     }
+
+    private async Task HandleActivationAsync()
+    {
+        SetDefaultTheme();
+        RegisterActipro();
+        InitiateMainWindow();
+    }
+
+    private void RegisterActipro()
+    {
+        IActiproLicenseProvider licenseProvider = serviceProvider.GetRequiredService<IActiproLicenseProvider>();
+        string licensee = licenseProvider.GetLicensee();
+        string license = licenseProvider.GetLicense();
+        ActiproLicenseManager.RegisterLicense(licensee, license);
+    }
+
+    private void SetDefaultTheme()
+        => serviceProvider.GetRequiredService<IWriteThemeStore>().ChangeThemeCommand.Execute(BlueprintTheme.Dark);
 }

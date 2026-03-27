@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net10.0-windows</TargetFramework>
-    <UseWPF>true</UseWPF>
+    <UserSecretsId>99e08637-df12-4b92-901a-ad18dd300c75</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Blueprint.Domain\Blueprint.Domain.csproj" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Hosting" />
     <PackageReference Include="ActiproSoftware.Controls.WPF.SyntaxEditor" />
-  </ItemGroup>
+  </ItemGroup>  
 </Project>

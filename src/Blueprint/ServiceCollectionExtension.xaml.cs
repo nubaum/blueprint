@@ -7,6 +7,7 @@ using Blueprint.Application.InternalAbstractions;
 using Blueprint.Languages.Adapaters.Actipro;
 using Blueprint.Services;
 using Blueprint.Stores;
+using BlueprintVendorLicenses;
 using Microsoft.Extensions.DependencyInjection;
 using Wpf.Ui;
 
@@ -21,7 +22,8 @@ internal static class ServiceCollectionExtension
             .ConfigureServices()
             .ConfigureLanguages()
             .ConfigureStores()
-            .ConfigureAdapters();
+            .ConfigureAdapters()
+            .RegisterLicenseProvider();
 
         return services;
     }

@@ -86,12 +86,11 @@
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition x:Name="LeftColumn"
-                                  Width="260"
-                                  MinWidth="160" />
+                                  Width="560"
+                                  MinWidth="400" />
                 <ColumnDefinition Width="6" />
                 <ColumnDefinition x:Name="RightColumn"
-                                  Width="*"
-                                  MinWidth="260" />
+                                  Width="*" />
             </Grid.ColumnDefinitions>
             <DockPanel Grid.Column="0"
                        LastChildFill="True">
