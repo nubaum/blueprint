@@ -5,12 +5,12 @@ namespace Blueprint.Presentation.ViewModels.Core;
 
 public class AsyncCommand<T>(
     Func<T?, Task> execute,
-    Func<T?, bool>? canExecute = null,
-    ILogger<AsyncCommand<T>>? logger = null) : ICommand
+    ILogger logger,
+    Func<T?, bool>? canExecute = null) : ICommand
 {
     private readonly Func<T?, Task> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
     private readonly Func<T?, bool>? _canExecute = canExecute;
-    private readonly ILogger<AsyncCommand<T>>? _logger = logger;
+    private readonly ILogger _logger = logger;
     private bool _isExecuting;
 
     public event EventHandler? CanExecuteChanged
