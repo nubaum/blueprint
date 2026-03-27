@@ -1,7 +1,7 @@
 using Blueprint.Abstractions.Licensing;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace BlueprintVendorLicenses;
+namespace Blueprint.Languages.Adapaters.Actipro.Licensing;
 
 public static class ServiceCollectionExtensions
 {

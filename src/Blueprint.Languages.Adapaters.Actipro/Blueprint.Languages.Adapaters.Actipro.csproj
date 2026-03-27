@@ -8,6 +8,7 @@
     <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Configuration.UserSecrets" />
     <PackageReference Include="ActiproSoftware.Controls.WPF.SyntaxEditor" />
   </ItemGroup>
 </Project>
