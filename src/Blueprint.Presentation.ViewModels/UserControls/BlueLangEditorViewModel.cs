@@ -5,11 +5,12 @@ using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.UserControls;
 
-internal class BlueLangEditorViewModel : NotifyPropertyChangedBase, IBlueLangEditorViewModel
+internal class BlueLangEditorViewModel : BindableObject, IBlueLangEditorViewModel
 {
     private EditorDocument? _document;
 
-    public BlueLangEditorViewModel(ILanguageProvider languageProvider)
+    public BlueLangEditorViewModel(IUiCoreServices uiCoreServices, ILanguageProvider languageProvider)
+        : base(uiCoreServices)
     {
         object lang = languageProvider.GetLanguage(SupportedLanguages.Blue);
         if (lang is SyntaxLanguage language)

@@ -1,4 +1,5 @@
-﻿using Blueprint.Application.Services;
+﻿using Blueprint.Application.Handlers.Workspace;
+using Blueprint.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blueprint.Application;
@@ -9,6 +10,7 @@ public static class ServiceCollectionExtension
     {
         services.AddSingleton<PathProvider>();
         services.AddSingleton<WorkspaceService>();
+        services.AddSingleton<FolderTreeBuilder>();
         return services;
     }
 }

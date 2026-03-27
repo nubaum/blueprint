@@ -126,10 +126,10 @@ where T : class
     IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
 
     protected virtual void OnPropertyChanged(string propertyName) =>
-        System.Windows.Application.Current.Dispatcher.Invoke(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
+        UIDispatcher.RunOnUiThread(() => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)));
 
     protected virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e) =>
-        System.Windows.Application.Current.Dispatcher.Invoke(() => CollectionChanged?.Invoke(this, e));
+        UIDispatcher.RunOnUiThread(() => CollectionChanged?.Invoke(this, e));
 
     private void NotifyReset()
     {

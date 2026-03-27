@@ -1,5 +1,6 @@
 ﻿using System.Windows.Threading;
 using Blueprint.Application;
+using Blueprint.Infrastructure;
 using Blueprint.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -16,6 +17,7 @@ public partial class App
         .ConfigureServices((_, services) =>
         {
             services
+                .ConfigureInfrastructure()
                 .ConfigureUI()
                 .ConfigureViewModels()
                 .ConfigureApplication();

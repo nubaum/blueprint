@@ -2,7 +2,7 @@ using System.Runtime.ExceptionServices;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
-public static class FireForget
+internal static class FireForget
 {
     public static void RunAndCrashOnUiThread(Func<Task> action)
         => InternalRunSafely(action, ex => ExceptionDispatchInfo.Capture(ex).Throw(), true);

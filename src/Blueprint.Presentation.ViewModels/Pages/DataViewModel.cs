@@ -5,11 +5,12 @@ using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class DataViewModel : NotifyPropertyChangedBase, IDataViewModel
+internal class DataViewModel : BindableObject, IDataViewModel
 {
     private readonly List<DataColor> _colors = [];
 
-    public DataViewModel()
+    public DataViewModel(IUiCoreServices uiCoreServices)
+        : base(uiCoreServices)
     {
         InitializeViewModel();
     }

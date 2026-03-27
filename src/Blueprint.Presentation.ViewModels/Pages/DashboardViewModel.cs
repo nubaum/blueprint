@@ -7,12 +7,13 @@ using Microsoft.Win32;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class DashboardViewModel : NotifyPropertyChangedBase, IDashboardViewModel
+internal class DashboardViewModel : BindableObject, IDashboardViewModel
 {
     private readonly IMediator _mediator;
     private int _counter;
 
-    public DashboardViewModel(IMediator mediator)
+    public DashboardViewModel(IUiCoreServices uiCoreServices, IMediator mediator)
+        : base(uiCoreServices)
     {
         _mediator = mediator;
         CounterIncrementCommand = new DelegateCommand(OnCounterIncrement);

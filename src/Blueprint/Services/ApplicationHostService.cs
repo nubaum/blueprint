@@ -1,10 +1,14 @@
-﻿using Blueprint.Views.Pages;
+﻿using ActiproSoftware.Products;
+using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.InternalAbstractions;
+using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 namespace Blueprint.Services;
 
-internal class ApplicationHostService : IHostedService
+internal class ApplicationHostService(IServiceProvider serviceProvider) : IHostedService
 {
     public async Task StartAsync(CancellationToken cancellationToken)
     {
@@ -16,10 +20,11 @@ internal class ApplicationHostService : IHostedService
         await Task.CompletedTask;
     }
 
-    private static async Task HandleActivationAsync()
+    private async Task HandleActivationAsync()
     {
         serviceProvider.GetRequiredService<IWriteThemeStore>().ChangeThemeCommand.Execute(BlueprintTheme.Dark);
         SplashScreen splashScreen = new("Assets/AppIcoDark.png");
+        ActiproLicenseManager.RegisterLicense("Remsoft", "WPF241-LPGQK-GQQNR-VWQ54-YKGG");
         splashScreen.Show(false);
         MainWindow mainWindow = new();
         splashScreen.Close(new TimeSpan(0, 0, 0, 0, 500));

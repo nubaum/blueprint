@@ -1,4 +1,5 @@
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
 using Wpf.Ui.Controls;
@@ -11,7 +12,7 @@ internal sealed class ViewNavigationHost : IViewNavigationHost
 
     public ViewNavigationHost()
     {
-        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        UIDispatcher.RunOnUiThread(() =>
         {
             _navigationView = ((MainWindow)System.Windows.Application.Current.MainWindow).RootNavigation;
         });
@@ -27,6 +28,6 @@ internal sealed class ViewNavigationHost : IViewNavigationHost
 
     private void Navigate(Type pageType)
     {
-        System.Windows.Application.Current.Dispatcher.Invoke(() => _navigationView?.Navigate(pageType));
+        UIDispatcher.RunOnUiThread(() => _navigationView?.Navigate(pageType));
     }
 }

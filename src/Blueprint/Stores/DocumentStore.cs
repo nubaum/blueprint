@@ -1,9 +1,10 @@
 using ActiproSoftware.Text.Implementation;
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 
-internal class DocumentStore : IWriteDocumentStore
+internal class DocumentStore(IUiCoreServices uiCoreServices) : BindableObject(uiCoreServices), IWriteDocumentStore
 {
     private readonly Dictionary<string, EditorDocument> _documents = new(StringComparer.OrdinalIgnoreCase);
 
@@ -20,7 +21,7 @@ internal class DocumentStore : IWriteDocumentStore
     public object CreateDocument(string filePath)
     {
         EditorDocument result = new();
-        System.Windows.Application.Current.Dispatcher.Invoke(() =>
+        UIDispatcher.RunOnUiThread(() =>
         {
             _documents[filePath] = result;
         });

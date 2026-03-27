@@ -1,22 +1,19 @@
 using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Messages.Workspace;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
-using MediatR;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class CodeViewModel : NotifyPropertyChangedBase, ICodeViewModel
+internal class CodeViewModel : BindableObject, ICodeViewModel
 {
-    public CodeViewModel(IMediator mediator, IReadWorkspaceStore readWorkspaceStore)
+    public CodeViewModel(IUiCoreServices uiCoreServices, IReadWorkspaceStore readWorkspaceStore, IReadProjectTreeStore projectTreeStore)
+        : base(uiCoreServices)
     {
         WorkspaceStore = readWorkspaceStore;
-        FireForget.RunAndCrashOnUiThread(async () =>
-        {
-            await mediator.Send(new OpenProjectRequest { ProjectFilePath = @"C:\Users\albin\source\repos\UAMConsulting\Personal\Blueprint\Directory.Build.props" });
-            await mediator.Send(new OpenDocumentRequest { FileName = "Test" });
-        });
+        ProjectTreeStore = projectTreeStore;
     }
 
     public IReadWorkspaceStore WorkspaceStore { get; }
+
+    public IReadProjectTreeStore ProjectTreeStore { get; }
 }

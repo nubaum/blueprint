@@ -3,14 +3,13 @@ using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Application.InternalAbstractions;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
-using Blueprint.Views.Models;
 using Blueprint.Views.Pages;
 using Blueprint.Views.UserControls;
 using Wpf.Ui.Controls;
 
 namespace Blueprint.Stores;
 
-internal class WorskpaceStore : NotifyPropertyChangedBase, IWriteWorkspaceStore
+internal class WorskpaceStore : BindableObject, IWriteWorkspaceStore
 {
     private readonly BPObservableCollection<NavigationViewItem> _menuItems = [];
 
@@ -46,7 +45,8 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IWriteWorkspaceStore
         TargetPageType = typeof(CodePage)
     };
 
-    public WorskpaceStore()
+    public WorskpaceStore(IUiCoreServices uiCoreServices)
+        : base(uiCoreServices)
     {
         _footerMenuItems.Add(_settingsNav);
         _menuItems.Add(_homeNav);
@@ -104,7 +104,7 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IWriteWorkspaceStore
     {
         if (document is EditorDocument doc && language is SyntaxLanguage lang)
         {
-            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+            UIDispatcher.RunOnUiThread(() =>
             {
                 var result = new BlueLangEditor();
                 if (result.DataContext is IBlueLangEditorViewModel viewModel)
@@ -113,7 +113,8 @@ internal class WorskpaceStore : NotifyPropertyChangedBase, IWriteWorkspaceStore
                     viewModel.Document = doc;
                 }
 
-                AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
+                ////Todo: need a factory for tabContent;
+                //// AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
             });
         }
     }
