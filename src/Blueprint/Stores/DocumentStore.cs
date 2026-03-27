@@ -21,10 +21,7 @@ internal class DocumentStore : BindableObject, IWriteDocumentStore
     public object CreateDocument(string filePath)
     {
         EditorDocument result = new();
-        UIDispatcher.RunOnUiThread(() =>
-        {
-            _documents[filePath] = result;
-        });
+        _documents[filePath] = result;
 
         return result;
     }

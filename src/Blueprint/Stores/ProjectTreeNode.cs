@@ -3,7 +3,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 
-internal sealed class ProjectTreeNode : IProjectTreeNode
+internal sealed class ProjectTreeNode : BindableObject, IProjectTreeNode
 {
     private readonly BPObservableCollection<IProjectTreeNode> _children = [];
 

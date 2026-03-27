@@ -104,17 +104,14 @@ internal class WorskpaceStore : BindableObject, IWriteWorkspaceStore
     {
         if (document is EditorDocument doc && language is SyntaxLanguage lang)
         {
-            UIDispatcher.RunOnUiThread(() =>
+            var result = new BlueLangEditor();
+            if (result.DataContext is IBlueLangEditorViewModel viewModel)
             {
-                var result = new BlueLangEditor();
-                if (result.DataContext is IBlueLangEditorViewModel viewModel)
-                {
-                    doc.Language = lang;
-                    viewModel.Document = doc;
-                }
+                doc.Language = lang;
+                viewModel.Document = doc;
+            }
 
-                AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
-            });
+            AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
         }
     }
 }
