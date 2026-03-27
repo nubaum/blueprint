@@ -1,10 +1,9 @@
-﻿namespace Blueprint.Views.Pages
+﻿namespace Blueprint.Views.Pages;
+
+public partial class DashboardPage
 {
-    public partial class DashboardPage
+    public DashboardPage()
     {
-        public DashboardPage()
-        {
-            InitializeComponent();
-        }
+        InitializeComponent();
     }
 }

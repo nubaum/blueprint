@@ -1,13 +1,9 @@
-﻿using System.IO;
-using System.Windows.Threading;
-using Blueprint.Services;
-using Blueprint.ViewModels.Pages;
-using Blueprint.ViewModels.Windows;
-using Microsoft.Extensions.Configuration;
+﻿using System.Windows.Threading;
+using Blueprint.Application;
+using Blueprint.Infrastructure;
+using Blueprint.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Wpf.Ui;
-using Wpf.Ui.DependencyInjection;
 
 namespace Blueprint;
 
@@ -18,24 +14,13 @@ public partial class App
 {
     private static readonly IHost _host = Host
         .CreateDefaultBuilder()
-        .ConfigureAppConfiguration(c => { c.SetBasePath(Path.GetDirectoryName(AppContext.BaseDirectory)!); })
         .ConfigureServices((_, services) =>
         {
-            services.AddNavigationViewPageProvider();
-
-            services.AddHostedService<ApplicationHostService>();
-
-            services.AddSingleton<IThemeService, ThemeService>();
-
-            services.AddSingleton<ITaskBarService, TaskBarService>();
-
-            services.AddSingleton<INavigationService, NavigationService>();
-
-            services.AddSingleton<MainWindowViewModel>();
-            services.AddSingleton<SettingsViewModel>();
-            services.AddSingleton<DashboardViewModel>();
-            services.AddSingleton<DataViewModel>();
-            services.AddSingleton<CodeViewModel>();
+            services
+                .ConfigureInfrastructure()
+                .ConfigureUI()
+                .ConfigureViewModels()
+                .ConfigureApplication();
         }).Build();
 
     public static IServiceProvider Services

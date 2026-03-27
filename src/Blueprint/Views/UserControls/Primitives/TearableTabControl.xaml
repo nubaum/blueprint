@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<UserControl x:Class="Blueprint.Views.UserControls.Primitives.TearableTabControl"
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             AllowDrop="True">
-    <Grid>
-        <TabControl x:Name="MainTabControl" ItemContainerStyle="{StaticResource BlueprintTabItemStyle}" AllowDrop="True" />
-    </Grid>
-</UserControl>

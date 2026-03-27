@@ -1,1 +1,12 @@
-<Project Sdk="Microsoft.NET.Sdk" />
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+  <!-- This allows to expose the WriteStoreInterfaces to the UI -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Blueprint" />
+  </ItemGroup>
+</Project>

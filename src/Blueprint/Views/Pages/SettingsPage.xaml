@@ -8,9 +8,10 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:services="clr-namespace:Blueprint.Services"
-      xmlns:vm="clr-namespace:Blueprint.ViewModels.Pages"
+      xmlns:abs="clr-namespace:Blueprint.Abstractions.Application.Workspace;assembly=Blueprint.Abstractions"
+      xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Pages.Interfaces;assembly=Blueprint.Presentation.ViewModels"
       Title="SettingsPage"
-      DataContext="{services:Resolve Type={x:Type vm:SettingsViewModel}}"
+      DataContext="{services:Resolve Type={x:Type vm:ISettingsViewModel}}"
       d:DesignHeight="450"
       d:DesignWidth="800"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
@@ -30,17 +31,17 @@
                 <TextBlock Margin="0,12,0,0"
                            Text="Theme" />
                 <RadioButton Margin="0,12,0,0"
-                             Command="{Binding ChangeThemeCommand, Mode=OneWay}"
-                             CommandParameter="theme_light"
+                             Command="{Binding ThemeStore.ChangeThemeCommand, Mode=OneWay}"
+                             CommandParameter="{x:Static abs:BlueprintTheme.Light}"
                              Content="Light"
                              GroupName="themeSelect"
-                             IsChecked="{Binding CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Light, Mode=OneWay}" />
+                             IsChecked="{Binding ThemeStore.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static abs:BlueprintTheme.Light}, Mode=OneWay}" />
                 <RadioButton Margin="0,8,0,0"
-                             Command="{Binding ChangeThemeCommand, Mode=OneWay}"
-                             CommandParameter="theme_dark"
+                             Command="{Binding ThemeStore.ChangeThemeCommand, Mode=OneWay}"
+                             CommandParameter="{x:Static abs:BlueprintTheme.Dark}"
                              Content="Dark"
                              GroupName="themeSelect"
-                             IsChecked="{Binding CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter=Dark, Mode=OneWay}" />
+                             IsChecked="{Binding ThemeStore.CurrentTheme, Converter={StaticResource EnumToBooleanConverter}, ConverterParameter={x:Static abs:BlueprintTheme.Dark}, Mode=OneWay}" />
                 <TextBlock Margin="0,24,0,0"
                            FontSize="20"
                            FontWeight="Medium"

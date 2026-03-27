@@ -6,17 +6,15 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:services="clr-namespace:Blueprint.Services"
-      xmlns:vm="clr-namespace:Blueprint.ViewModels.Pages"
+      xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Pages.Interfaces;assembly=Blueprint.Presentation.ViewModels"
+      xmlns:workspace="clr-namespace:Blueprint.Abstractions.Application.Workspace;assembly=Blueprint.Abstractions"
       xmlns:helpers="clr-namespace:Blueprint.Helpers"
-      xmlns:ad="clr-namespace:AvalonDock.Controls;assembly=AvalonDock"
-      xmlns:dock="clr-namespace:AvalonDock;assembly=AvalonDock"
-      xmlns:layout="clr-namespace:AvalonDock.Layout;assembly=AvalonDock"
-      xmlns:prim="clr-namespace:Blueprint.Views.UserControls.Primitives"
+      xmlns:core="clr-namespace:Blueprint.Views.UserControls.Core"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
       ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
       Title="CodePage"
-      DataContext="{services:Resolve Type={x:Type vm:CodeViewModel}}"
+      DataContext="{services:Resolve Type={x:Type vm:ICodeViewModel}}"
       d:DesignHeight="450"
       d:DesignWidth="900"
       ScrollViewer.CanContentScroll="False"
@@ -71,84 +69,72 @@
             </Setter>
         </Style>
     </Page.Resources>
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <Grid MaxHeight="{Binding ActualHeight, RelativeSource={RelativeSource AncestorType=Window}}"
-              Margin="12">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <StackPanel Grid.Row="0"
-                        Margin="0,0,0,10">
-                <TextBlock FontSize="20"
-                           FontWeight="Medium"
-                           Text="Coding" />
-                <TextBlock Opacity="0.8"
-                           Margin="0,4,0,0"
-                           Text="Tree on the left, tabs on the right. Resize or collapse sections as needed." />
-            </StackPanel>
-            <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition x:Name="LeftColumn"
-                                      Width="260"
-                                      MinWidth="160" />
-                    <ColumnDefinition Width="6" />
-                    <ColumnDefinition x:Name="RightColumn"
-                                      Width="*"
-                                      MinWidth="260" />
-                </Grid.ColumnDefinitions>
-                <DockPanel Grid.Column="0"
-                           LastChildFill="True">
-                    <Border DockPanel.Dock="Top"
-                            Padding="0,0,0,8" />
-                    <Border Padding="10"
-                            CornerRadius="8">
-                        <TreeView>
-                            <TreeViewItem Header="Workspace">
-                                <TreeViewItem Header="src">
-                                    <TreeViewItem Header="Blueprint.App" />
-                                    <TreeViewItem Header="Blueprint.Domain" />
-                                    <TreeViewItem Header="Blueprint.Application" />
-                                    <TreeViewItem Header="Blueprint.Infrastructure" />
-                                    <TreeViewItem Header="Blueprint.Presentation.Wpf" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="docs">
-                                    <TreeViewItem Header="architecture.md" />
-                                    <TreeViewItem Header="readme-notes.md" />
-                                </TreeViewItem>
-                                <TreeViewItem Header="assets">
-                                    <TreeViewItem Header="icons" />
-                                    <TreeViewItem Header="themes" />
-                                </TreeViewItem>
-                            </TreeViewItem>
-                            <TreeViewItem Header="Favorites">
-                                <TreeViewItem Header="Current File" />
-                                <TreeViewItem Header="Recent" />
-                            </TreeViewItem>
-                        </TreeView>
-                    </Border>
-                </DockPanel>
-                <Grid Grid.Column="1"
-                      Background="Transparent">
-                    <prim:GridSplitterThumb Grid.Column="1"
-                                            Margin="-2,0,0,0"
-                                            Cursor="SizeWE"
-                                            LeftColumn="{Binding ElementName=LeftColumn}"
-                                            RightColumn="{Binding ElementName=RightColumn}" />
-                </Grid>
-                <Grid Grid.Column="2">
-                    <prim:TearableTabControl ItemsSource="{Binding Tabs}"
-                                             SelectedItem="{Binding SelectedTab}">
-                        <prim:TearableTabControl.ContentTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <TextBlock Text="{Binding Content}" />
-                                </Grid>
-                            </DataTemplate>
-                        </prim:TearableTabControl.ContentTemplate>
-                    </prim:TearableTabControl>
-                </Grid>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Margin="0,0,0,10">
+            <TextBlock FontSize="20"
+                       FontWeight="Medium"
+                       Text="Coding" />
+            <TextBlock Opacity="0.8"
+                       Margin="0,4,0,0"
+                       Text="Tree on the left, tabs on the right. Resize or collapse sections as needed." />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftColumn"
+                                  Width="560"
+                                  MinWidth="400" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition x:Name="RightColumn"
+                                  Width="*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0"
+                       LastChildFill="True">
+                <Border DockPanel.Dock="Top"
+                        Padding="0,0,0,8" />
+                <Border Padding="10"
+                        CornerRadius="8">
+                    <TreeView ItemsSource="{Binding ProjectTreeStore.Root.Children}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding Name}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Border>
+            </DockPanel>
+            <Grid Grid.Column="1"
+                  Background="Transparent">
+                <core:GridSplitterThumb Grid.Column="1"
+                                        Margin="-2,0,0,0"
+                                        Cursor="SizeWE"
+                                        LeftColumn="{Binding ElementName=LeftColumn}"
+                                        RightColumn="{Binding ElementName=RightColumn}" />
+            </Grid>
+            <Grid Grid.Column="2">
+                <core:TearableTabControl ItemsSource="{Binding WorkspaceStore.OpenItems}"
+                                         SelectedItem="{Binding WorkspaceStore.SelectedItem, Mode=TwoWay}"
+                                         CaptionMemberPath="Caption"
+                                         IconMemberPath="Icon"
+                                         IsPinnedMemberPath="IsPinned"
+                                         IsDirtyMemberPath="IsDirty">
+                    <core:TearableTabControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10,0,10,10">
+                                <ContentControl Content="{Binding Content}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch" />
+                            </Grid>
+                        </DataTemplate>
+                    </core:TearableTabControl.ContentTemplate>
+                </core:TearableTabControl>
             </Grid>
         </Grid>
-    </ScrollViewer>
+    </Grid>
 </Page>

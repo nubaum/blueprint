@@ -14,7 +14,7 @@ public partial class MainWindow
     protected override void OnClosed(EventArgs e)
     {
         base.OnClosed(e);
-        Application.Current.Shutdown();
+        System.Windows.Application.Current.Shutdown();
     }
 
     protected override void OnInitialized(EventArgs e)
