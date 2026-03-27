@@ -1,5 +1,4 @@
 # editorconfig.org
-
 # Generated code
 [*{.g.cs}]
 generated_code = true

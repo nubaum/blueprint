@@ -4,7 +4,8 @@ using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;
 
-internal class CodeViewModel(IReadWorkspaceStore readWorkspaceStore, IReadProjectTreeStore projectTreeStore) : BindableObject, ICodeViewModel
+internal class CodeViewModel(IReadWorkspaceStore readWorkspaceStore, IReadProjectTreeStore projectTreeStore)
+    : BindableObject, ICodeViewModel
 {
     public IReadWorkspaceStore WorkspaceStore { get; } = readWorkspaceStore;
 

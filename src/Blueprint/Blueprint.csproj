@@ -8,6 +8,7 @@
         <UseWPF>true</UseWPF>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
     <PropertyGroup>
         <UserSecretsId>99e08637-df12-4b92-901a-ad18dd300c75</UserSecretsId>
@@ -33,7 +34,6 @@
         <ProjectReference Include="..\Blueprint.Presentation.ViewModels\Blueprint.Presentation.ViewModels.csproj" />
         <ProjectReference Include="..\Blueprint.Languages.Adapaters.Actipro\Blueprint.Languages.Adapaters.Actipro.csproj" />
         <ProjectReference Include="..\Blueprint.Infrastructure\Blueprint.Infrastructure.csproj" />
-        <ProjectReference Include="..\BlueprintVendorLicenses\BlueprintVendorLicenses.csproj" />
     </ItemGroup>
     <ItemGroup>
         <Resource Include="Assets\AppIcoDark.png" />
