@@ -3,6 +3,7 @@ using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Application.InternalAbstractions;
 using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
+using Blueprint.Views.Models;
 using Blueprint.Views.Pages;
 using Blueprint.Views.UserControls;
 using Wpf.Ui.Controls;
@@ -113,8 +114,7 @@ internal class WorskpaceStore : BindableObject, IWriteWorkspaceStore
                     viewModel.Document = doc;
                 }
 
-                ////Todo: need a factory for tabContent;
-                //// AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
+                AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
             });
         }
     }

@@ -3,7 +3,7 @@ using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Views.Models;
 
-public class TabContent(IUiCoreServices uiCoreServices) : BindableObject(uiCoreServices), IWorkspaceItem
+public class TabContent : NotifyPropertyChangedBase, IWorkspaceItem
 {
     private bool _isDirty;
 

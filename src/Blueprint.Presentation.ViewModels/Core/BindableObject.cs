@@ -1,4 +1,3 @@
-using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using Microsoft.Extensions.Logging;
 using Wpf.Ui;
@@ -6,7 +5,7 @@ using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
-public abstract class BindableObject : INotifyPropertyChanged
+public abstract class BindableObject : NotifyPropertyChangedBase
 {
     protected BindableObject(IUiCoreServices uiCoreServices)
     {
@@ -14,28 +13,9 @@ public abstract class BindableObject : INotifyPropertyChanged
         SnackbarService = uiCoreServices.SnackbarService;
     }
 
-    public event PropertyChangedEventHandler? PropertyChanged;
-
     protected ILogger Logger { get; }
 
     protected ISnackbarService SnackbarService { get; }
-
-    protected void OnPropertyChanged([CallerMemberName] string name = default!)
-    {
-        UIDispatcher.RunOnUiThread(() => PropertyChanged?.Invoke(this, new(name)));
-    }
-
-    protected bool SetField<T>(ref T field, T value, [CallerMemberName] string name = null!)
-    {
-        if (Equals(field, value))
-        {
-            return false;
-        }
-
-        field = value;
-        OnPropertyChanged(name);
-        return true;
-    }
 
     protected void FireAndForget(
         Func<Task> action,
