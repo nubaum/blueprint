@@ -3,22 +3,15 @@ using Microsoft.Extensions.Logging;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
-public class AsyncCommand : ICommand
+public class AsyncCommand(
+    Func<Task> execute,
+    ILogger logger,
+    Func<bool>? canExecute = null) : ICommand
 {
-    private readonly Func<Task> _execute;
-    private readonly Func<bool>? _canExecute;
-    private readonly ILogger<AsyncCommand>? _logger;
+    private readonly Func<Task> _execute = execute ?? throw new ArgumentNullException(nameof(execute));
+    private readonly Func<bool>? _canExecute = canExecute;
+    private readonly ILogger _logger = logger;
     private bool _isExecuting;
-
-    public AsyncCommand(
-        Func<Task> execute,
-        Func<bool>? canExecute = null,
-        ILogger<AsyncCommand>? logger = null)
-    {
-        _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-        _canExecute = canExecute;
-        _logger = logger;
-    }
 
     public event EventHandler? CanExecuteChanged
     {

@@ -22,7 +22,7 @@ public abstract class FireForgetExecutor : BindableObject
         string? errorMessage = null,
         [CallerMemberName] string caller = "")
     {
-        FireForget.RunHandlingExceptionsInMainThread(action, (ex) =>
+        FireForget.RunOnMainThread(action, (ex) =>
         {
             Logger.LogError(ex, "Unhandled exception in FireAndForget call from {Caller}", caller);
             if (!string.IsNullOrWhiteSpace(errorMessage))

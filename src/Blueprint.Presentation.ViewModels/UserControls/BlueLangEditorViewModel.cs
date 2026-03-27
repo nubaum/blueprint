@@ -6,11 +6,9 @@ namespace Blueprint.Presentation.ViewModels.UserControls;
 
 internal class BlueLangEditorViewModel : BindableObject, IBlueLangEditorViewModel
 {
-    private EditorDocument? _document;
-
     public EditorDocument? Document
     {
-        get => _document;
-        set => SetField(ref _document, value);
+        get;
+        set => SetField(ref field, value);
     }
 }

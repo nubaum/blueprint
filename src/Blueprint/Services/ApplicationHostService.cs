@@ -25,7 +25,7 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
     {
         SplashScreen splashScreen = new("Assets/AppIcoDark.png");
         splashScreen.Show(false);
-        MainWindow mainWindow = new() { WindowState = WindowState.Maximized };
+        MainWindow mainWindow = new() { WindowState = WindowState.Normal };
         splashScreen.Close(new TimeSpan(0, 0, 0, 0, 500));
         mainWindow.Show();
         mainWindow.Navigate(typeof(DashboardPage));

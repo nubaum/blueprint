@@ -4,12 +4,10 @@ using Blueprint.Infrastructure;
 using Blueprint.Presentation.ViewModels;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 
 namespace Blueprint;
 
-/// <summary>
-/// Interaction logic for App.xaml
-/// </summary>
 public partial class App
 {
     private static readonly IHost _host = Host
@@ -21,7 +19,9 @@ public partial class App
                 .ConfigureUI()
                 .ConfigureViewModels()
                 .ConfigureApplication();
-        }).Build();
+        })
+        .ConfigureLogging()
+        .Build();
 
     public static IServiceProvider Services
     {
@@ -55,6 +55,8 @@ public partial class App
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
-        // For more info see https://docs.microsoft.com/en-us/dotnet/api/system.windows.application.dispatcherunhandledexception?view=windowsdesktop-6.0
+        ILogger logger = Services.GetRequiredService<ILogger<App>>();
+        logger?.LogError(e.Exception, "An error occurred in the UI thread.");
+        e.Handled = true;
     }
 }
