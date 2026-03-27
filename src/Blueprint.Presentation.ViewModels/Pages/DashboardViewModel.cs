@@ -37,7 +37,7 @@ internal class DashboardViewModel : BindableObject, IDashboardViewModel
 
     private void OnCounterIncrement()
     {
-        Counter++;
+        Counter += 2;
     }
 
     private async Task OpenProjectAsync()
