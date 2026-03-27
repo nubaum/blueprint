@@ -42,9 +42,7 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
     private void RegisterActipro()
     {
         IActiproLicenseProvider licenseProvider = serviceProvider.GetRequiredService<IActiproLicenseProvider>();
-        string licensee = licenseProvider.GetLicensee();
-        string license = licenseProvider.GetLicense();
-        ActiproLicenseManager.RegisterLicense(licensee, license);
+        ActiproLicenseManager.RegisterLicense(licenseProvider.Licensee, licenseProvider.LicenseKey);
     }
 
     private void SetDefaultTheme()

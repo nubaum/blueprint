@@ -8,6 +8,7 @@ using Blueprint.Languages.Adapaters.Actipro;
 using Blueprint.Services;
 using Blueprint.Stores;
 using BlueprintVendorLicenses;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Wpf.Ui;
 
@@ -37,7 +38,7 @@ internal static class ServiceCollectionExtension
         services.AddHostedService<ApplicationHostService>();
         services.AddSingleton<IThemeService, ThemeService>();
         services.AddSingleton<ITaskBarService, TaskBarService>();
-
+        services.AddConfiguration();
         return services;
     }
 
@@ -73,6 +74,17 @@ internal static class ServiceCollectionExtension
     {
         services.AddSingleton<IFolderTreeDtoAdapter, FolderTreeDtoAdapter>();
 
+        return services;
+    }
+
+    private static IServiceCollection AddConfiguration(this IServiceCollection services)
+    {
+        IConfigurationRoot configuration = new ConfigurationBuilder()
+            .AddEnvironmentVariables()
+            .AddUserSecrets(typeof(App).Assembly, optional: true)
+            .Build();
+
+        services.AddSingleton<IConfiguration>(configuration);
         return services;
     }
 }
