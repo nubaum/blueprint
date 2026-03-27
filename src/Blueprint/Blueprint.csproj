@@ -8,6 +8,7 @@
         <UseWPF>true</UseWPF>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <EnableWindowsTargeting>true</EnableWindowsTargeting>
     </PropertyGroup>
     <PropertyGroup>
         <UserSecretsId>99e08637-df12-4b92-901a-ad18dd300c75</UserSecretsId>
