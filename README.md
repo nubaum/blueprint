@@ -1,5 +1,7 @@
 # Blueprint – Clean Architecture + DDD + Language Platform
 
+# this is a test
+
 This project follows Clean Architecture, DDD principles, and strict separation of concerns.
 
 It is designed to support:
