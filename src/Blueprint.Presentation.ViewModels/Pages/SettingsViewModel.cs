@@ -1,5 +1,5 @@
 ﻿using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Application.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;

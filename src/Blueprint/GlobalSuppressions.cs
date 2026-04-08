@@ -17,3 +17,9 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "Temporary solution",
     Scope = "type",
     Target = "~T:Blueprint.ServiceCollectionExtension")]
+[assembly: SuppressMessage(
+    "Design",
+    "BEV001:Avoid subscribing to events with '+='",
+    Justification = "This is the only exception",
+    Scope = "member",
+    Target = "~E:Blueprint.Services.WindowsCommandManager.RequerySuggested")]

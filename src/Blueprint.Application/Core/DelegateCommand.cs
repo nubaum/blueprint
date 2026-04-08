@@ -1,4 +1,4 @@
-namespace Blueprint.Presentation.ViewModels.Core;
+namespace Blueprint.Application.Core;
 
 public class DelegateCommand : DelegateCommand<object>
 {

@@ -13,6 +13,6 @@
     <PackageReference Include="MediatR" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
+    <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
   </ItemGroup>
 </Project>

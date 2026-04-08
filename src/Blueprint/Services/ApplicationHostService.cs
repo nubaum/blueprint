@@ -34,6 +34,7 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
 
     private async Task HandleActivationAsync()
     {
+        WpfConfigurator.ConfigureWpfDependencies();
         SetDefaultTheme();
         RegisterActipro();
         InitiateMainWindow();

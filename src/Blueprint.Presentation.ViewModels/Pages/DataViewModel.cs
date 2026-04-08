@@ -1,5 +1,5 @@
 ﻿using System.Windows.Media;
-using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Application.Core;
 using Blueprint.Presentation.ViewModels.Models;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 

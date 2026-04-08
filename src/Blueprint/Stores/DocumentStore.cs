@@ -3,8 +3,8 @@ using ActiproSoftware.Text;
 using ActiproSoftware.Text.Implementation;
 using Blueprint.Abstractions;
 using Blueprint.Abstractions.Application.Languages;
+using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 

@@ -1,6 +1,6 @@
 using System.Windows.Input;
 
-namespace Blueprint.Presentation.ViewModels.Core;
+namespace Blueprint.Application.Core;
 
 public class DelegateCommand<T>(Action<T?> execute, Func<T?, bool>? canExecute = null) : ICommand
 {

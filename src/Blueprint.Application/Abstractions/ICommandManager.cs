@@ -1,4 +1,4 @@
-﻿namespace Blueprint.Presentation.ViewModels.Core;
+﻿namespace Blueprint.Application.Abstractions;
 
 public interface ICommandManager
 {

@@ -3,7 +3,7 @@ using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Abstractions.Application.Workspace.Models;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.Presentation.ViewModels.Core;
+namespace Blueprint.Application.Core;
 
 public abstract class FireForgetExecutor : BindableObject
 {

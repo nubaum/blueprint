@@ -1,6 +1,6 @@
 ﻿using System.Windows.Input;
 using Blueprint.Abstractions.Messages.Workspace;
-using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Application.Core;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 using MediatR;
 using Microsoft.Extensions.Logging;

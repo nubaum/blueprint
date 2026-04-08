@@ -1,5 +1,5 @@
+using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
 using Wpf.Ui.Controls;

@@ -1,4 +1,5 @@
 ﻿using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Core;
 using Blueprint.Application.Handlers.Workspace;
 using Blueprint.Application.Services;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,12 @@ public static class ServiceCollectionExtension
         services.AddSingleton<IPathProvider, PathProvider>();
         services.AddSingleton<WorkspaceService>();
         services.AddSingleton<FolderTreeBuilder>();
+        return services.ConfigureCoreServices();
+    }
+
+    private static IServiceCollection ConfigureCoreServices(this IServiceCollection services)
+    {
+        services.AddSingleton<IUiCoreServices, UiCoreServices>();
         return services;
     }
 }

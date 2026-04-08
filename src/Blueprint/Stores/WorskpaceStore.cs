@@ -1,7 +1,7 @@
 using ActiproSoftware.Text.Implementation;
 using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 using Blueprint.Views.Models;
 using Blueprint.Views.Pages;

@@ -1,6 +1,6 @@
 using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
 
 namespace Blueprint.Stores;
 
