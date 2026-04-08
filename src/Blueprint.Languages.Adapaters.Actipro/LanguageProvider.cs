@@ -1,3 +1,5 @@
+using ActiproSoftware.Text;
+using Blueprint.Abstractions;
 using Blueprint.Abstractions.Application.Languages;
 using Blueprint.Languages.Adapaters.Actipro.BlueLang;
 using Microsoft.Extensions.DependencyInjection;
@@ -6,25 +8,40 @@ namespace Blueprint.Languages.Adapaters.Actipro;
 
 internal sealed class LanguageProvider : ILanguageProvider
 {
-    private readonly Dictionary<SupportedLanguages, LanguageDescriptor> _languages;
+    private readonly Dictionary<KnownLanguage, ISyntaxLanguage> _languages;
+
+    private readonly Dictionary<string, KnownLanguage> _languageByExtension =
+        new(StringComparer.OrdinalIgnoreCase)
+        {
+            { ".blue", KnownLanguage.Blue }
+        };
 
     public LanguageProvider(IServiceProvider serviceProvider)
     {
-        _languages = new Dictionary<SupportedLanguages, LanguageDescriptor>
+        _languages = new Dictionary<KnownLanguage, ISyntaxLanguage>
         {
-            [SupportedLanguages.Blue] = new LanguageDescriptor
-            {
-                Language = SupportedLanguages.Blue,
-                Name = "Blue",
-                Instance = serviceProvider.GetRequiredService<BlueSyntaxLanguage>()
-            }
+            [KnownLanguage.Blue] = serviceProvider.GetRequiredService<BlueSyntaxLanguage>()
         };
     }
 
-    public object GetLanguage(SupportedLanguages language)
+    public T GetLanguage<T>(KnownLanguage language)
     {
-        return !_languages.TryGetValue(language, out LanguageDescriptor? descriptor)
-            ? throw new NotSupportedException($"Language '{language}' is not supported.")
-            : descriptor.Instance;
+        // TODO: This should be returning plain text for languages known and unspported.
+        if (typeof(T) == typeof(ISyntaxLanguage) && _languages.TryGetValue(language, out ISyntaxLanguage? result))
+        {
+            return (T)result;
+        }
+
+        throw new NotSupportedException(StringProvider.Application.Messages.InvalidLanguage(language.ToString()));
+    }
+
+    public T GetLanguageByExtension<T>(string extension)
+    {
+        if (typeof(T) == typeof(ISyntaxLanguage) && _languageByExtension.TryGetValue(extension, out KnownLanguage lang))
+        {
+            return GetLanguage<T>(lang);
+        }
+
+        throw new NotSupportedException(StringProvider.Application.Messages.UnknownExtension(extension));
     }
 }

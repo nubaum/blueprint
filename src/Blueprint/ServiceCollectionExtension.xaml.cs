@@ -14,6 +14,7 @@ using Wpf.Ui;
 
 namespace Blueprint;
 
+// TODO: Split this into samller classes.
 internal static class ServiceCollectionExtension
 {
     public static IServiceCollection ConfigureUI(this IServiceCollection services)
@@ -38,6 +39,9 @@ internal static class ServiceCollectionExtension
         services.AddHostedService<ApplicationHostService>();
         services.AddSingleton<IThemeService, ThemeService>();
         services.AddSingleton<ITaskBarService, TaskBarService>();
+        services.AddSingleton<IFolderPicker, FolderPicker>();
+        services.AddSingleton<ISnackbarService, SnackbarService>();
+        services.AddSingleton<INotificationService, NotificationService>();
         services.AddConfiguration();
         return services;
     }

@@ -27,7 +27,7 @@ internal static class FireForget
     {
         if (handleInMainThread)
         {
-            await Application.Current.Dispatcher.BeginInvoke(() => onException.Invoke(ex));
+            await UIDispatcher.RunOnUiThreadAsync(() => onException.Invoke(ex));
         }
         else
         {

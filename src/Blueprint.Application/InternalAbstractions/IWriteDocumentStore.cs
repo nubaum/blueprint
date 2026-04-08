@@ -7,4 +7,8 @@ internal interface IWriteDocumentStore : IReadDocumentStore
     void ClearDocuemntStore();
 
     object CreateDocument(string filePath);
+
+    object LoadDocument(string filePath);
+
+    object AddDocument(object document);
 }

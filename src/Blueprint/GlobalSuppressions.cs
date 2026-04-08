@@ -11,3 +11,9 @@ using System.Diagnostics.CodeAnalysis;
     Justification = "This is a partial class so it needs to remain non static",
     Scope = "member",
     Target = "~M:Blueprint.App.OnDispatcherUnhandledException(System.Object,System.Windows.Threading.DispatcherUnhandledExceptionEventArgs)")]
+[assembly: SuppressMessage(
+    "Major Code Smell",
+    "S1200:Classes should not be coupled to too many other classes",
+    Justification = "Temporary solution",
+    Scope = "type",
+    Target = "~T:Blueprint.ServiceCollectionExtension")]

@@ -53,7 +53,7 @@ public class AsyncCommand(
         }
         finally
         {
-            await Application.Current.Dispatcher.BeginInvoke(() =>
+            await UIDispatcher.RunOnUiThreadAsync(() =>
             {
                 _isExecuting = false;
                 RaiseCanExecuteChanged();

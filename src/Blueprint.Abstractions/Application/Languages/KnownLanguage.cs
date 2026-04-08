@@ -1,6 +1,6 @@
 namespace Blueprint.Abstractions.Application.Languages;
 
-public enum SupportedLanguages
+public enum KnownLanguage
 {
     Blue,
     BlueScript,

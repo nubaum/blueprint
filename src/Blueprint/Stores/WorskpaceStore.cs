@@ -100,18 +100,14 @@ internal class WorskpaceStore : BindableObject, IWriteWorkspaceStore
         CurrentProject = projectInfo;
     }
 
-    public void AddDocument(string caption, object document, object language)
+    public void AddEditor(string caption, object document)
     {
-        if (document is EditorDocument doc && language is SyntaxLanguage lang)
+        var result = new BlueLangEditor();
+        if (document is EditorDocument doc && result.DataContext is IBlueLangEditorViewModel viewModel)
         {
-            var result = new BlueLangEditor();
-            if (result.DataContext is IBlueLangEditorViewModel viewModel)
-            {
-                doc.Language = lang;
-                viewModel.Document = doc;
-            }
-
-            AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
+            viewModel.Document = doc;
         }
+
+        AddItem(new TabContent { Caption = caption, Content = result, Kind = WorkspaceItemKind.Doucument });
     }
 }

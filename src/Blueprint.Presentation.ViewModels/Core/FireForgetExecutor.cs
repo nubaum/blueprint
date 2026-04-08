@@ -1,7 +1,7 @@
 using System.Runtime.CompilerServices;
+using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Abstractions.Application.Workspace.Models;
 using Microsoft.Extensions.Logging;
-using Wpf.Ui;
-using Wpf.Ui.Controls;
 
 namespace Blueprint.Presentation.ViewModels.Core;
 
@@ -10,12 +10,12 @@ public abstract class FireForgetExecutor : BindableObject
     protected FireForgetExecutor(IUiCoreServices uiCoreServices)
     {
         Logger = uiCoreServices.LoggerFactory.CreateLogger(GetType());
-        SnackbarService = uiCoreServices.SnackbarService;
+        NotificationService = uiCoreServices.NotificationService;
     }
 
     protected ILogger Logger { get; }
 
-    protected ISnackbarService SnackbarService { get; }
+    protected INotificationService NotificationService { get; }
 
     protected void FireAndForget(
         Func<Task> action,
@@ -27,12 +27,13 @@ public abstract class FireForgetExecutor : BindableObject
             Logger.LogError(ex, "Unhandled exception in FireAndForget call from {Caller}", caller);
             if (!string.IsNullOrWhiteSpace(errorMessage))
             {
-                SnackbarService.Show(
-                    "Error",
-                    errorMessage,
-                    ControlAppearance.Danger,
-                    null,
-                    TimeSpan.FromSeconds(5));
+                _ = NotificationService.ShowAsync(new Notification
+                {
+                    Caption = "Error",
+                    Kind = NotificationKind.Error,
+                    Message = ex.Message,
+                    LifespanSeconds = 5
+                });
             }
         });
     }

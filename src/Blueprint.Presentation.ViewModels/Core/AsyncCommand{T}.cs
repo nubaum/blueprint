@@ -69,7 +69,7 @@ public class AsyncCommand<T>(
         }
         finally
         {
-            UIDispatcher.RunOnUiThread(() =>
+            await UIDispatcher.RunOnUiThreadAsync(() =>
             {
                 _isExecuting = false;
                 RaiseCanExecuteChanged();

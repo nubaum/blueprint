@@ -12,4 +12,15 @@ public static class UIDispatcher
 
         Application.Current.Dispatcher.Invoke(action);
     }
+
+    public static async Task RunOnUiThreadAsync(Action action)
+    {
+        if (Application.Current.Dispatcher.CheckAccess())
+        {
+            action();
+            return;
+        }
+
+        await Application.Current.Dispatcher.InvokeAsync(action);
+    }
 }
