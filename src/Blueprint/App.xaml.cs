@@ -1,7 +1,11 @@
 ﻿using System.Windows.Threading;
 using Blueprint.Application;
 using Blueprint.Infrastructure;
+using Blueprint.Languages.Adapaters.Actipro;
+using Blueprint.Languages.Adapaters.Actipro.Licensing;
+using Blueprint.Presentation.Adapters;
 using Blueprint.Presentation.ViewModels;
+using Blueprint.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -14,11 +18,16 @@ public partial class App
         .CreateDefaultBuilder()
         .ConfigureServices((_, services) =>
         {
+            WpfConfigurator.ConfigureWpfDependencies();
+
             services
+                .RegisterLicenseProvider()
+                .ConfigureLanguages()
                 .ConfigureInfrastructure()
                 .ConfigureUI()
-                .ConfigureViewModels()
-                .ConfigureApplication();
+                .ConfigureWpfAdapter()
+                .ConfigureApplication()
+                .ConfigureViewModels();
         })
         .ConfigureLogging()
         .Build();

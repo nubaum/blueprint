@@ -14,5 +14,5 @@ internal interface IWriteWorkspaceStore : IReadWorkspaceStore
 
     void AddItem(IWorkspaceItem item);
 
-    void AddEditor(string caption, object document);
+    void AddEditor(string caption, object editor);
 }

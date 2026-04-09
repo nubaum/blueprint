@@ -1,36 +1,36 @@
 using System.Windows.Input;
-using ActiproSoftware.Windows.Themes;
 using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Abstractions;
 using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Wpf.Ui.Appearance;
 
 namespace Blueprint.Stores;
 
-public class ThemeStore : IWriteThemeStore
+internal class ThemeStore : IWriteThemeStore
 {
-    public ThemeStore()
+    private readonly IBlueprintThemeService _themeService;
+
+    public ThemeStore(IBlueprintThemeService themeService)
     {
         ChangeThemeCommand = new DelegateCommand<BlueprintTheme>(SetTheme!);
+        _themeService = themeService;
     }
 
     public ICommand ChangeThemeCommand { get; }
 
     public BlueprintTheme CurrentTheme { get; private set; }
 
-    private void SetTheme(BlueprintTheme parameter)
+    public void SetTheme(BlueprintTheme parameter)
     {
         if (parameter == BlueprintTheme.Light)
         {
-            ApplicationThemeManager.Apply(ApplicationTheme.Light);
+            _themeService.SetLightTheme();
             CurrentTheme = BlueprintTheme.Light;
-            ThemeManager.CurrentTheme = ThemeNames.Light;
         }
         else
         {
-            ApplicationThemeManager.Apply(ApplicationTheme.Dark);
+            _themeService.SetDarkTheme();
             CurrentTheme = BlueprintTheme.Dark;
-            ThemeManager.CurrentTheme = ThemeNames.Dark;
         }
     }
 }

@@ -1,6 +1,6 @@
 namespace Blueprint.Application.InternalAbstractions;
 
-internal interface IViewNavigationHost
+public interface IViewNavigationHost
 {
     void NavigateToHome();
 

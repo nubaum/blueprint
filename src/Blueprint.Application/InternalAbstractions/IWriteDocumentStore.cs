@@ -8,7 +8,5 @@ internal interface IWriteDocumentStore : IReadDocumentStore
 
     object CreateDocument(string filePath);
 
-    object LoadDocument(string filePath);
-
-    object AddDocument(object document);
+    object AddDocument(object document, string fileName);
 }
