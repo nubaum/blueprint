@@ -1,4 +1,4 @@
-using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Abstractions.Workspace;
 
 namespace Blueprint.Application.InternalAbstractions;
 

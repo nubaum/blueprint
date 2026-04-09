@@ -1,9 +1,9 @@
 ﻿using ActiproSoftware.Products;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Licensing;
-using Blueprint.Application.InternalAbstractions;
+using Blueprint.Application.Abstractions.Languages;
+using Blueprint.Application.Requests;
 using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
+using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
@@ -34,7 +34,7 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
 
     private async Task HandleActivationAsync()
     {
-        SetDefaultTheme();
+        await SetDefaultThemeAsync();
         RegisterActipro();
         InitiateMainWindow();
     }
@@ -45,6 +45,6 @@ internal class ApplicationHostService(IServiceProvider serviceProvider) : IHoste
         ActiproLicenseManager.RegisterLicense(licenseProvider.Licensee, licenseProvider.LicenseKey);
     }
 
-    private void SetDefaultTheme()
-        => serviceProvider.GetRequiredService<IWriteThemeStore>().ChangeThemeCommand.Execute(BlueprintTheme.Dark);
+    private async Task SetDefaultThemeAsync()
+        => await serviceProvider.GetRequiredService<IMediator>().Send(new SetDefaultThemeRequest());
 }

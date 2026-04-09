@@ -1,5 +1,5 @@
-﻿using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Presentation.ViewModels.Core;
+﻿using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Presentation.Adapters;
 
 namespace Blueprint.Presentation.ViewModels.Windows;
 

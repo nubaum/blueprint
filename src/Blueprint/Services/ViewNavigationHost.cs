@@ -1,7 +1,6 @@
-using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
+using Blueprint.Application.Abstractions;
+using Blueprint.Presentation.Adapters;
 using Blueprint.Views.Pages;
-using Blueprint.Views.Windows;
 using Wpf.Ui.Controls;
 
 namespace Blueprint.Services;
@@ -14,7 +13,7 @@ internal sealed class ViewNavigationHost : IViewNavigationHost
     {
         UIDispatcher.RunOnUiThread(() =>
         {
-            _navigationView = ((MainWindow)System.Windows.Application.Current.MainWindow).RootNavigation;
+            _navigationView = new NavigationView();
         });
     }
 

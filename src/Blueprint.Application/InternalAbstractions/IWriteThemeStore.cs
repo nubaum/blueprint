@@ -1,9 +1,8 @@
-using System.Windows.Input;
-using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Abstractions.Workspace;
 
 namespace Blueprint.Application.InternalAbstractions;
 
 internal interface IWriteThemeStore : IReadThemeStore
 {
-    ICommand ChangeThemeCommand { get; }
+    void SetTheme(BlueprintTheme parameter);
 }

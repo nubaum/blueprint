@@ -7,7 +7,7 @@
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:services="clr-namespace:Blueprint.Services"
       xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Pages.Interfaces;assembly=Blueprint.Presentation.ViewModels"
-      xmlns:workspace="clr-namespace:Blueprint.Abstractions.Application.Workspace;assembly=Blueprint.Abstractions"
+      xmlns:workspace="clr-namespace:Blueprint.Application.Abstractions.Workspace;assembly=Blueprint.Application"
       xmlns:helpers="clr-namespace:Blueprint.Helpers"
       xmlns:core="clr-namespace:Blueprint.Views.UserControls.Core"
       Foreground="{DynamicResource TextFillColorPrimaryBrush}"

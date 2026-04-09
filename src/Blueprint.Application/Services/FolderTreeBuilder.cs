@@ -1,9 +1,9 @@
-using Blueprint.Abstractions.Adapters.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace.Models;
-using Blueprint.Abstractions.Infrastructure;
+using Blueprint.Application.Abstractions;
+using Blueprint.Application.Abstractions.Infrastructure;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Application.Abstractions.Workspace.Models;
 
-namespace Blueprint.Application.Handlers.Workspace;
+namespace Blueprint.Application.Services;
 
 internal sealed class FolderTreeBuilder(
     IDirectoryInfoProvider directoryInfoProvider,

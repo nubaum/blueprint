@@ -1,12 +1,14 @@
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Messages.Workspace;
+using Blueprint.Application.Abstractions;
+using Blueprint.Application.Abstractions.Workspace;
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Application.Requests;
 using Blueprint.Application.Services;
 using MediatR;
 
 namespace Blueprint.Application.Handlers.Workspace;
 
 internal class OpenProjectRequestHandler(
+    IFolderPicker folderPicker,
     WorkspaceService workspaceService,
     IViewNavigationHost viewNavigationHost,
     IWriteProjectTreeStore projectTreeStore,
@@ -15,9 +17,13 @@ internal class OpenProjectRequestHandler(
 {
     public async Task Handle(OpenProjectRequest request, CancellationToken cancellationToken)
     {
-        await workspaceService.OpenProjectAsync(request.ProjectFilePath);
-        IProjectTreeNode root = folderTreeBuilder.Build(request.ProjectFilePath);
-        projectTreeStore.SetRoot(root);
-        viewNavigationHost.NavigateToCode();
+        string? selectedFolderResult = await folderPicker.PickFolderAsync();
+        if (selectedFolderResult is string selectedFolder)
+        {
+            await workspaceService.OpenProjectAsync(selectedFolder);
+            IProjectTreeNode root = folderTreeBuilder.Build(selectedFolder);
+            projectTreeStore.SetRoot(root);
+            viewNavigationHost.NavigateToCode();
+        }
     }
 }

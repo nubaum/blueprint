@@ -1,4 +1,4 @@
-using Blueprint.Abstractions.Messages.Workspace;
+using Blueprint.Application.Requests;
 using Blueprint.Application.Services;
 using MediatR;
 

@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="clr-namespace:Blueprint.Views.Pages"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:models="clr-namespace:Blueprint.Presentation.ViewModels.Models;assembly=Blueprint.Presentation.ViewModels"
+      xmlns:models="clr-namespace:Blueprint.Application.Abstractions;assembly=Blueprint.Application"
       xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
       xmlns:services="clr-namespace:Blueprint.Services"
       xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Pages.Interfaces;assembly=Blueprint.Presentation.ViewModels"

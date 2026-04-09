@@ -1,5 +1,5 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\Blueprint.Abstractions\Blueprint.Abstractions.csproj" />
+<ItemGroup>
+    <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
   </ItemGroup>
 </Project>

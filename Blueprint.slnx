@@ -1,12 +1,21 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+    <File Path=".gitignore" />
+    <File Path="Directory.Build.props" />
+    <File Path="Directory.Packages.props" />
+    <File Path="LICENSE" />
+    <File Path="nuget.config" />
+    <File Path="README.md" />
+  </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Blueprint.Abstractions/Blueprint.Abstractions.csproj" />
     <Project Path="src/Blueprint.Analyzers/Blueprint.Analyzers.csproj" />
     <Project Path="src/Blueprint.Application/Blueprint.Application.csproj" />
     <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
     <Project Path="src/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
-    <Project Path="src/Blueprint.Languages.Adapaters.Actipro/Blueprint.Languages.Adapaters.Actipro.csproj" />
+    <Project Path="src/Blueprint.Languages/Blueprint.Languages.csproj" />
     <Project Path="src/Blueprint.Presentation.ViewModels/Blueprint.Presentation.ViewModels.csproj" />
+    <Project Path="src/Blueprint.Presentation.Adapters/Blueprint.Presentation.Adapters.csproj" />
     <Project Path="src/Blueprint/Blueprint.csproj" />
   </Folder>
 </Solution>
