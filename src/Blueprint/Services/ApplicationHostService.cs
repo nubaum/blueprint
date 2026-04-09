@@ -1,6 +1,6 @@
 ﻿using ActiproSoftware.Products;
-using Blueprint.Abstractions.Licensing;
-using Blueprint.Abstractions.Messages.Workspace;
+using Blueprint.Application.Abstractions.Languages;
+using Blueprint.Application.Requests;
 using Blueprint.Views.Pages;
 using Blueprint.Views.Windows;
 using MediatR;

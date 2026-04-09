@@ -1,9 +1,9 @@
-using Blueprint.Abstractions;
+using Blueprint.Application;
 using Blueprint.Application.Abstractions;
-using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Presentation.Adapters;
 
-namespace Blueprint.Stores;
+namespace Blueprint.Application.Stores;
 
 internal class DocumentStore(IDocumentLoader documentLoader) : BindableObject, IWriteDocumentStore
 {

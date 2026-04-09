@@ -1,7 +1,6 @@
-using Blueprint.Abstractions.Application.Workspace;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters.Abstractions;
 
 public interface IUiCoreServices
 {

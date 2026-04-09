@@ -1,6 +1,6 @@
 using MediatR;
 
-namespace Blueprint.Abstractions.Messages.Workspace;
+namespace Blueprint.Application.Requests;
 
 public record OpenDocumentRequest : IRequest
 {

@@ -1,4 +1,4 @@
-namespace Blueprint.Abstractions.Application.Workspace.Models;
+namespace Blueprint.Presentation.Adapters.Abstractions;
 
 public enum NotificationKind
 {

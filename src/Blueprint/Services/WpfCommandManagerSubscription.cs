@@ -1,5 +1,5 @@
 using System.Runtime.CompilerServices;
-using Blueprint.Application.Abstractions;
+using Blueprint.Presentation.Adapters.Abstractions;
 
 namespace Blueprint.Services;
 

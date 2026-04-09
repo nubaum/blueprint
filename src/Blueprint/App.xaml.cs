@@ -1,8 +1,8 @@
 ﻿using System.Windows.Threading;
 using Blueprint.Application;
 using Blueprint.Infrastructure;
-using Blueprint.Languages.Adapaters.Actipro;
-using Blueprint.Languages.Adapaters.Actipro.Licensing;
+using Blueprint.Languages;
+using Blueprint.Languages.Licensing;
 using Blueprint.Presentation.Adapters;
 using Blueprint.Presentation.ViewModels;
 using Blueprint.Services;

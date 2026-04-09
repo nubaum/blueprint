@@ -1,9 +1,8 @@
-using Blueprint.Abstractions.Adapters.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace.Models;
-using Blueprint.Stores;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Application.Abstractions.Workspace.Models;
+using Blueprint.Application.Stores;
 
-namespace Blueprint.Adapters.Workspace;
+namespace Blueprint.Application.Adapters;
 
 internal class FolderTreeDtoAdapter : IFolderTreeDtoAdapter
 {

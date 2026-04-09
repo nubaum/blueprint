@@ -1,7 +1,7 @@
 using System.Globalization;
-using Blueprint.Abstractions.Application.Workspace.Models;
+using Blueprint.Presentation.Adapters.Abstractions;
 
-namespace Blueprint.Abstractions;
+namespace Blueprint.Application;
 
 public static class StringProvider
 {

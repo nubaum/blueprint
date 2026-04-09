@@ -1,11 +1,9 @@
-﻿using Blueprint.Abstractions.Adapters.Application.Workspace;
-using Blueprint.Abstractions.Application.Languages;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Adapters.Workspace;
-using Blueprint.Application.Handlers.Workspace;
+﻿using Blueprint.Application.Abstractions.Languages;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Application.Adapters;
 using Blueprint.Application.InternalAbstractions;
 using Blueprint.Application.Services;
-using Blueprint.Stores;
+using Blueprint.Application.Stores;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blueprint.Application;

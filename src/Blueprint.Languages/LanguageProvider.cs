@@ -1,10 +1,10 @@
 using ActiproSoftware.Text;
-using Blueprint.Abstractions;
-using Blueprint.Abstractions.Application.Languages;
+using Blueprint.Application;
+using Blueprint.Application.Abstractions.Languages;
 using Blueprint.Languages.Adapaters.Actipro.BlueLang;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blueprint.Languages.Adapaters.Actipro;
+namespace Blueprint.Languages;
 
 internal sealed class LanguageProvider : ILanguageProvider
 {

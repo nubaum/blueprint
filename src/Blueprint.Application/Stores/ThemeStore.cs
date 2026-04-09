@@ -1,10 +1,10 @@
 using System.Windows.Input;
-using Blueprint.Abstractions.Application.Workspace;
 using Blueprint.Application.Abstractions;
-using Blueprint.Application.Core;
+using Blueprint.Application.Abstractions.Workspace;
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Presentation.Adapters;
 
-namespace Blueprint.Stores;
+namespace Blueprint.Application.Stores;
 
 internal class ThemeStore : IWriteThemeStore
 {

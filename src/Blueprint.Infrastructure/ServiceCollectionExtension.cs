@@ -1,4 +1,4 @@
-﻿using Blueprint.Abstractions.Infrastructure;
+﻿using Blueprint.Application.Abstractions.Infrastructure;
 using Blueprint.Infrastructure.IOManagement;
 using Microsoft.Extensions.DependencyInjection;
 

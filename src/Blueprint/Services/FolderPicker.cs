@@ -1,4 +1,4 @@
-using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Abstractions.Workspace;
 using Microsoft.Win32;
 
 namespace Blueprint.Services;

@@ -1,4 +1,4 @@
-namespace Blueprint.Abstractions.Application.Languages;
+namespace Blueprint.Application.Abstractions.Languages;
 
 public enum KnownLanguage
 {

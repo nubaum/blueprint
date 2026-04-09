@@ -1,4 +1,4 @@
-namespace Blueprint.Abstractions.Infrastructure;
+namespace Blueprint.Application.Abstractions.Infrastructure;
 
 public interface IDirectoryInfoProvider
 {

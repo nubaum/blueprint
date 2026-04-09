@@ -1,5 +1,5 @@
 using ActiproSoftware.Text.Implementation;
-using Blueprint.Abstractions.Application.Languages;
+using Blueprint.Application.Abstractions.Languages;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 using Blueprint.Views.UserControls;
 

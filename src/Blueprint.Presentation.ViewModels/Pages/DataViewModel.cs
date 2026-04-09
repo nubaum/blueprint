@@ -1,6 +1,5 @@
 ﻿using Blueprint.Application.Abstractions;
-using Blueprint.Application.Core;
-using Blueprint.Presentation.ViewModels.Models;
+using Blueprint.Presentation.Adapters;
 using Blueprint.Presentation.ViewModels.Pages.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.Pages;

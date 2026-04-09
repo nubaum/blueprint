@@ -1,6 +1,6 @@
-using Blueprint.Application.Abstractions;
+using Blueprint.Presentation.Adapters.Abstractions;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters;
 
 public static class UIDispatcher
 {

@@ -1,7 +1,7 @@
-using Blueprint.Abstractions.Licensing;
+using Blueprint.Application.Abstractions.Languages;
 using Microsoft.Extensions.Configuration;
 
-namespace Blueprint.Languages.Adapaters.Actipro.Licensing;
+namespace Blueprint.Languages.Licensing;
 
 internal sealed class ActiproLicenseProvider(IConfiguration configuration) : IActiproLicenseProvider
 {

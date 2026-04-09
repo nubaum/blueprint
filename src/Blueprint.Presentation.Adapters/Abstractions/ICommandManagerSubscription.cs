@@ -1,4 +1,4 @@
-namespace Blueprint.Application.Abstractions;
+namespace Blueprint.Presentation.Adapters.Abstractions;
 
 public interface ICommandManagerSubscription
 {

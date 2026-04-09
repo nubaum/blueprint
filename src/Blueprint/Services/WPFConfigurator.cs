@@ -1,5 +1,5 @@
-using Blueprint.Application.Abstractions;
-using Blueprint.Application.Core;
+using Blueprint.Presentation.Adapters;
+using Blueprint.Presentation.Adapters.Abstractions;
 
 namespace Blueprint.Services;
 

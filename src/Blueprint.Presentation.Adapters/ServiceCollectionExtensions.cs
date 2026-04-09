@@ -1,4 +1,4 @@
-using Blueprint.Application.Core;
+using Blueprint.Presentation.Adapters.Abstractions;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Blueprint.Presentation.Adapters;

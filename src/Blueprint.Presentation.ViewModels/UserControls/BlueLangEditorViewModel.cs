@@ -1,4 +1,4 @@
-using Blueprint.Application.Core;
+using Blueprint.Presentation.Adapters;
 using Blueprint.Presentation.ViewModels.UserControls.Interfaces;
 
 namespace Blueprint.Presentation.ViewModels.UserControls;

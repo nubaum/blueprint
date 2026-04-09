@@ -1,6 +1,5 @@
-using Blueprint.Abstractions;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace.Models;
+using Blueprint.Application;
+using Blueprint.Presentation.Adapters.Abstractions;
 using Wpf.Ui;
 using Wpf.Ui.Controls;
 

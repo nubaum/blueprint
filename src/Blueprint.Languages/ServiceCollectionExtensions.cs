@@ -1,8 +1,8 @@
-using Blueprint.Abstractions.Application.Languages;
+using Blueprint.Application.Abstractions.Languages;
 using Blueprint.Languages.Adapaters.Actipro.BlueLang;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Blueprint.Languages.Adapaters.Actipro;
+namespace Blueprint.Languages;
 
 public static class ServiceCollectionExtensions
 {

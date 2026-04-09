@@ -1,6 +1,4 @@
-using Blueprint.Abstractions.Application.Workspace.Models;
-
-namespace Blueprint.Abstractions.Application.Workspace;
+namespace Blueprint.Presentation.Adapters.Abstractions;
 
 public interface INotificationService
 {

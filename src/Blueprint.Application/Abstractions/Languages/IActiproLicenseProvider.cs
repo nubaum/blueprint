@@ -1,4 +1,4 @@
-namespace Blueprint.Abstractions.Licensing;
+namespace Blueprint.Application.Abstractions.Languages;
 
 public interface IActiproLicenseProvider
 {

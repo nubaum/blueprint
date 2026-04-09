@@ -1,7 +1,7 @@
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Application.Core;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Presentation.Adapters;
 
-namespace Blueprint.Views.Models;
+namespace Blueprint.Application.Stores;
 
 public class TabContent : BindableObject, IWorkspaceItem
 {

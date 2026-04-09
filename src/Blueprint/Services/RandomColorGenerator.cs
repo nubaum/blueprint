@@ -1,6 +1,5 @@
 using System.Windows.Media;
 using Blueprint.Application.Abstractions;
-using Blueprint.Presentation.ViewModels.Models;
 
 namespace Blueprint.Services;
 

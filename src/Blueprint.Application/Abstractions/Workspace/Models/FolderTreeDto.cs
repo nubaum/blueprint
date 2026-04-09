@@ -1,4 +1,4 @@
-namespace Blueprint.Abstractions.Application.Workspace.Models;
+namespace Blueprint.Application.Abstractions.Workspace.Models;
 
 public sealed class FolderTreeDto
 {

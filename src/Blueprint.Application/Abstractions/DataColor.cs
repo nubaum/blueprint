@@ -1,4 +1,4 @@
-﻿namespace Blueprint.Presentation.ViewModels.Models;
+﻿namespace Blueprint.Application.Abstractions;
 
 public record DataColor
 {

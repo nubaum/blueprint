@@ -1,7 +1,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters;
 
 public abstract class BindableObject : INotifyPropertyChanged
 {

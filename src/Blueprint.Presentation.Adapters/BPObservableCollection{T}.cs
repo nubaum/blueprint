@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Specialized;
 using System.ComponentModel;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters;
 
 public class BPObservableCollection<T> : IReadOnlyCollection<T>, INotifyCollectionChanged, INotifyPropertyChanged
 where T : class

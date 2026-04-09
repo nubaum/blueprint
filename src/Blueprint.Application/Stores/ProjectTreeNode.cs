@@ -1,7 +1,7 @@
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Application.Core;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Presentation.Adapters;
 
-namespace Blueprint.Stores;
+namespace Blueprint.Application.Stores;
 
 internal sealed class ProjectTreeNode : BindableObject, IProjectTreeNode
 {

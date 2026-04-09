@@ -1,6 +1,6 @@
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Messages.Workspace;
+using Blueprint.Application.Abstractions.Workspace;
 using Blueprint.Application.InternalAbstractions;
+using Blueprint.Application.Requests;
 using Blueprint.Application.Services;
 using MediatR;
 

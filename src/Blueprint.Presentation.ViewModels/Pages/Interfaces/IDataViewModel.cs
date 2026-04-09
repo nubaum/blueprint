@@ -1,4 +1,4 @@
-using Blueprint.Presentation.ViewModels.Models;
+using Blueprint.Application.Abstractions;
 
 namespace Blueprint.Presentation.ViewModels.Pages.Interfaces;
 

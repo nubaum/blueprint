@@ -1,4 +1,4 @@
-using Blueprint.Abstractions.Application.Languages;
+using Blueprint.Application.Abstractions.Languages;
 
 namespace Blueprint.Application.InternalAbstractions;
 

@@ -1,7 +1,7 @@
-using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Presentation.Adapters.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters;
 
 internal class UiCoreServices(ILoggerFactory loggerFactory, INotificationService notificationService) : IUiCoreServices
 {

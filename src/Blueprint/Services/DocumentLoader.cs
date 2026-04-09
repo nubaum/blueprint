@@ -1,8 +1,8 @@
 using System.IO;
 using ActiproSoftware.Text;
 using ActiproSoftware.Text.Implementation;
-using Blueprint.Abstractions.Application.Languages;
 using Blueprint.Application.Abstractions;
+using Blueprint.Application.Abstractions.Languages;
 
 namespace Blueprint.Services;
 

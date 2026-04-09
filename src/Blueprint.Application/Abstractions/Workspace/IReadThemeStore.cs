@@ -1,6 +1,6 @@
 using System.Windows.Input;
 
-namespace Blueprint.Abstractions.Application.Workspace;
+namespace Blueprint.Application.Abstractions.Workspace;
 
 public interface IReadThemeStore
 {

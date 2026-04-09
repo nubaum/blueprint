@@ -1,7 +1,7 @@
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace.Models;
+using Blueprint.Application.Abstractions.Workspace;
+using Blueprint.Application.Abstractions.Workspace.Models;
 
-namespace Blueprint.Abstractions.Adapters.Application.Workspace;
+namespace Blueprint.Application;
 
 public interface IFolderTreeDtoAdapter
 {

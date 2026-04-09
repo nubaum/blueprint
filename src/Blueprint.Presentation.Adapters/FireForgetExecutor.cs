@@ -1,9 +1,8 @@
 using System.Runtime.CompilerServices;
-using Blueprint.Abstractions.Application.Workspace;
-using Blueprint.Abstractions.Application.Workspace.Models;
+using Blueprint.Presentation.Adapters.Abstractions;
 using Microsoft.Extensions.Logging;
 
-namespace Blueprint.Application.Core;
+namespace Blueprint.Presentation.Adapters;
 
 public abstract class FireForgetExecutor : BindableObject
 {
