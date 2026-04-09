@@ -1,4 +1,5 @@
-﻿using Blueprint.Application.Abstractions.Languages;
+﻿using Blueprint.Application.Abstractions;
+using Blueprint.Application.Abstractions.Languages;
 using Blueprint.Application.Abstractions.Workspace;
 using Blueprint.Application.Adapters;
 using Blueprint.Application.InternalAbstractions;
@@ -22,27 +23,27 @@ public static class ServiceCollectionExtension
 
     private static IServiceCollection ConfigureStores(this IServiceCollection services)
     {
-        services.AddSingleton<WorskpaceStore>();
-        services.AddSingleton<IReadWorkspaceStore>(sp => sp.GetRequiredService<WorskpaceStore>());
-        services.AddSingleton<IWriteWorkspaceStore>(sp => sp.GetRequiredService<WorskpaceStore>());
-
-        services.AddSingleton<DocumentStore>();
-        services.AddSingleton<IReadDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
-        services.AddSingleton<IWriteDocumentStore>(sp => sp.GetRequiredService<DocumentStore>());
-
-        services.AddSingleton<ThemeStore>();
-        services.AddSingleton<IReadThemeStore>(sp => sp.GetRequiredService<ThemeStore>());
-        services.AddSingleton<IWriteThemeStore>(sp => sp.GetRequiredService<ThemeStore>());
-
-        services.AddSingleton<ProjectTreeStore>();
-        services.AddSingleton<IReadProjectTreeStore>(sp => sp.GetRequiredService<ProjectTreeStore>());
-        services.AddSingleton<IWriteProjectTreeStore>(sp => sp.GetRequiredService<ProjectTreeStore>());
+        services.AddStore<WorskpaceStore, IReadWorkspaceStore, IWriteWorkspaceStore>();
+        services.AddStore<DocumentStore, IReadDocumentStore, IWriteDocumentStore>();
+        services.AddStore<ThemeStore, IReadThemeStore, IWriteThemeStore>();
+        services.AddStore<ProjectTreeStore, IReadProjectTreeStore, IWriteProjectTreeStore>();
         return services;
     }
 
     private static IServiceCollection ConfigureAdapters(this IServiceCollection services)
     {
         services.AddSingleton<IFolderTreeDtoAdapter, FolderTreeDtoAdapter>();
+        return services;
+    }
+
+    private static IServiceCollection AddStore<TStore, TRead, TWrite>(this IServiceCollection services)
+        where TStore : class, TRead, TWrite
+        where TRead : class
+        where TWrite : class
+    {
+        services.AddSingleton<TStore>();
+        services.AddSingleton<TRead>(sp => sp.GetRequiredService<TStore>());
+        services.AddSingleton<TWrite>(sp => sp.GetRequiredService<TStore>());
         return services;
     }
 }

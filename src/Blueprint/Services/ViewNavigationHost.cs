@@ -1,4 +1,4 @@
-using Blueprint.Application.InternalAbstractions;
+using Blueprint.Application.Abstractions;
 using Blueprint.Presentation.Adapters;
 using Blueprint.Views.Pages;
 using Wpf.Ui.Controls;

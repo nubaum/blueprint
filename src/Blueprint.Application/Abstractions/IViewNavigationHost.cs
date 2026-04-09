@@ -1,4 +1,4 @@
-namespace Blueprint.Application.InternalAbstractions;
+namespace Blueprint.Application.Abstractions;
 
 public interface IViewNavigationHost
 {

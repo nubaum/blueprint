@@ -3,7 +3,7 @@ using Blueprint.Presentation.Adapters.Abstractions;
 
 namespace Blueprint.Services;
 
-public class WindowsCommandManager : ICommandManager
+internal class WindowsCommandManager : ICommandManager
 {
     public event EventHandler RequerySuggested
     {
