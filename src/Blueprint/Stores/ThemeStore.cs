@@ -1,8 +1,8 @@
 using System.Windows.Input;
 using ActiproSoftware.Windows.Themes;
 using Blueprint.Abstractions.Application.Workspace;
+using Blueprint.Application.Core;
 using Blueprint.Application.InternalAbstractions;
-using Blueprint.Presentation.ViewModels.Core;
 using Wpf.Ui.Appearance;
 
 namespace Blueprint.Stores;

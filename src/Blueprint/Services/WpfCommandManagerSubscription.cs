@@ -6,7 +6,7 @@ namespace Blueprint.Services;
 internal sealed class WpfCommandManagerSubscription(ICommandManager commandManager) : ICommandManagerSubscription
 {
     private readonly ICommandManager _commandManager = commandManager ?? throw new ArgumentNullException(nameof(commandManager));
-    private readonly ConditionalWeakTable<EventHandler, EventHandler<EventArgs>> _wrapperCache = new();
+    private readonly ConditionalWeakTable<EventHandler, EventHandler<EventArgs>> _wrapperCache = [];
 
     public void Subscribe(EventHandler handler)
     {
