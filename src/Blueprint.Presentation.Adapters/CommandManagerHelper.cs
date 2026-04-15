@@ -5,23 +5,29 @@ namespace Blueprint.Presentation.Adapters;
 
 public static class CommandManagerHelper
 {
-    public static ICommandManagerSubscription? Subscription { get; set; }
+    public static ICommandManager? CommandManager { get; set; }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void Subscribe(EventHandler canExecuteChangedHandler)
     {
-        Subscription?.Subscribe(canExecuteChangedHandler);
+        if (CommandManager != null)
+        {
+            CommandManager!.RequerySuggested += canExecuteChangedHandler;
+        }
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void Unsubscribe(EventHandler canExecuteChangedHandler)
     {
-        Subscription?.Unsubscribe(canExecuteChangedHandler);
+        if (CommandManager != null)
+        {
+            CommandManager!.RequerySuggested -= canExecuteChangedHandler;
+        }
     }
 
     [MethodImpl(MethodImplOptions.NoInlining)]
     public static void InvalidateRequerySuggested()
     {
-        Subscription?.InvalidateRequerySuggested();
+        CommandManager?.InvalidateRequerySuggested();
     }
 }

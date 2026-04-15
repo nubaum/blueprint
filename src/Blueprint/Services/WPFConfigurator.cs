@@ -18,6 +18,6 @@ internal static class WpfConfigurator
 
     private static void AddWindowsCommandManager(ICommandManager commandManager)
     {
-        CommandManagerHelper.Subscription = new WpfCommandManagerSubscription(commandManager);
+        CommandManagerHelper.CommandManager = commandManager;
     }
 }
