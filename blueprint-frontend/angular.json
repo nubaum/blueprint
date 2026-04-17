@@ -30,7 +30,12 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.scss",
+              {
+                "input": "monaco-editor/min/vs/style.css",
+                "inject": true,
+                "bundleName": "monaco"
+              }
             ],
             "loader": {
               ".ttf": "file"

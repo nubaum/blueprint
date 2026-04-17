@@ -11,14 +11,7 @@ import * as fs from 'fs';
 import * as url from 'url';
 import { DEV_SERVER_URL, APP_SCHEME, IPC_CHANNELS } from '../shared/constants';
 
-// ─── Environment ─────────────────────────────────────────────────────────────
-
 const isDev = !app.isPackaged;
-
-// ─── Custom protocol ──────────────────────────────────────────────────────────
-//
-// IMPORTANT: registerSchemesAsPrivileged must be called before app.whenReady()
-// and before any other use of `protocol`. This is an Electron hard requirement.
 
 protocol.registerSchemesAsPrivileged([
   {
@@ -33,42 +26,52 @@ protocol.registerSchemesAsPrivileged([
   },
 ]);
 
-// ─── Resolve the Angular browser output directory ─────────────────────────────
-
 function getBrowserDir(): string {
   if (isDev) {
     return path.join(__dirname, '..', '..', 'dist-frontend', 'browser');
   }
-  // In a packaged app, electron-builder places files listed under `files`
-  // into <resources>/app.asar — but static assets are NOT inside the asar.
-  // We use `extraResources` to place dist-frontend/browser alongside it.
+
   return path.join(process.resourcesPath, 'dist-frontend', 'browser');
 }
 
-// ─── Protocol handler ─────────────────────────────────────────────────────────
-
 function registerProtocolHandler(): void {
   const browserDir = getBrowserDir();
+  const normalizedBrowserDir = path.normalize(browserDir + path.sep);
 
-  protocol.handle(APP_SCHEME, (request) => {
-    const { pathname } = new URL(request.url);
+  protocol.handle(APP_SCHEME, async (request) => {
+    const requestUrl = new URL(request.url);
+    const pathname = decodeURIComponent(requestUrl.pathname);
+    const relativePath = pathname.replace(/^\/+/, '') || 'index.html';
+    const resolvedPath = path.normalize(path.join(browserDir, relativePath));
 
-    // Strip leading slash and normalise
-    const relative = pathname.replace(/^\//, '') || 'index.html';
-    const filePath = path.join(browserDir, relative);
-
-    // If the file exists, serve it directly
-    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
-      return net.fetch(url.pathToFileURL(filePath).toString());
+    if (
+      resolvedPath !== path.normalize(path.join(browserDir, 'index.html')) &&
+      !resolvedPath.startsWith(normalizedBrowserDir)
+    ) {
+      return new Response('Forbidden', { status: 403 });
     }
 
-    // Fallback to index.html for Angular client-side routing
+    const fileExists =
+      fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isFile();
+
+    if (fileExists) {
+      return net.fetch(url.pathToFileURL(resolvedPath).toString());
+    }
+
+    const looksLikeAssetRequest =
+      relativePath.includes('.') ||
+      relativePath.startsWith('assets/') ||
+      relativePath.startsWith('media/') ||
+      relativePath.startsWith('favicon');
+
+    if (looksLikeAssetRequest) {
+      return new Response('Not Found', { status: 404 });
+    }
+
     const indexPath = path.join(browserDir, 'index.html');
     return net.fetch(url.pathToFileURL(indexPath).toString());
   });
 }
-
-// ─── Window ───────────────────────────────────────────────────────────────────
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -105,15 +108,17 @@ function createWindow(): void {
     mainWindow = null;
   });
 
-  // If the window fails to load (e.g. protocol not ready), retry once
-  mainWindow.webContents.on('did-fail-load', (_event, errorCode, _errorDesc, validatedURL) => {
-    if (!isDev && validatedURL.startsWith(`${APP_SCHEME}://`)) {
-      console.error(`Failed to load ${validatedURL} (${errorCode}), retrying...`);
-      setTimeout(() => {
-        mainWindow?.loadURL(`${APP_SCHEME}://app/index.html`);
-      }, 500);
+  mainWindow.webContents.on(
+    'did-fail-load',
+    (_event, errorCode, _errorDesc, validatedURL) => {
+      if (!isDev && validatedURL.startsWith(`${APP_SCHEME}://`)) {
+        console.error(`Failed to load ${validatedURL} (${errorCode}), retrying...`);
+        setTimeout(() => {
+          mainWindow?.loadURL(`${APP_SCHEME}://app/index.html`);
+        }, 500);
+      }
     }
-  });
+  );
 
   mainWindow.webContents.setWindowOpenHandler(({ url: targetUrl }) => {
     if (targetUrl.startsWith('http')) {
@@ -122,14 +127,10 @@ function createWindow(): void {
     return { action: 'deny' };
   });
 
-  //TODO: Remove this once we're confident the protocol handler is reliable. It's
   mainWindow.webContents.openDevTools();
 }
 
-// ─── App lifecycle ────────────────────────────────────────────────────────────
-
 app.whenReady().then(() => {
-  // Register protocol handler before creating the window
   if (!isDev) {
     registerProtocolHandler();
   }
@@ -148,7 +149,5 @@ app.on('window-all-closed', () => {
     app.quit();
   }
 });
-
-// ─── IPC ──────────────────────────────────────────────────────────────────────
 
 ipcMain.handle(IPC_CHANNELS.GET_APP_VERSION, () => app.getVersion());

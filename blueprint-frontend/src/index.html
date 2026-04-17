@@ -6,17 +6,6 @@
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <!--
-      Override Monaco's codicon @font-face with a stable asset path.
-      This must live in index.html (not styles.scss) so esbuild never
-      tries to resolve the URL at build time — it is served as-is at runtime.
-    -->
-    <style>
-      @font-face {
-        font-family: 'codicon';
-        src: url('assets/fonts/codicon.ttf') format('truetype');
-      }
-    </style>
   </head>
   <body>
     <app-root></app-root>
