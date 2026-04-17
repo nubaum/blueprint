@@ -6,10 +6,10 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"npm run dev:angular\" \"npm run dev:electron\"",
-    "dev:angular": "cd ../blueprint-frontend && ng serve --port 4200",
+    "dev:angular": "npm run --prefix ../blueprint-frontend start",
     "dev:electron": "wait-on http://localhost:4200 && tsc -p tsconfig.electron.json && electron .",
     "build": "npm run build:angular && npm run build:electron",
-    "build:angular": "cd ../blueprint-frontend && ng build --output-path ../blueprint-electron/dist-frontend",
+    "build:angular": "node scripts/build-angular.js",
     "build:electron": "tsc -p tsconfig.electron.json",
     "dist": "npm run build && electron-builder",
     "dist:win": "npm run build && electron-builder --win",
@@ -34,8 +34,14 @@
     },
     "files": [
       "dist-electron/**/*",
-      "dist-frontend/**/*",
       "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist-frontend/browser",
+        "to": "dist-frontend/browser",
+        "filter": ["**/*"]
+      }
     ],
     "win": {
       "target": "nsis",

@@ -8,9 +8,7 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api.js';
-
 import { TabsStore } from '../../../../../state/tabs/tabs.store';
 
 @Component({
@@ -49,10 +47,8 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.resizeObserver?.disconnect();
-
-    this.models.forEach(model => model.dispose());
+    this.models.forEach((model) => model.dispose());
     this.models.clear();
-
     this.editor?.dispose();
     this.editor = null;
   }
@@ -62,18 +58,22 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
   }
 
   private createEditor(): void {
-    this.editor = monaco.editor.create(this.editorContainer.nativeElement, {
+    const container = this.editorContainer.nativeElement;
+
+    this.editor = monaco.editor.create(container, {
       value: '',
       language: 'typescript',
       theme: 'vs-dark',
       fontSize: 14,
-      fontFamily: "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
+      fontFamily:
+        "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
       fontLigatures: true,
       lineHeight: 22,
       minimap: { enabled: true },
       scrollBeyondLastLine: false,
       automaticLayout: false,
       tabSize: 2,
+      mouseWheelZoom: true,
       insertSpaces: true,
       renderWhitespace: 'selection',
       bracketPairColorization: { enabled: true },
@@ -115,11 +115,11 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
       this.editor?.layout();
     });
 
-    this.resizeObserver.observe(this.editorContainer.nativeElement);
+    this.resizeObserver.observe(container);
   }
 
   private switchToTab(tabId: string): void {
-    const tab = this.tabsStore.tabs().find(x => x.id === tabId);
+    const tab = this.tabsStore.tabs().find((x) => x.id === tabId);
     if (!tab || !this.editor) {
       return;
     }
@@ -130,7 +130,7 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
       model = monaco.editor.createModel(
         tab.content,
         tab.language,
-        monaco.Uri.parse(`inmemory://model/${tabId}`)
+        monaco.Uri.parse(`inmemory://model/${tabId}`),
       );
 
       this.models.set(tabId, model);

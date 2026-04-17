@@ -7,38 +7,68 @@ import {
   net,
 } from 'electron';
 import * as path from 'path';
+import * as fs from 'fs';
 import * as url from 'url';
 import { DEV_SERVER_URL, APP_SCHEME, IPC_CHANNELS } from '../shared/constants';
 
-// ─── Environment ────────────────────────────────────────────────────────────
+// ─── Environment ─────────────────────────────────────────────────────────────
 
 const isDev = !app.isPackaged;
 
-// ─── Custom protocol (production) ───────────────────────────────────────────
+// ─── Custom protocol ──────────────────────────────────────────────────────────
 //
-// In production the Angular build is copied to dist-frontend/.
-// We register a custom `blueprint://` protocol so that the
-// Angular router's `<base href="/">` works correctly when the
-// app is loaded from disk (file:// breaks Angular routing).
+// IMPORTANT: registerSchemesAsPrivileged must be called before app.whenReady()
+// and before any other use of `protocol`. This is an Electron hard requirement.
 
-function registerCustomProtocol(): void {
-  protocol.registerSchemesAsPrivileged([
-    {
-      scheme: APP_SCHEME,
-      privileges: {
-        standard: true,
-        secure: true,
-        supportFetchAPI: true,
-        corsEnabled: true,
-      },
+protocol.registerSchemesAsPrivileged([
+  {
+    scheme: APP_SCHEME,
+    privileges: {
+      standard: true,
+      secure: true,
+      supportFetchAPI: true,
+      corsEnabled: true,
+      stream: true,
     },
-  ]);
+  },
+]);
+
+// ─── Resolve the Angular browser output directory ─────────────────────────────
+
+function getBrowserDir(): string {
+  if (isDev) {
+    return path.join(__dirname, '..', '..', 'dist-frontend', 'browser');
+  }
+  // In a packaged app, electron-builder places files listed under `files`
+  // into <resources>/app.asar — but static assets are NOT inside the asar.
+  // We use `extraResources` to place dist-frontend/browser alongside it.
+  return path.join(process.resourcesPath, 'dist-frontend', 'browser');
 }
 
-// Call before `app.ready` so the scheme is registered in time.
-registerCustomProtocol();
+// ─── Protocol handler ─────────────────────────────────────────────────────────
 
-// ─── Window ─────────────────────────────────────────────────────────────────
+function registerProtocolHandler(): void {
+  const browserDir = getBrowserDir();
+
+  protocol.handle(APP_SCHEME, (request) => {
+    const { pathname } = new URL(request.url);
+
+    // Strip leading slash and normalise
+    const relative = pathname.replace(/^\//, '') || 'index.html';
+    const filePath = path.join(browserDir, relative);
+
+    // If the file exists, serve it directly
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      return net.fetch(url.pathToFileURL(filePath).toString());
+    }
+
+    // Fallback to index.html for Angular client-side routing
+    const indexPath = path.join(browserDir, 'index.html');
+    return net.fetch(url.pathToFileURL(indexPath).toString());
+  });
+}
+
+// ─── Window ───────────────────────────────────────────────────────────────────
 
 let mainWindow: BrowserWindow | null = null;
 
@@ -48,30 +78,24 @@ function createWindow(): void {
     height: 900,
     minWidth: 800,
     minHeight: 600,
-    show: false, // show after `ready-to-show` to avoid white flash
+    show: false,
     backgroundColor: '#1e1e1e',
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     webPreferences: {
       preload: path.join(__dirname, '../preload/index.js'),
-      contextIsolation: true,  // security: keep renderer isolated
-      nodeIntegration: false,  // security: no Node in renderer
-      sandbox: false,          // preload needs Node APIs
-      webSecurity: !isDev,     // relax CORS only during development
+      contextIsolation: true,
+      nodeIntegration: false,
+      sandbox: false,
+      webSecurity: true,
     },
   });
 
-  // ── Load content ──────────────────────────────────────────────────────────
-
   if (isDev) {
-    // Development: load Angular dev server (hot reload included)
     mainWindow.loadURL(DEV_SERVER_URL);
     mainWindow.webContents.openDevTools();
   } else {
-    // Production: serve from custom protocol
     mainWindow.loadURL(`${APP_SCHEME}://app/index.html`);
   }
-
-  // ── Window lifecycle ──────────────────────────────────────────────────────
 
   mainWindow.once('ready-to-show', () => {
     mainWindow!.show();
@@ -81,39 +105,37 @@ function createWindow(): void {
     mainWindow = null;
   });
 
-  // Open external links in the OS browser, not inside Electron.
+  // If the window fails to load (e.g. protocol not ready), retry once
+  mainWindow.webContents.on('did-fail-load', (_event, errorCode, _errorDesc, validatedURL) => {
+    if (!isDev && validatedURL.startsWith(`${APP_SCHEME}://`)) {
+      console.error(`Failed to load ${validatedURL} (${errorCode}), retrying...`);
+      setTimeout(() => {
+        mainWindow?.loadURL(`${APP_SCHEME}://app/index.html`);
+      }, 500);
+    }
+  });
+
   mainWindow.webContents.setWindowOpenHandler(({ url: targetUrl }) => {
     if (targetUrl.startsWith('http')) {
       shell.openExternal(targetUrl);
     }
     return { action: 'deny' };
   });
+
+  //TODO: Remove this once we're confident the protocol handler is reliable. It's
+  mainWindow.webContents.openDevTools();
 }
 
-// ─── Protocol handler (production) ──────────────────────────────────────────
-
-function handleCustomProtocol(): void {
-  protocol.handle(APP_SCHEME, (request) => {
-    // Strip the custom scheme + host to get a relative path.
-    // `blueprint://app/index.html` → `/index.html`
-    const { pathname } = new URL(request.url);
-    const distPath = path.join(__dirname, '../../dist-frontend');
-    const filePath = path.join(distPath, pathname);
-
-    return net.fetch(url.pathToFileURL(filePath).toString());
-  });
-}
-
-// ─── App lifecycle ───────────────────────────────────────────────────────────
+// ─── App lifecycle ────────────────────────────────────────────────────────────
 
 app.whenReady().then(() => {
+  // Register protocol handler before creating the window
   if (!isDev) {
-    handleCustomProtocol();
+    registerProtocolHandler();
   }
 
   createWindow();
 
-  // macOS: re-create window when dock icon is clicked and no windows are open.
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
       createWindow();
@@ -122,12 +144,11 @@ app.whenReady().then(() => {
 });
 
 app.on('window-all-closed', () => {
-  // On macOS it is conventional to keep the app running until Cmd+Q.
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
-// ─── IPC handlers ────────────────────────────────────────────────────────────
+// ─── IPC ──────────────────────────────────────────────────────────────────────
 
 ipcMain.handle(IPC_CHANNELS.GET_APP_VERSION, () => app.getVersion());

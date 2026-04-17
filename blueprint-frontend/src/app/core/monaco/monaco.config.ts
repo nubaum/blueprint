@@ -1,21 +1,21 @@
 import * as monaco from 'monaco-editor';
 
-import EditorWorker from 'monaco-editor/esm/vs/editor/editor.worker?worker';
-import TsWorker from 'monaco-editor/esm/vs/language/typescript/ts.worker?worker';
-import HtmlWorker from 'monaco-editor/esm/vs/language/html/html.worker?worker';
-
 (self as Window & typeof globalThis & { MonacoEnvironment?: unknown }).MonacoEnvironment = {
-  getWorker(_: unknown, label: string) {
+  getWorkerUrl(_moduleId: string, label: string): string {
+    const base = `${location.origin}/assets/monaco`;
     switch (label) {
       case 'typescript':
       case 'javascript':
-        return new TsWorker();
-
+        return `${base}/ts.worker.js`;
       case 'html':
-        return new HtmlWorker();
-
+        return `${base}/html.worker.js`;
+      case 'css':
+      case 'scss':
+        return `${base}/css.worker.js`;
+      case 'json':
+        return `${base}/json.worker.js`;
       default:
-        return new EditorWorker();
+        return `${base}/editor.worker.js`;
     }
   },
 };

@@ -27,22 +27,32 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "codicon.ttf",
+                "input": "node_modules/monaco-editor/esm/vs/base/browser/ui/codicons/codicon",
+                "output": "assets/fonts"
               }
             ],
-            "styles": ["src/styles.scss"]
+            "styles": [
+              "src/styles.scss"
+            ],
+            "loader": {
+              ".ttf": "file"
+            }
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "10MB",
+                  "maximumError": "15MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "4kB",
-                  "maximumError": "8kB"
+                  "maximumWarning": "8kB",
+                  "maximumError": "16kB"
                 }
               ],
               "outputHashing": "all"

@@ -2,7 +2,7 @@ import { Tab } from '../models/tab';
 
 const WELCOME_CODE = `// Welcome to Blueprint
 // Click "Home" in the sidebar to open this tab
-import '../../../core/monaco/monaco.config'; // 🔥 must be first
+
 import { Component, signal } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
