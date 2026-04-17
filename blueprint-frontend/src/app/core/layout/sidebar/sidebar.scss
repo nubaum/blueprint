@@ -1,0 +1,113 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 220px;
+  min-width: 220px;
+  height: 100%;
+  background: #1f1f1f;
+  border-right: 1px solid #2d2d2d;
+  user-select: none;
+}
+
+.sidebar__logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 16px 14px;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.sidebar__logo-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #e0e0e0;
+  letter-spacing: 0.02em;
+}
+
+.sidebar__section {
+  flex: 1;
+  padding: 16px 0 8px;
+}
+
+.sidebar__section-label {
+  display: block;
+  padding: 0 16px 8px;
+  font-size: 10px;
+  font-weight: 600;
+  color: #858585;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.sidebar__nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 7px 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #cccccc;
+  font-size: 13px;
+  font-family: inherit;
+  text-align: left;
+  transition:
+    background 0.12s,
+    color 0.12s;
+}
+
+.sidebar__nav-item:hover {
+  background: #2a2d2e;
+  color: #ffffff;
+}
+
+.sidebar__nav-item:active {
+  background: #094771;
+  color: #ffffff;
+}
+
+.sidebar__nav-icon {
+  display: flex;
+  align-items: center;
+  color: #858585;
+  transition: color 0.12s;
+}
+
+.sidebar__nav-item:hover .sidebar__nav-icon {
+  color: #cccccc;
+}
+
+.sidebar__nav-label {
+  font-weight: 400;
+}
+
+.sidebar__footer {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  padding: 10px 12px;
+  border-top: 1px solid #2d2d2d;
+}
+
+.sidebar__footer-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  color: #858585;
+  cursor: pointer;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  transition:
+    color 0.12s,
+    background 0.12s;
+}
+
+.sidebar__footer-item:hover {
+  color: #cccccc;
+  background: #2a2d2e;
+}

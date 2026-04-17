@@ -1,0 +1,47 @@
+<nav class="sidebar">
+  <div class="sidebar__logo">
+    <svg width="28" height="28" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+      <rect width="28" height="28" rx="6" fill="#007acc" />
+      <path d="M7 14L14 7L21 14L14 21L7 14Z" fill="white" opacity="0.9" />
+      <circle cx="14" cy="14" r="3" fill="#007acc" />
+    </svg>
+
+    <span class="sidebar__logo-text">Blueprint</span>
+  </div>
+
+  <div class="sidebar__section">
+    <span class="sidebar__section-label">Navigation</span>
+
+    @for (item of navItems; track item.label) {
+      <button class="sidebar__nav-item" type="button" (click)="item.action()">
+        <span class="sidebar__nav-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+            <path
+              d="M8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 8v6.5a.5.5 0 0 0 .5.5H6a.5.5 0 0 0 .5-.5V11h3v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5V8a.5.5 0 0 0-.146-.354L8.354 1.146Z"
+            />
+          </svg>
+        </span>
+
+        <span class="sidebar__nav-label">{{ item.label }}</span>
+      </button>
+    }
+  </div>
+
+  <div class="sidebar__footer">
+    <button class="sidebar__footer-item" type="button" aria-label="Information">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path
+          d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 1a6 6 0 1 1 0 12A6 6 0 0 1 8 2zm0 2.5a.75.75 0 1 1 0 1.5.75.75 0 0 1 0-1.5zm-.75 3h1.5v4h-1.5V7.5z"
+        />
+      </svg>
+    </button>
+
+    <button class="sidebar__footer-item" type="button" aria-label="Help">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+        <path
+          d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 2.75a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5zM6 10.5h4v1H6v-1z"
+        />
+      </svg>
+    </button>
+  </div>
+</nav>
