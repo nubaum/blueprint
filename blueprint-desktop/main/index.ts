@@ -22,6 +22,7 @@ protocol.registerSchemesAsPrivileged([
       supportFetchAPI: true,
       corsEnabled: true,
       stream: true,
+      bypassCSP: true,
     },
   },
 ]);
@@ -30,44 +31,42 @@ function getBrowserDir(): string {
   if (isDev) {
     return path.join(__dirname, '..', '..', 'dist-frontend', 'browser');
   }
-
   return path.join(process.resourcesPath, 'dist-frontend', 'browser');
 }
 
 function registerProtocolHandler(): void {
   const browserDir = getBrowserDir();
-  const normalizedBrowserDir = path.normalize(browserDir + path.sep);
 
-  protocol.handle(APP_SCHEME, async (request) => {
-    const requestUrl = new URL(request.url);
-    const pathname = decodeURIComponent(requestUrl.pathname);
-    const relativePath = pathname.replace(/^\/+/, '') || 'index.html';
-    const resolvedPath = path.normalize(path.join(browserDir, relativePath));
+  protocol.handle(APP_SCHEME, (request) => {
+    const { pathname } = new URL(request.url);
 
-    if (
-      resolvedPath !== path.normalize(path.join(browserDir, 'index.html')) &&
-      !resolvedPath.startsWith(normalizedBrowserDir)
-    ) {
+    // Prevent path traversal attacks
+    const relative = path.normalize(pathname).replace(/^(\.\.(\/|\\|$))+/, '');
+    const filePath = path.join(browserDir, relative);
+
+    // Ensure the resolved path is still inside browserDir
+    if (!filePath.startsWith(browserDir)) {
       return new Response('Forbidden', { status: 403 });
     }
 
-    const fileExists =
-      fs.existsSync(resolvedPath) && fs.statSync(resolvedPath).isFile();
-
-    if (fileExists) {
-      return net.fetch(url.pathToFileURL(resolvedPath).toString());
+    // Serve the file if it exists
+    if (fs.existsSync(filePath) && fs.statSync(filePath).isFile()) {
+      return net.fetch(url.pathToFileURL(filePath).toString());
     }
 
-    const looksLikeAssetRequest =
-      relativePath.includes('.') ||
-      relativePath.startsWith('assets/') ||
-      relativePath.startsWith('media/') ||
-      relativePath.startsWith('favicon');
+    // Only fall back to index.html for navigation requests (HTML pages),
+    // not for assets (JS, CSS, fonts, images, workers).
+    // This supports Angular's client-side routing without swallowing
+    // real 404s for missing assets.
+    const ext = path.extname(filePath).toLowerCase();
+    const isAsset = ['.js', '.css', '.ttf', '.woff', '.woff2', '.png',
+                     '.jpg', '.svg', '.ico', '.json', '.map'].includes(ext);
 
-    if (looksLikeAssetRequest) {
-      return new Response('Not Found', { status: 404 });
+    if (isAsset) {
+      return new Response(`Not found: ${pathname}`, { status: 404 });
     }
 
+    // Navigation request with no extension (Angular route) → serve index.html
     const indexPath = path.join(browserDir, 'index.html');
     return net.fetch(url.pathToFileURL(indexPath).toString());
   });
@@ -89,7 +88,7 @@ function createWindow(): void {
       contextIsolation: true,
       nodeIntegration: false,
       sandbox: false,
-      webSecurity: true,
+      webSecurity: false,
     },
   });
 
@@ -100,54 +99,31 @@ function createWindow(): void {
     mainWindow.loadURL(`${APP_SCHEME}://app/index.html`);
   }
 
-  mainWindow.once('ready-to-show', () => {
-    mainWindow!.show();
+  mainWindow.once('ready-to-show', () => mainWindow!.show());
+  mainWindow.on('closed', () => { mainWindow = null; });
+
+  mainWindow.webContents.on('did-fail-load', (_e, code, _desc, validatedURL) => {
+    if (!isDev && validatedURL.startsWith(`${APP_SCHEME}://`)) {
+      setTimeout(() => mainWindow?.loadURL(`${APP_SCHEME}://app/index.html`), 500);
+    }
   });
 
-  mainWindow.on('closed', () => {
-    mainWindow = null;
-  });
-
-  mainWindow.webContents.on(
-    'did-fail-load',
-    (_event, errorCode, _errorDesc, validatedURL) => {
-      if (!isDev && validatedURL.startsWith(`${APP_SCHEME}://`)) {
-        console.error(`Failed to load ${validatedURL} (${errorCode}), retrying...`);
-        setTimeout(() => {
-          mainWindow?.loadURL(`${APP_SCHEME}://app/index.html`);
-        }, 500);
-      }
-    }
-  );
-
-  mainWindow.webContents.setWindowOpenHandler(({ url: targetUrl }) => {
-    if (targetUrl.startsWith('http')) {
-      shell.openExternal(targetUrl);
-    }
+  mainWindow.webContents.setWindowOpenHandler(({ url: u }) => {
+    if (u.startsWith('http')) shell.openExternal(u);
     return { action: 'deny' };
   });
-
-  mainWindow.webContents.openDevTools();
 }
 
 app.whenReady().then(() => {
-  if (!isDev) {
-    registerProtocolHandler();
-  }
-
+  if (!isDev) registerProtocolHandler();
   createWindow();
-
   app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) {
-      createWindow();
-    }
+    if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
 });
 
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
-    app.quit();
-  }
+  if (process.platform !== 'darwin') app.quit();
 });
 
 ipcMain.handle(IPC_CHANNELS.GET_APP_VERSION, () => app.getVersion());
