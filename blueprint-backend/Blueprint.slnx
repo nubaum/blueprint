@@ -18,4 +18,5 @@
     <Project Path="src/Blueprint.Presentation.Adapters/Blueprint.Presentation.Adapters.csproj" />
     <Project Path="src/Blueprint/Blueprint.csproj" />
   </Folder>
+  <Project Path="src/Blueprint.Api/Blueprint.Api.csproj" />
 </Solution>

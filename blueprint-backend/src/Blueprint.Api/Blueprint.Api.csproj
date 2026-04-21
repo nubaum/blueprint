@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Remove="Microsoft.Extensions.DependencyInjection.Abstractions" />
+        <PackageReference Remove="Microsoft.Extensions.Logging.Abstractions" />
+    </ItemGroup>
+</Project>
