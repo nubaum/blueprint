@@ -9,14 +9,6 @@
     <File Path="README.md" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Blueprint.Analyzers/Blueprint.Analyzers.csproj" />
-    <Project Path="src/Blueprint.Application/Blueprint.Application.csproj" />
-    <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
-    <Project Path="src/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
-    <Project Path="src/Blueprint.Languages/Blueprint.Languages.csproj" />
-    <Project Path="src/Blueprint.Presentation.ViewModels/Blueprint.Presentation.ViewModels.csproj" />
-    <Project Path="src/Blueprint.Presentation.Adapters/Blueprint.Presentation.Adapters.csproj" />
-    <Project Path="src/Blueprint/Blueprint.csproj" />
+    <Project Path="src/Blueprint.Api/Blueprint.Api.csproj" />
   </Folder>
-  <Project Path="src/Blueprint.Api/Blueprint.Api.csproj" />
 </Solution>

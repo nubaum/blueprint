@@ -10,7 +10,7 @@ public static class Program
 
         ConfigureServices(builder.Services);
 
-        var app = builder.Build();
+        WebApplication app = builder.Build();
 
         Configure(app);
 
