@@ -8,7 +8,7 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection ConfigureInfrastructure(this IServiceCollection services)
     {
-        services.AddSingleton<IDirectoryInfoProvider, DirectoryInfoProvider>();
+        services.AddSingleton<IDirectoryScanner, DirectoryScanner>();
         return services;
     }
 }

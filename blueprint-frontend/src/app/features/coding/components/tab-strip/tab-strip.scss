@@ -25,7 +25,7 @@
   border-right: 1px solid #1e1e1e;
   background: #2d2d2d;
   color: #969696;
-  cursor: pointer;
+  cursor: default;
   font-size: 12.5px;
   position: relative;
   flex-shrink: 0;
@@ -80,7 +80,7 @@
   border-radius: 3px;
   background: transparent;
   color: transparent;
-  cursor: pointer;
+  cursor: default;
   flex-shrink: 0;
   transition:
     background 0.1s,

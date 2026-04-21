@@ -7,6 +7,7 @@
   background: #1f1f1f;
   border-right: 1px solid #2d2d2d;
   user-select: none;
+  font-family: 'Inter', sans-serif; 
 }
 
 .sidebar__logo {
@@ -32,7 +33,7 @@
 .sidebar__section-label {
   display: block;
   padding: 0 16px 8px;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   color: #858585;
   letter-spacing: 0.08em;
@@ -47,9 +48,9 @@
   padding: 7px 16px;
   background: transparent;
   border: none;
-  cursor: pointer;
+  cursor: default;
   color: #cccccc;
-  font-size: 13px;
+  font-size: 18px;
   font-family: inherit;
   text-align: left;
   transition:
@@ -72,6 +73,10 @@
   align-items: center;
   color: #858585;
   transition: color 0.12s;
+  svg {
+    width: 28px;
+    height: 28px;
+  }
 }
 
 .sidebar__nav-item:hover .sidebar__nav-icon {
@@ -98,7 +103,7 @@
   width: 28px;
   height: 28px;
   color: #858585;
-  cursor: pointer;
+  cursor: default;
   border: none;
   background: transparent;
   border-radius: 4px;
