@@ -1,9 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-    </ItemGroup>
-    <ItemGroup>
-        <PackageReference Remove="Microsoft.Extensions.DependencyInjection.Abstractions" />
-        <PackageReference Remove="Microsoft.Extensions.Logging.Abstractions" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Remove="Microsoft.Extensions.DependencyInjection.Abstractions" />
+    <PackageReference Remove="Microsoft.Extensions.Logging.Abstractions" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
+    <ProjectReference Include="..\Blueprint.Infrastructure\Blueprint.Infrastructure.csproj" />
+  </ItemGroup>
 </Project>

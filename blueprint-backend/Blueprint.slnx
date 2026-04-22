@@ -10,5 +10,7 @@
   </Folder>
   <Folder Name="/src/">
     <Project Path="src/Blueprint.Api/Blueprint.Api.csproj" />
+    <Project Path="src/Blueprint.Application/Blueprint.Application.csproj" />
+    <Project Path="src/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
   </Folder>
 </Solution>
