@@ -1,0 +1,113 @@
+import * as monaco from 'monaco-editor';
+
+monaco.languages.register({ id: 'blueprint' });
+monaco.languages.setLanguageConfiguration('blueprint', {
+  brackets: [
+    ['{', '}'],
+    ['(', ')'],
+  ],
+  autoClosingPairs: [
+    { open: '{', close: '}' },
+    { open: '(', close: ')' },
+    { open: '"', close: '"' },
+  ],
+  surroundingPairs: [
+    { open: '{', close: '}' },
+    { open: '(', close: ')' },
+    { open: '"', close: '"' },
+  ],
+});
+monaco.languages.setMonarchTokensProvider('blueprint', {
+  defaultToken: '',
+  tokenPostfix: '.blueprint',
+  tokenizer: {
+    root: [
+      [/\/\/.*$/, 'comment'],
+      [/\/\*/, 'comment', '@blockComment'],
+      [/\$"/, 'string.interpolated', '@interpolatedString'],
+      [/"/, 'string', '@string'],
+      [/\b(resource|request|response|controller)\b/, 'keyword.toplevel'],
+      [/\b(get|post|put|delete|patch)\b/, 'keyword.http'],
+      [/\b(key|required|rules|input|output|at)\b/, 'keyword.modifier'],
+      [/\b(true|false)\b/, 'keyword.literal'],
+      [/\b(notEmpty|isEmail)\b/, 'keyword.validator'],
+      [/\b(string|bool|Guid|int|float)\b/, 'keyword.type'],
+      [/\bmax\b/, 'keyword.constraint'],
+      [/=>/, 'operator.lambda'],
+      [/=/, 'operator.equals'],
+      [/:/, 'operator.colon'],
+      [/[{}]/, 'delimiter.curly'],
+      [/[()]/, 'delimiter.paren'],
+      [/,/, 'delimiter.comma'],
+      [/[a-zA-Z_]\w*/, 'identifier'],
+      [/\d+\.\d+/, 'number.float'],
+      [/\d+/, 'number'],
+      [/[ \t\r\n]+/, 'white'],
+    ],
+    blockComment: [
+      [/[^/*]+/, 'comment'],
+      [/\*\//, 'comment', '@pop'],
+      [/[/*]/, 'comment'],
+    ],
+    string: [
+      [/[^"\\]+/, 'string'],
+      [/\\./, 'string.escape'],
+      [/"/, 'string', '@pop'],
+    ],
+    interpolatedString: [
+      [/\{/, 'string.interpolated.delimiter', '@interpolatedExpr'],
+      [/[^"{]+/, 'string.interpolated'],
+      [/"/, 'string.interpolated', '@pop'],
+    ],
+    interpolatedExpr: [
+      [/[a-zA-Z_]\w*/, 'identifier.interpolated'],
+      [/\}/, 'string.interpolated.delimiter', '@pop'],
+    ],
+  },
+});
+
+monaco.editor.defineTheme('blueprint-dark', {
+  base: 'vs-dark',
+  inherit: true,
+  rules: [
+    { token: '', foreground: 'D4D4D4', background: '1E1E2E' },
+    { token: 'keyword.toplevel', foreground: '7AB7E9', fontStyle: 'bold' },
+    { token: 'keyword.http', foreground: '4EC9B0', fontStyle: 'bold' },
+    { token: 'keyword.modifier', foreground: '7AB7E9' },
+    { token: 'keyword.literal', foreground: '569CD6' },
+    { token: 'keyword.validator', foreground: 'BD8DE9' },
+    { token: 'keyword.type', foreground: '4EC9B0' },
+    { token: 'keyword.constraint', foreground: 'BD8DE9' },
+    { token: 'operator.lambda', foreground: 'E9C639', fontStyle: 'bold' },
+    { token: 'operator.equals', foreground: 'E9C639' },
+    { token: 'operator.colon', foreground: 'E9C639' },
+    { token: 'identifier', foreground: '9CDCFE' },
+    { token: 'identifier.interpolated', foreground: '6FCEBC', fontStyle: 'italic' },
+    { token: 'string', foreground: 'CE9178' },
+    { token: 'string.interpolated', foreground: 'CE9178' },
+    { token: 'string.interpolated.delimiter', foreground: 'BD8DE9', fontStyle: 'bold' },
+    { token: 'string.escape', foreground: 'D7BA7D' },
+    { token: 'comment', foreground: '6A9955', fontStyle: 'italic' },
+    { token: 'number', foreground: 'B5CEA8' },
+    { token: 'number.float', foreground: 'B5CEA8' },
+    { token: 'delimiter.curly', foreground: 'FFB86C' },
+    { token: 'delimiter.paren', foreground: '88C8A8' },
+    { token: 'delimiter.comma', foreground: '808080' },
+  ],
+  colors: {
+    'editor.background': '#1E1E2E',
+    'editor.foreground': '#D4D4D4',
+    'editorLineNumber.foreground': '#495057',
+    'editorLineNumber.activeForeground': '#7AB7E9',
+    'editor.selectionBackground': '#264F78',
+    'editor.lineHighlightBackground': '#2A2A3E',
+    'editorCursor.foreground': '#7AB7E9',
+    'editorBracketHighlight.foreground1': '#FFB86C',
+    'editorBracketHighlight.foreground2': '#BD8DE9',
+    'editorBracketHighlight.foreground3': '#4EC9B0',
+    'editorBracketHighlight.foreground4': '#E9C639',
+    'editorBracketHighlight.foreground5': '#7AB7E9',
+    'editorBracketHighlight.foreground6': '#CE9178',
+    'editorBracketHighlight.unexpectedBracket.foreground': '#E24B4A',
+  },
+});

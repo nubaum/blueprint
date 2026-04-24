@@ -62,11 +62,10 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
 
     this.editor = monaco.editor.create(container, {
       value: '',
-      language: 'typescript',
-      theme: 'vs-dark',
+      language: 'blueprint',
+      theme: 'blueprint-dark',
       fontSize: 14,
-      fontFamily:
-        "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
+      fontFamily: "'Fira Code', 'Cascadia Code', 'Consolas', 'Courier New', monospace",
       fontLigatures: true,
       lineHeight: 22,
       minimap: { enabled: true },
@@ -76,7 +75,10 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
       mouseWheelZoom: true,
       insertSpaces: true,
       renderWhitespace: 'selection',
-      bracketPairColorization: { enabled: true },
+      bracketPairColorization: {
+        enabled: true,
+        independentColorPoolPerBracketType: true,
+      },
       guides: { bracketPairs: true },
       padding: { top: 12, bottom: 12 },
       cursorBlinking: 'smooth',
