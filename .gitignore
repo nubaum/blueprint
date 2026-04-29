@@ -1,0 +1,38 @@
+
+
+# Environment & Secrets (AIOX)
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
+
+# Dependencies (AIOX)
+node_modules/
+node_modules
+
+# Build & Logs (AIOX)
+dist/
+build/
+*.log
+logs/
+
+# IDE & OS (AIOX)
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+
+# AIOX Local (AIOX)
+.aiox-core/
+.claude/
+.aiox/
+.antigravity/
+.cursor/
+.gemini/
+.github/
+.codex/
+.env.example
+agents.md
+claude.md
+brownfield-architecture.md

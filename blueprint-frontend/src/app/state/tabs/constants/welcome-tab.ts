@@ -1,99 +1,115 @@
 import { Tab } from '../models/tab';
 
-const WELCOME_CODE = `// Welcome to Blueprint
-// Click "Home" in the sidebar to open this tab
-
-// Task management API definition
-
-resource Task
+const WELCOME_CODE = `
+api TaskManagement
 {
-    key Id Guid
+    uses outbox;
+    uses cqrs;
+    basepath "api/v1";
+}
 
-    required Title string max(200)
-    Description string max(1000)
+enum TaskStatus
+{ 
+    Todo,
+    InProgress,
+    Complete
+}
 
-    // TODO: enforce enum — only Todo | InProgress | Done
-    // TODO: default value must be set to Todo at application layer
-    Status string max(20)
+value TaskInfo
+{
+    required text Title max(200);
+    text Description max(1000);
+}
 
-    CreatedAt string
-    DueDate string
+aggregate Task
+{
+    key guid Id;
+    required TaskInfo TaskInfo;
+    required DateTime CreatedDate;
+    date DueDate;
+    required TaskStatus Status;
+    
+    Start()
+        Set Status To InProgress
+        Requires Status EqualsTo ToDo
+        ErrorMessage "A task in progress or complete can't be set in progress";
+    
+    Complete()
+        Set Status To Complete
+        Requires Status EqualsTo InProgress
+        ErrorMessage default;
+    
+    UpdateInfo(TaskInfo taskInfo)
+        Set TaskInfo To taskInfo
+        Requires Status DifferentThan Complete
+        ErrorMessage "A completed task can't update basic info";
 
-    rules
+    Create(TaskInfo taskInfo, date dueDate)
+        Set Id To default
+        Set CreatedDate To now
+        Set Status To ToDo
+        Set TaskInfo To taskInfo
+        Set DueDate To dueDate;
+}
+
+dto TaskDto maps Task
+{
+    guid Id maps Task.Id;
+    text Title maps Task.TaskInfo.Title;
+    text Description maps Task.TaskInfo.Description;
+    date DueDate maps Task.DueDate;
+    Status maps Task.Status;
+}
+
+
+controller Tasks at "tasks"
+{
+    post input TaskDto use Task.Create output TaskDto;
+    get at "{key}" input guid output TaskDto;
+    get at "get-all" output list of TaskDto;
+    put at "{key}/complete" input guid output TaskDto use Task.Complete;
+    put at "{key}/start" input guid output TaskDto use Task.Start;
+    put at "{key}/update-info" input (guid, TaskDto) use Task.UpdateInfo output TaskDto;
+    put at "{hey}/updateKey?apiKey" input UpdateTask output TaskDto;
+}
+
+command UpdateTask emit TaskDto
+{
+    required TaskInfo Info;
+    required text ApiKey;
+    required guid TaskId;
+}
+
+handler MyMessageHandler on UpdateTask
+{
+    invoke MyClient.EnsureAccess command.ApiKey;
+    fetch Task command.TaskId
+    with
     {
-        Title notEmpty
-        Status notEmpty
+        invoke UpdateInfo command.Info;
+        invoke Complete;
     }
 }
 
-// DTO for creating a new task
-request CreateTaskDto (Task t) =>
+handler MyOtherHandler on UpdateTask
 {
-    Title,
-    Description,
-    DueDate
+    invoke MyClient.EnsureAccess command.ApiKey;
+    create Task
+    {
+        command.Info;
+        now;
+    }
+    with
+    {
+        Complete;
+    }
 }
 
-// DTO for updating task fields
-request UpdateTaskDto (Task t) =>
+apiclient MyClient
 {
-    Title,
-    Description,
-    DueDate
+    EnsureAccess input text ApiKey;
 }
-
-response TaskSummaryDto (Task t) =>
-{
-    Id,
-    Title,
-    Status,
-    DueDate
-}
-
-response TaskDetailDto (Task t) =>
-{
-    Id,
-    Title,
-    Description,
-    Status,
-    CreatedAt,
-    DueDate,
-    Label => $"{Title} [{Status}]"
-}
-
-controller Tasks at "/api/tasks"
-{
-    post "/"
-    {
-        input CreateTaskDto
-        output TaskDetailDto
-    }
-
-    get "/"
-    {
-        output TaskSummaryDto
-    }
-
-    get "/{id}"
-    {
-        input id
-        output TaskDetailDto
-    }
-
-    // TODO: validate transition Todo → InProgress at application layer
-    put "/{id}/start"
-    {
-        input id
-        output TaskDetailDto
-    }
-
-    // TODO: validate transition InProgress → Done at application layer
-    put "/{id}/done"
-    {
-        input id
-        output TaskDetailDto
-    }
-}`;
+`;
 
 export const WELCOME_TAB: Tab = {
   id: 'home',

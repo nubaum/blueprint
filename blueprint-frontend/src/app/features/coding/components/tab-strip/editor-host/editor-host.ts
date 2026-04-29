@@ -92,17 +92,12 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
     });
 
     this.editor.onDidChangeModelContent(() => {
-      if (this.suppressContentSync) {
-        return;
-      }
+      if (this.suppressContentSync) return;
 
       const activeTab = this.tabsStore.activeTab();
-      if (!activeTab || !this.editor) {
-        return;
-      }
+      if (!activeTab || !this.editor) return;
 
       const content = this.editor.getValue();
-
       if (content !== activeTab.content) {
         this.tabsStore.updateTabContent(activeTab.id, content);
       }
@@ -122,9 +117,7 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
 
   private switchToTab(tabId: string): void {
     const tab = this.tabsStore.tabs().find((x) => x.id === tabId);
-    if (!tab || !this.editor) {
-      return;
-    }
+    if (!tab || !this.editor) return;
 
     let model = this.models.get(tabId);
 
@@ -134,7 +127,6 @@ export class EditorHostComponent implements AfterViewInit, OnDestroy {
         tab.language,
         monaco.Uri.parse(`inmemory://model/${tabId}`),
       );
-
       this.models.set(tabId, model);
     } else if (model.getValue() !== tab.content) {
       this.suppressContentSync = true;
