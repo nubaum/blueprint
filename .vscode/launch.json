@@ -29,7 +29,7 @@
       "request": "launch",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}/blueprint-frontend",
-      "preLaunchTask": "ng serve"
+      "preLaunchTask": "Build Frontend"
     }
   ],
   "compounds": [
