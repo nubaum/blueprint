@@ -1,0 +1,25 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Build OldDesktop",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/previous-frontend-attempt/Blueprint.slnx"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Build Api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/blueprint-backend/Blueprint.slnx"
+      ],
+      "problemMatcher": "$msCompile"
+    }
+  ]
+}

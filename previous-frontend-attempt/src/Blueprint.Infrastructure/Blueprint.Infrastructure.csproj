@@ -1,0 +1,5 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Blueprint.Application\Blueprint.Application.csproj" />
+  </ItemGroup>
+</Project>

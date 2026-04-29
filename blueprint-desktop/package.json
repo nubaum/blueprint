@@ -1,0 +1,59 @@
+{
+  "name": "blueprint-electron",
+  "version": "0.0.1",
+  "description": "Electron host for Blueprint Frontend",
+  "main": "dist-electron/main/index.js",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently \"npm run dev:angular\" \"npm run dev:electron\"",
+    "dev:angular": "npm run --prefix ../blueprint-frontend start",
+    "dev:electron": "wait-on http://localhost:4200 && tsc -p tsconfig.electron.json && electron .",
+    "build": "npm run build:angular && npm run build:electron",
+    "build:angular": "node scripts/build-angular.js",
+    "build:electron": "tsc -p tsconfig.electron.json",
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux"
+  },
+  "dependencies": {
+    "electron-updater": "^6.3.9"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "electron": "^41.2.1",
+    "electron-builder": "^26.8.1",
+    "typescript": "~5.9.2",
+    "wait-on": "^9.0.5"
+  },
+  "build": {
+    "appId": "com.blueprint.desktop",
+    "productName": "Blueprint",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist-electron/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "dist-frontend/browser",
+        "to": "dist-frontend/browser",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icon.ico"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icon.png"
+    }
+  }
+}

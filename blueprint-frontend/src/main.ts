@@ -1,0 +1,7 @@
+import './app/core/monaco/monaco.config';
+import './app/core/monaco/blueprint-language';
+import { bootstrapApplication } from '@angular/platform-browser';
+import { appConfig } from './app/app.config';
+import { App } from './app/app';
+
+bootstrapApplication(App, appConfig).catch((err) => console.error(err));

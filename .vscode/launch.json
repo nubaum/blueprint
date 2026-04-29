@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "preLaunchTask": "Build OldDesktop",
+      "args": [
+        "${workspaceFolder}/previous-frontend-attempt/src/Blueprint/bin/Debug/net10.0-windows/win-x64/Blueprint.dll"
+      ],
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "externalTerminal"
+    },
+    {
+      "name": "Launch API",
+      "type": "coreclr",
+      "request": "launch",
+      "program": "dotnet",
+      "preLaunchTask": "Build Api",
+      "args": [
+        "${workspaceFolder}/blueprint-backend/src/Blueprint.Api/bin/Debug/net10.0/win-x64/Blueprint.Api.dll"
+      ],
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "ASPNETCORE_URLS": "http://localhost:5202"
+      },
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "Now listening on: (http://localhost:5202)",
+        "uriFormat": "%s/scalar/v1"
+      },
+      "cwd": "${workspaceFolder}",
+      "stopAtEntry": false,
+      "console": "externalTerminal"
+    }
+  ]
+}

@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Page x:Class="Blueprint.Views.Pages.CodePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:ui="http://schemas.lepo.co/wpfui/2022/xaml"
+      xmlns:services="clr-namespace:Blueprint.Services"
+      xmlns:vm="clr-namespace:Blueprint.Presentation.ViewModels.Pages.Interfaces;assembly=Blueprint.Presentation.ViewModels"
+      xmlns:workspace="clr-namespace:Blueprint.Application.Abstractions.Workspace;assembly=Blueprint.Application"
+      xmlns:helpers="clr-namespace:Blueprint.Helpers"
+      xmlns:core="clr-namespace:Blueprint.Views.UserControls.Core"
+      Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      ui:Design.Background="{DynamicResource ApplicationBackgroundBrush}"
+      ui:Design.Foreground="{DynamicResource TextFillColorPrimaryBrush}"
+      Title="CodePage"
+      DataContext="{services:Resolve Type={x:Type vm:ICodeViewModel}}"
+      d:DesignHeight="450"
+      d:DesignWidth="900"
+      ScrollViewer.CanContentScroll="False"
+      mc:Ignorable="d">
+    <Page.Resources>
+        <helpers:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <Style x:Key="TreeExpanderToggleStyle"
+               TargetType="ToggleButton">
+            <Setter Property="Focusable"
+                    Value="False" />
+            <Setter Property="Width"
+                    Value="14" />
+            <Setter Property="Height"
+                    Value="14" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ToggleButton">
+                        <Grid Background="Transparent">
+                            <Path x:Name="Chevron"
+                                  Data="M 0 0 L 4 4 L 0 8"
+                                  Stroke="{DynamicResource TextFillColorPrimaryBrush}"
+                                  StrokeThickness="2"
+                                  StrokeStartLineCap="Round"
+                                  StrokeEndLineCap="Round"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  RenderTransformOrigin="0.5,0.5">
+                                <Path.RenderTransform>
+                                    <RotateTransform Angle="0" />
+                                </Path.RenderTransform>
+                            </Path>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked"
+                                     Value="True">
+                                <Setter TargetName="Chevron"
+                                        Property="RenderTransform">
+                                    <Setter.Value>
+                                        <RotateTransform Angle="90" />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsEnabled"
+                                     Value="False">
+                                <Setter TargetName="Chevron"
+                                        Property="Opacity"
+                                        Value="0.35" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="0"
+                    Margin="0,0,0,10">
+            <TextBlock FontSize="20"
+                       FontWeight="Medium"
+                       Text="Coding" />
+            <TextBlock Opacity="0.8"
+                       Margin="0,4,0,0"
+                       Text="Tree on the left, tabs on the right. Resize or collapse sections as needed." />
+        </StackPanel>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition x:Name="LeftColumn"
+                                  Width="560"
+                                  MinWidth="400" />
+                <ColumnDefinition Width="6" />
+                <ColumnDefinition x:Name="RightColumn"
+                                  Width="*" />
+            </Grid.ColumnDefinitions>
+            <DockPanel Grid.Column="0"
+                       LastChildFill="True">
+                <Border DockPanel.Dock="Top"
+                        Padding="0,0,0,8" />
+                <Border Padding="10"
+                        CornerRadius="8">
+                    <TreeView ItemsSource="{Binding ProjectTreeStore.Root.Children}">
+                        <TreeView.ItemTemplate>
+                            <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                                <TextBlock Text="{Binding Name}" />
+                            </HierarchicalDataTemplate>
+                        </TreeView.ItemTemplate>
+                    </TreeView>
+                </Border>
+            </DockPanel>
+            <Grid Grid.Column="1"
+                  Background="Transparent">
+                <core:GridSplitterThumb Grid.Column="1"
+                                        Margin="-2,0,0,0"
+                                        Cursor="SizeWE"
+                                        LeftColumn="{Binding ElementName=LeftColumn}"
+                                        RightColumn="{Binding ElementName=RightColumn}" />
+            </Grid>
+            <Grid Grid.Column="2">
+                <core:TearableTabControl ItemsSource="{Binding WorkspaceStore.OpenItems}"
+                                         SelectedItem="{Binding WorkspaceStore.SelectedItem, Mode=TwoWay}"
+                                         CaptionMemberPath="Caption"
+                                         IconMemberPath="Icon"
+                                         IsPinnedMemberPath="IsPinned"
+                                         IsDirtyMemberPath="IsDirty">
+                    <core:TearableTabControl.ContentTemplate>
+                        <DataTemplate>
+                            <Grid Margin="10,0,10,10">
+                                <ContentControl Content="{Binding Content}"
+                                                HorizontalContentAlignment="Stretch"
+                                                VerticalContentAlignment="Stretch"
+                                                HorizontalAlignment="Stretch"
+                                                VerticalAlignment="Stretch" />
+                            </Grid>
+                        </DataTemplate>
+                    </core:TearableTabControl.ContentTemplate>
+                </core:TearableTabControl>
+            </Grid>
+        </Grid>
+    </Grid>
+</Page>
