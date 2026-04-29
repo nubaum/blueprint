@@ -2,16 +2,6 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "Build OldDesktop",
-      "command": "dotnet",
-      "type": "process",
-      "args": [
-        "build",
-        "${workspaceFolder}/previous-frontend-attempt/Blueprint.slnx"
-      ],
-      "problemMatcher": "$msCompile"
-    },
-    {
       "label": "Build Api",
       "command": "dotnet",
       "type": "process",
@@ -20,6 +10,63 @@
         "${workspaceFolder}/blueprint-backend/Blueprint.slnx"
       ],
       "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "Build Frontend",
+      "type": "shell",
+      "command": "npx ng serve",
+      "options": {
+        "cwd": "${workspaceFolder}/blueprint-frontend",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      },
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "typescript",
+        "pattern": {
+          "regexp": "^ERROR in (.+)$",
+          "file": 1
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Building\\.\\.\\.",
+          "endsPattern": "Application bundle generation complete"
+        }
+      }
+    },
+    {
+      "label": "Build Desktop",
+      "type": "shell",
+      "command": "npm run dist:win",
+      "options": {
+        "cwd": "${workspaceFolder}/blueprint-desktop",
+        "shell": {
+          "executable": "cmd.exe",
+          "args": [
+            "/d",
+            "/c"
+          ]
+        }
+      },
+      "group": "build",
+      "presentation": {
+        "reveal": "always",
+        "panel": "new"
+      },
+      "problemMatcher": []
     }
   ]
 }
