@@ -15,7 +15,7 @@ public class CompleteTaskHandler(TaskRepository repository, INotificationContext
                         //// .WithCheck(o => o.Status == TaskStatus.Cancelled)
                         //// .WithMessage("This is working")
                     .Invoke(t => t.Complete())
-                    .Invoke(() => client.ValidateAccessAsync(Guid.Empty))
+                    //// .Invoke(() => client.ValidateAccessAsync(Guid.Empty))
                     .Save(repository.SaveAsync)
                     .ToResultAsync();
 }
