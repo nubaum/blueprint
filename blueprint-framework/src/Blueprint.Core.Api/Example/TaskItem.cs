@@ -25,7 +25,7 @@ public class TaskItem : Aggregate<TaskItem>
         .Requires(o => o.Status is TaskStatus.Cancelled or TaskStatus.Done, "A task can only be reopend when it's cancelled or completed")
         .Create();
 
-    private static readonly Transition<TaskItem, string> _rename = GetInputTransition<string>()
+    private static readonly Transition<TaskItem, string> _rename = CreateTransitionWith<string>()
         .Requires((o, _) => o.Status is TaskStatus.ToDo or TaskStatus.InProgress, "A task can't be renamed if it's complete or cancelled")
         .Do((o, newName) => o.Title = newName)
         .Create();
