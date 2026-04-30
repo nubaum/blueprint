@@ -1,6 +1,6 @@
 <Solution>
   <Folder Name="/src/">
-    <Project Path="src/Blueprint.Api/Blueprint.Api.csproj" />
-    <Project Path="src/Blueprint.Domain/Blueprint.Domain.csproj" />
+    <Project Path="src/Blueprint.Core.Api/Blueprint.Core.Api.csproj" />
+    <Project Path="src/Blueprint.Core.Domain/Blueprint.Core.Domain.csproj" />
   </Folder>
 </Solution>
