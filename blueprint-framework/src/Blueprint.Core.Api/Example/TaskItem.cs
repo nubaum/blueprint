@@ -7,7 +7,6 @@ public class TaskItem : Aggregate<TaskItem>
     private static readonly Transition<TaskItem> _complete = TransitionBuilder
         .Do(o => o.Status = TaskStatus.Done)
         .Requires(o => o.Status == TaskStatus.InProgress, "A task can only be completed when in progress.")
-        .Do(o => o.Cancel())
         .Create();
 
     private static readonly Transition<TaskItem> _start = TransitionBuilder
