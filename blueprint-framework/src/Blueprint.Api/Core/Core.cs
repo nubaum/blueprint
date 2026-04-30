@@ -310,7 +310,7 @@ internal sealed class HandlerPipeline<T>(
             var entity = (T?)input;
             if (entity is null) return default;
             try { await guardTask(); }
-            catch { ctx.Fail("An unexpected error occurred."); return default; }
+            catch { ctx.Fail("An unexpected error occurred."); return default; } // TODO: translate this to a 500 instead of 400
             return (object?)entity;
         });
 

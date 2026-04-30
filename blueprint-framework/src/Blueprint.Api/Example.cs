@@ -88,8 +88,7 @@ public class TaskItem : Aggregate
     private static readonly ITransitionRule<TaskItem> _cancel =
         Transition<TaskItem>.Named(nameof(Cancel))
             .Set(t => t.Status, TaskStatus.Cancelled)
-            .Requires(t => t.Status != TaskStatus.Done)
-            .Requires(t => t.Status != TaskStatus.Cancelled)
+            .Requires(ToStartOrInProgress)
             .WithErrorMessage("Done or already-cancelled tasks cannot be cancelled",
                               NotificationSeverity.Warning)
             .Build();
@@ -99,11 +98,12 @@ public class TaskItem : Aggregate
             .Set(t => t.Status, TaskStatus.ToDo)
             .Set(t => t.StartedAt, (DateTimeOffset?)null)
             .Set(t => t.CompletedAt, (DateTimeOffset?)null)
-            .Requires(IsComplete)
+            .Requires(Completed)
             .WithErrorMessage("Only done or cancelled tasks can be reopened")
             .Build();
 
-    private static Expression<Func<TaskItem, bool>> IsComplete => t => t.Status == TaskStatus.Cancelled || t.Status == TaskStatus.Done;
+    private static Expression<Func<TaskItem, bool>> Completed => t => t.Status == TaskStatus.Cancelled || t.Status == TaskStatus.Done;
+    private static Expression<Func<TaskItem, bool>> ToStartOrInProgress => t => t.Status == TaskStatus.ToDo || t.Status == TaskStatus.InProgress;
 }
 
 public record struct GetAllTasksQuery : IRequest<ICommandResult<IEnumerable<TaskItem>>>;
@@ -147,8 +147,8 @@ public class CompleteTaskHandler(TaskRepository repository, INotificationBag not
     : CommandHandler<CompleteTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(CompleteTaskCommand request, CancellationToken cancellationToken)
-        => await Invoke(() => client.ValidateAccess(Guid.NewGuid()))
-                    .WithMessage("Access denied to complete task")
+        => await Invoke(() => client.ValidateAccess(Guid.Empty))
+                    //.WithMessage("Access denied to complete task") // this overrides inner exception message but not a previously set message to the current bag.
                     .Invoke(() => repository.GetTaskAsync(request.Id))
                     .Invoke(t => t.Complete())
                     .Invoke(() => client.ValidateAccess(Guid.Empty))
@@ -162,7 +162,7 @@ public class AccessValidator(INotificationBag bag)
     {
         if (clientId == Guid.Empty)
         {
-            bag.Add(new Notification{ Message = "can't access", Severity = NotificationSeverity.Error, TransitionName = "AccessValidator" });
+            throw new Exception("Can't access"); // will show if there is no WithMessage in the invoker;
         }
         return Task.CompletedTask;
     }
