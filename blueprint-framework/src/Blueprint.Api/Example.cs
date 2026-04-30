@@ -115,22 +115,22 @@ public record struct ReopenTaskCommand(Guid Id) : IRequest<ICommandResult<TaskIt
 public class GetAllTasksHandler(TaskRepository repository, INotificationBag notifications) : CommandHandler<GetAllTasksQuery, IEnumerable<TaskItem>>(notifications)
 {
     public override async Task<ICommandResult<IEnumerable<TaskItem>>> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
-        => await Invoke(repository.GetAsync()!).ToResultAsync();
+        => await Invoke(() => repository.GetAsync()!).ToResultAsync();
 
 }
 
 public class CreateTaskHandler(TaskRepository repository, INotificationBag notifications) : CommandHandler<CreateTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
-        => await Invoke(repository.AddAsync(TaskItem.Create(request.Title))!).ToResultAsync();
+        => await Invoke(() => repository.AddAsync(TaskItem.Create(request.Title))!).ToResultAsync();
 }
 
 public class StartTaskHandler(TaskRepository repository, INotificationBag notifications)
     : CommandHandler<StartTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(StartTaskCommand request, CancellationToken cancellationToken)
-        => await Invoke(repository.GetTaskAsync(request.Id))
-                    .Change(task => task.Start())
+        => await Invoke(() => repository.GetTaskAsync(request.Id))
+                    .Invoke(task => task.Start())
                     .Save(repository.SaveAsync).ToResultAsync();
 }
 
@@ -138,17 +138,32 @@ public class ReopenTaskHandler(TaskRepository repository, INotificationBag notif
     : CommandHandler<ReopenTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(ReopenTaskCommand request, CancellationToken cancellationToken)
-        => await Invoke(repository.GetTaskAsync(request.Id))
-                    .Change(task => task.Reopen())
+        => await Invoke(() => repository.GetTaskAsync(request.Id))
+                    .Invoke(task => task.Reopen())
                     .Save(repository.SaveAsync).ToResultAsync();
 }
 
-public class CompleteTaskHandler(TaskRepository repository, INotificationBag notifications)
+public class CompleteTaskHandler(TaskRepository repository, INotificationBag notifications, AccessValidator client)
     : CommandHandler<CompleteTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(CompleteTaskCommand request, CancellationToken cancellationToken)
-        => await Invoke(repository.GetTaskAsync(request.Id))
-                    .Change(task => task.Complete())
+        => await Invoke(() => client.ValidateAccess(Guid.NewGuid()))
+                    .WithMessage("Access denied to complete task")
+                    .Invoke(() => repository.GetTaskAsync(request.Id))
+                    .Invoke(t => t.Complete())
+                    .Invoke(() => client.ValidateAccess(Guid.Empty))
                     .Save(repository.SaveAsync)
                     .ToResultAsync();
+}
+
+public class AccessValidator(INotificationBag bag)
+{
+    public Task ValidateAccess(Guid clientId)
+    {
+        if (clientId == Guid.Empty)
+        {
+            bag.Add(new Notification{ Message = "can't access", Severity = NotificationSeverity.Error, TransitionName = "AccessValidator" });
+        }
+        return Task.CompletedTask;
+    }
 }
