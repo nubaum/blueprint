@@ -28,6 +28,7 @@ public static class Program
             });
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
         services.AddSingleton<TaskRepository>();
+        services.AddScoped<AccessValidator>();
         services.AddBlueprintDomainServices();
         services.AddOpenApi();
     }
