@@ -2,8 +2,34 @@ using Blueprint.Core.Domain;
 
 namespace Blueprint.Core.Api.Example;
 
-public class TaskItem : Aggregate
+public class TaskItem : Aggregate<TaskItem>
 {
+    private static readonly Transition<TaskItem> _complete = TransitionBuilder
+        .Do(o => o.Status = TaskStatus.Done)
+        .Requires(o => o.Status == TaskStatus.InProgress, "A task can only be completed when in progress.")
+        .Do(o => o.Cancel())
+        .Create();
+
+    private static readonly Transition<TaskItem> _start = TransitionBuilder
+        .Do(o => o.Status = TaskStatus.InProgress)
+        .Requires(o => o.Status == TaskStatus.ToDo, "A task can only start if it's current state is InProgress")
+        .Create();
+
+    private static readonly Transition<TaskItem> _cancel = TransitionBuilder
+        .Do(o => o.Status = TaskStatus.Cancelled)
+        .Requires(o => o.Status is TaskStatus.InProgress or TaskStatus.ToDo, "A complete task can't be canceled")
+        .Create();
+
+    private static readonly Transition<TaskItem> _reopen = TransitionBuilder
+        .Do(o => o.Status = TaskStatus.ToDo)
+        .Requires(o => o.Status is TaskStatus.Cancelled or TaskStatus.Done, "A task can only be reopend when it's cancelled or completed")
+        .Create();
+
+    private static readonly Transition<TaskItem, string> _rename = GetInputTransition<string>()
+        .Requires((o, _) => o.Status is TaskStatus.ToDo or TaskStatus.InProgress, "A task can't be renamed if it's complete or cancelled")
+        .Do((o, newName) => o.Title = newName)
+        .Create();
+
     private TaskItem()
     {
     }
@@ -26,63 +52,13 @@ public class TaskItem : Aggregate
             Status = TaskStatus.ToDo
         };
 
-    public void Start()
-    {
-        if (Status == TaskStatus.ToDo)
-        {
-            Status = TaskStatus.InProgress;
-        }
-        else
-        {
-            AddViolationMessage("A task can only start if it's current state is InProgress");
-        }
-    }
+    public void Start() => _start.Invoke(this);
 
-    public void Complete()
-    {
-        if (Status == TaskStatus.InProgress)
-        {
-            Status = TaskStatus.Done;
-        }
-        else
-        {
-            AddViolationMessage("A task can only be complete when It's in progress");
-        }
-    }
+    public void Complete() => _complete.Invoke(this);
 
-    public void Cancel()
-    {
-        if (Status is TaskStatus.InProgress or TaskStatus.ToDo)
-        {
-            Status = TaskStatus.Cancelled;
-        }
-        else
-        {
-            AddViolationMessage("A complete task can't be canceled");
-        }
-    }
+    public void Cancel() => _cancel.Invoke(this);
 
-    public void Reopen()
-    {
-        if (Status is TaskStatus.Cancelled or TaskStatus.Done)
-        {
-            Status = TaskStatus.ToDo;
-        }
-        else
-        {
-            AddViolationMessage("A task can only be reopend when it's cancelled or completed");
-        }
-    }
+    public void Reopen() => _reopen.Invoke(this);
 
-    public void Rename(string newName)
-    {
-        if(Status == TaskStatus.Done || Status == TaskStatus.Cancelled)
-        {
-            AddViolationMessage("A task can't be renamed if it's complete or cancelled");
-        }
-        else
-        {
-            Title = newName;
-        }
-    }
+    public void Rename(string newName) => _rename.Invoke(this, newName);
 }
