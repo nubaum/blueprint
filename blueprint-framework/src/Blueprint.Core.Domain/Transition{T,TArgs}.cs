@@ -2,11 +2,11 @@ using System.Runtime.CompilerServices;
 
 namespace Blueprint.Core.Domain;
 
-public sealed class Transition<T, TArgs>
+internal sealed class Transition<T, TArgs> : ITransition<T, TArgs>
 {
-    private readonly IReadOnlyList<(Func<T, TArgs, bool>? Guard, string? Message, Action<T, TArgs>? Action)> _steps;
+    private readonly IReadOnlyList<ITransitionStep<T, TArgs>> _steps;
 
-    internal Transition(IReadOnlyList<(Func<T, TArgs, bool>? Input, string? Message, Action<T, TArgs>? Action)> steps)
+    internal Transition(IReadOnlyList<ITransitionStep<T, TArgs>> steps)
     {
         _steps = steps;
     }
@@ -15,31 +15,68 @@ public sealed class Transition<T, TArgs>
     {
         var pendingActions = new List<Action<T, TArgs>>();
 
-        foreach ((Func<T, TArgs, bool>? guard, string? message, Action<T, TArgs>? action) in _steps)
+        foreach (ITransitionStep<T, TArgs> step in _steps)
         {
-            if (guard != null)
+            switch (step)
             {
-                if (!guard(target, args))
-                {
-                    DomainNotifications.Current.Add(new Notification
+                case GuardStep<T, TArgs> g:
                     {
-                        Kind = NotificationKind.ValidationError,
-                        Message = message!,
-                        TransitionName = callerName
-                    });
-                    return;
-                }
+                        if (!g.Guard(target, args))
+                        {
+                            DomainNotifications.Current.Add(new Notification
+                            {
+                                Kind = NotificationKind.ValidationError,
+                                Message = g.Message,
+                                TransitionName = callerName
+                            });
+                            return;
+                        }
 
-                foreach (Action<T, TArgs> pending in pendingActions)
-                {
-                    pending(target, args);
-                }
+                        foreach (Action<T, TArgs> pending in pendingActions)
+                        {
+                            pending(target, args);
+                        }
 
-                pendingActions.Clear();
-            }
-            else
-            {
-                pendingActions.Add(action!);
+                        pendingActions.Clear();
+                        break;
+                    }
+
+                case GuardAllStep<T, TArgs> ga:
+                    {
+                        var failures = ga.Guards.Where(g => !g.Guard(target, args)).ToList();
+                        if (failures.Count > 0)
+                        {
+                            foreach ((Func<T, TArgs, bool> Guard, string Message) f in failures)
+                            {
+                                DomainNotifications.Current.Add(new Notification
+                                {
+                                    Kind = NotificationKind.ValidationError,
+                                    Message = f.Message,
+                                    TransitionName = callerName
+                                });
+                            }
+
+                            return;
+                        }
+
+                        foreach (Action<T, TArgs> pending in pendingActions)
+                        {
+                            pending(target, args);
+                        }
+
+                        pendingActions.Clear();
+                        break;
+                    }
+
+                case ActionStep<T, TArgs> a:
+                    {
+                        pendingActions.Add(a.Action);
+                        break;
+                    }
+
+                default:
+                    // nothing to do here.
+                    break;
             }
         }
 

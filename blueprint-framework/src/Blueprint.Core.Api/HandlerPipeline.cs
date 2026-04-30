@@ -1,3 +1,6 @@
+using System.Runtime.CompilerServices;
+using Blueprint.Core.Domain;
+
 namespace Blueprint.Core.Api;
 
 internal sealed class HandlerPipeline<T>(
@@ -7,17 +10,35 @@ internal sealed class HandlerPipeline<T>(
     public IWithPipeline<T> WithCheck(Func<T, bool> predicate)
         => new WithPipeline<T>(predicate, steps, ctx);
 
-    public IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask)
+    public IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask, [CallerMemberName] string stepName = "")
     {
         steps.Add(async _ =>
         {
-            return ctx.Failed ? default : (object?)await entityTask();
+            if (ctx.Failed)
+            {
+                return default;
+            }
+
+            try
+            {
+                return await entityTask();
+            }
+            catch (Exception ex)
+            {
+                ctx.Fail(new FailureDetail
+                {
+                    Message = ex.Message,
+                    TransitionName = stepName,
+                    Kind = NotificationKind.ValidationError
+                });
+                return default;
+            }
         });
 
         return new HandlerPipeline<TNext>(steps, ctx);
     }
 
-    public IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask)
+    public IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask, [CallerMemberName] string stepName = "")
     {
         steps.Add(async input =>
         {
@@ -27,7 +48,25 @@ internal sealed class HandlerPipeline<T>(
             }
 
             var entity = (T?)input;
-            return entity is null ? default : (object?)await entityTask(entity);
+            if (entity is null)
+            {
+                return default;
+            }
+
+            try
+            {
+                return await entityTask(entity);
+            }
+            catch (Exception ex)
+            {
+                ctx.Fail(new FailureDetail
+                {
+                    Message = ex.Message,
+                    TransitionName = stepName,
+                    Kind = NotificationKind.ValidationError
+                });
+                return default;
+            }
         });
 
         return new HandlerPipeline<TNext>(steps, ctx);
@@ -55,7 +94,7 @@ internal sealed class HandlerPipeline<T>(
         return this;
     }
 
-    public IHandlerPipeline<T> Invoke(Func<Task> guardTask)
+    public IHandlerPipeline<T> Invoke(Func<Task> guardTask, [CallerMemberName] string stepName = "")
     {
         steps.Add(async input =>
         {
@@ -74,17 +113,14 @@ internal sealed class HandlerPipeline<T>(
             {
                 await guardTask();
             }
-
-            // TODO: Do we really need this or should it be treated as 400?
             catch (Exception ex)
             {
                 ctx.Fail(new FailureDetail
                 {
-                    Message = $"An unexpected error occurred: {ex.Message}",
-                    TransitionName = "Pipeline internal",
-                    Kind = Domain.NotificationKind.InternalError
+                    Message = ex.Message,
+                    TransitionName = stepName,
+                    Kind = NotificationKind.ValidationError
                 });
-
                 return default;
             }
 
@@ -94,7 +130,7 @@ internal sealed class HandlerPipeline<T>(
         return this;
     }
 
-    public IHandlerPipeline<T> Save(Func<T, Task> persist)
+    public IHandlerPipeline<T> Save(Func<T, Task> persist, [CallerMemberName] string stepName = "")
     {
         steps.Add(async input =>
         {
@@ -109,7 +145,21 @@ internal sealed class HandlerPipeline<T>(
                 return default;
             }
 
-            await persist(entity);
+            try
+            {
+                await persist(entity);
+            }
+            catch (Exception ex)
+            {
+                ctx.Fail(new FailureDetail
+                {
+                    Message = ex.Message,
+                    TransitionName = stepName,
+                    Kind = NotificationKind.ValidationError
+                });
+                return default;
+            }
+
             return (object?)entity;
         });
 
