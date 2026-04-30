@@ -150,8 +150,8 @@ public class CompleteTaskHandler(TaskRepository repository, INotificationBag not
         => await Invoke(() => client.ValidateAccess(Guid.NewGuid()))
                     //.WithMessage("Access denied to complete task") // this overrides inner exception message but not a previously set message to the current bag.
                     .Invoke(() => repository.GetTaskAsync(request.Id))
-                    .With(o => o.Status == TaskStatus.Cancelled)
-                    .WithMessage("This is working")
+                        .WithCheck(o => o.Status == TaskStatus.Cancelled)
+                        .WithMessage("This is working")
                     .Invoke(t => t.Complete())
                     .Invoke(() => client.ValidateAccess(Guid.Empty))
                     .Save(repository.SaveAsync)

@@ -279,7 +279,7 @@ internal sealed class HandlerPipeline<T>(
     List<PipelineStep> steps,
     PipelineContext ctx) : IHandlerPipeline<T>
 {
-    public IWithPipeline<T> With(Func<T, bool> predicate)
+    public IWithPipeline<T> WithCheck(Func<T, bool> predicate)
         => new WithPipeline<T>(predicate, steps, ctx);
 
     public IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> nextTask)
@@ -431,7 +431,7 @@ public interface IWithPipeline<T>
 
 public interface IHandlerPipeline<T>
 {
-    IWithPipeline<T> With(Func<T, bool> predicate);
+    IWithPipeline<T> WithCheck(Func<T, bool> predicate);
     IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask);
     IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask);
     IHandlerPipeline<T> Invoke(Action<T> transition);
