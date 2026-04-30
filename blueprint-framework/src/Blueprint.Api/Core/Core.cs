@@ -205,6 +205,24 @@ internal sealed class WithPipeline<T>(
         return new HandlerPipeline<TNext>(steps, ctx);
     }
 
+    public IHandlerPipeline<T> Invoke(Func<Task> guardTask)
+    {
+        var message = _message;
+
+        steps.Add(async input =>
+        {
+            if (ctx.Failed) return default;
+            var entity = (T?)input;
+            if (entity is null) return default;
+            if (!predicate(entity)) { ctx.Fail(message); return default; }
+            try { await guardTask(); }
+            catch { ctx.Fail("An unexpected error occurred."); return default; }
+            return (object?)entity;
+        });
+
+        return new HandlerPipeline<T>(steps, ctx);
+    }
+
     public IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> nextTask)
     {
         var message = _message;
@@ -406,6 +424,7 @@ public interface IWithPipeline<T>
     IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask);
     IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask);
     IHandlerPipeline<T> Invoke(Action<T> transition);
+    IHandlerPipeline<T> Invoke(Func<Task> guardTask);
     IHandlerPipeline<T> Save(Func<T, Task> persist);
     Task<ICommandResult<T>> ToResultAsync();
 }
