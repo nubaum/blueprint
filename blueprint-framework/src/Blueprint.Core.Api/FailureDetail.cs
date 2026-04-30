@@ -1,0 +1,12 @@
+using Blueprint.Core.Domain;
+
+namespace Blueprint.Core.Api;
+
+internal readonly record struct FailureDetail
+{
+    public required string Message { get; init; }
+
+    public required string TransitionName { get; init; }
+
+    public NotificationKind? Kind { get; init; }
+}

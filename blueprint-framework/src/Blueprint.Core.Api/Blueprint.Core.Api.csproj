@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+    <ItemGroup>
+        <PackageReference Include="MediatR" />
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Scalar.AspNetCore.Microsoft" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\Blueprint.Core.Domain\Blueprint.Core.Domain.csproj" />
+    </ItemGroup>
+</Project>
