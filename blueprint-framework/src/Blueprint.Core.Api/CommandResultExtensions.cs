@@ -29,12 +29,6 @@ internal static class CommandResultExtensions
                 kind = e.Kind.ToString()
             })
         };
-
-        if (result.Errors.Any(o => o.Kind == Domain.NotificationKind.InternalError))
-        {
-            return controller.StatusCode(StatusCodes.Status500InternalServerError, errors);
-        }
-
         return controller.BadRequest(errors);
     }
 }

@@ -1,18 +1,20 @@
+using System.Runtime.CompilerServices;
+
 namespace Blueprint.Core.Api;
 
 public interface IHandlerPipeline<T>
 {
     IWithPipeline<T> WithCheck(Func<T, bool> predicate);
 
-    IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask);
+    IHandlerPipeline<TNext> Invoke<TNext>(Func<Task<TNext?>> entityTask, [CallerMemberName] string stepName = "");
 
-    IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask);
+    IHandlerPipeline<TNext> Invoke<TNext>(Func<T, Task<TNext?>> entityTask, [CallerMemberName] string stepName = "");
 
     IHandlerPipeline<T> Invoke(Action<T> transition);
 
-    IHandlerPipeline<T> Invoke(Func<Task> guardTask);
+    public IHandlerPipeline<T> Invoke(Func<Task> guardTask, [CallerMemberName] string stepName = "");
 
-    IHandlerPipeline<T> Save(Func<T, Task> persist);
+    IHandlerPipeline<T> Save(Func<T, Task> persist, [CallerMemberName] string stepName = "");
 
     Task<ICommandResult<T>> ToResultAsync();
 }

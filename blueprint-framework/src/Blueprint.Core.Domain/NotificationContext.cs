@@ -12,11 +12,8 @@ internal sealed class NotificationContext : INotificationContext
     public IEnumerable<Notification> Warnings =>
         _items.Where(n => n.Kind == NotificationKind.Warning);
 
-    public IEnumerable<Notification> InternalErrors =>
-        _items.Where(n => n.Kind == NotificationKind.InternalError);
-
     public bool HasErrors =>
-        _items.Exists(n => n.Kind == NotificationKind.ValidationError || n.Kind == NotificationKind.InternalError);
+        _items.Exists(n => n.Kind == NotificationKind.ValidationError);
 
     public bool IsEmpty => _items.Count == 0;
 
