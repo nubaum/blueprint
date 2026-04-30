@@ -86,7 +86,7 @@ internal static class CommandResultExtensions
 }
 
 
-public abstract class CommandHandler<TCommand, T>(NotificationBag notifications)
+public abstract class CommandHandler<TCommand, T>(INotificationBag notifications)
     : IRequestHandler<TCommand, ICommandResult<T>>
     where TCommand : IRequest<ICommandResult<T>>
 {
@@ -109,11 +109,11 @@ public interface IHandlerPipeline<T>
 internal sealed class HandlerPipeline<T> : IHandlerPipeline<T>
 {
     private readonly Task<T?> _entityTask;
-    private readonly NotificationBag _notifications;
+    private readonly INotificationBag _notifications;
     private Action<T>? _transition;
     private Func<T, Task>? _persist;
 
-    internal HandlerPipeline(Task<T?> entityTask, NotificationBag notifications)
+    internal HandlerPipeline(Task<T?> entityTask, INotificationBag notifications)
     {
         _entityTask = entityTask;
         _notifications = notifications;

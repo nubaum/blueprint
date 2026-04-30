@@ -112,20 +112,20 @@ public record struct StartTaskCommand(Guid Id) : IRequest<ICommandResult<TaskIte
 public record struct CompleteTaskCommand(Guid Id) : IRequest<ICommandResult<TaskItem>>;
 public record struct ReopenTaskCommand(Guid Id) : IRequest<ICommandResult<TaskItem>>;
 
-public class GetAllTasksHandler(TaskRepository repository, NotificationBag notifications) : CommandHandler<GetAllTasksQuery, IEnumerable<TaskItem>>(notifications)
+public class GetAllTasksHandler(TaskRepository repository, INotificationBag notifications) : CommandHandler<GetAllTasksQuery, IEnumerable<TaskItem>>(notifications)
 {
     public override async Task<ICommandResult<IEnumerable<TaskItem>>> Handle(GetAllTasksQuery request, CancellationToken cancellationToken)
         => await Invoke(repository.GetAsync()!).ToResultAsync();
 
 }
 
-public class CreateTaskHandler(TaskRepository repository, NotificationBag notifications) : CommandHandler<CreateTaskCommand, TaskItem>(notifications)
+public class CreateTaskHandler(TaskRepository repository, INotificationBag notifications) : CommandHandler<CreateTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(CreateTaskCommand request, CancellationToken cancellationToken)
         => await Invoke(repository.AddAsync(TaskItem.Create(request.Title))!).ToResultAsync();
 }
 
-public class StartTaskHandler(TaskRepository repository, NotificationBag notifications)
+public class StartTaskHandler(TaskRepository repository, INotificationBag notifications)
     : CommandHandler<StartTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(StartTaskCommand request, CancellationToken cancellationToken)
@@ -134,7 +134,7 @@ public class StartTaskHandler(TaskRepository repository, NotificationBag notific
                     .Save(repository.SaveAsync).ToResultAsync();
 }
 
-public class ReopenTaskHandler(TaskRepository repository, NotificationBag notifications)
+public class ReopenTaskHandler(TaskRepository repository, INotificationBag notifications)
     : CommandHandler<ReopenTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(ReopenTaskCommand request, CancellationToken cancellationToken)
@@ -143,7 +143,7 @@ public class ReopenTaskHandler(TaskRepository repository, NotificationBag notifi
                     .Save(repository.SaveAsync).ToResultAsync();
 }
 
-public class CompleteTaskHandler(TaskRepository repository, NotificationBag notifications)
+public class CompleteTaskHandler(TaskRepository repository, INotificationBag notifications)
     : CommandHandler<CompleteTaskCommand, TaskItem>(notifications)
 {
     public override async Task<ICommandResult<TaskItem>> Handle(CompleteTaskCommand request, CancellationToken cancellationToken)

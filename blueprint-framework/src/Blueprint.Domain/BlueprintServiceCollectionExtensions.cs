@@ -7,7 +7,7 @@ public static class BlueprintServiceCollectionExtensions
     public static IServiceCollection AddBlueprintDomainServices(
         this IServiceCollection services)
     {
-        services.AddScoped(sp =>
+        services.AddScoped<INotificationBag>(sp =>
         {
             var bag = new NotificationBag();
             DomainNotifications.SetCurrent(bag);

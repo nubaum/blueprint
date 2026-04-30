@@ -1,6 +1,6 @@
 namespace Blueprint.Domain;
 
-public sealed class NotificationBag
+internal sealed class NotificationBag : INotificationBag
 {
     private readonly List<Notification> _items = [];
 
