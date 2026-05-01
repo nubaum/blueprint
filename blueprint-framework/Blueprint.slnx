@@ -1,6 +1,13 @@
 <Solution>
+  <Folder Name="/sample/">
+    <Project Path="sample/Blueprint.Api/Blueprint.Api.csproj" />
+    <Project Path="sample/Blueprint.Application/Blueprint.Application.csproj" />
+    <Project Path="sample/Blueprint.Domain/Blueprint.Domain.csproj" />
+    <Project Path="sample/Blueprint.Infrastructure/Blueprint.Infrastructure.csproj" />
+  </Folder>
   <Folder Name="/src/">
     <Project Path="src/Blueprint.Core.Api/Blueprint.Core.Api.csproj" />
+    <Project Path="src/Blueprint.Core.Application/Blueprint.Core.Application.csproj" />
     <Project Path="src/Blueprint.Core.Domain/Blueprint.Core.Domain.csproj" />
   </Folder>
 </Solution>

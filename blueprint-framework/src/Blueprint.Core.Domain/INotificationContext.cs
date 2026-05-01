@@ -14,5 +14,5 @@ public interface INotificationContext
 
     void Add(Notification notification);
 
-    void Add(string transitionName, string message, NotificationKind kind = NotificationKind.ValidationError);
+    void Add(string transitionName, string message, NotificationKind kind = NotificationKind.Error);
 }

@@ -1,0 +1,6 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <ItemGroup>
+    <ProjectReference Include="..\Blueprint.Core.Domain\Blueprint.Core.Domain.csproj" />
+    <PackageReference Include="MediatR" />
+  </ItemGroup>
+</Project>

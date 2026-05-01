@@ -1,3 +1,4 @@
+using Blueprint.Core.Application;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Blueprint.Core.Api;

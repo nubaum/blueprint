@@ -25,7 +25,7 @@ internal sealed class Transition<T, TArgs> : ITransition<T, TArgs>
                         {
                             DomainNotifications.Current.Add(new Notification
                             {
-                                Kind = NotificationKind.ValidationError,
+                                Kind = NotificationKind.Error,
                                 Message = g.Message,
                                 TransitionName = callerName
                             });
@@ -50,7 +50,7 @@ internal sealed class Transition<T, TArgs> : ITransition<T, TArgs>
                             {
                                 DomainNotifications.Current.Add(new Notification
                                 {
-                                    Kind = NotificationKind.ValidationError,
+                                    Kind = NotificationKind.Error,
                                     Message = f.Message,
                                     TransitionName = callerName
                                 });
