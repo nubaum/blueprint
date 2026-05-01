@@ -7,13 +7,13 @@ internal sealed class NotificationContext : INotificationContext
     public IReadOnlyList<Notification> All => _items;
 
     public IEnumerable<Notification> ValidationErrors =>
-        _items.Where(n => n.Kind == NotificationKind.ValidationError);
+        _items.Where(n => n.Kind == NotificationKind.Error);
 
     public IEnumerable<Notification> Warnings =>
         _items.Where(n => n.Kind == NotificationKind.Warning);
 
     public bool HasErrors =>
-        _items.Exists(n => n.Kind == NotificationKind.ValidationError);
+        _items.Exists(n => n.Kind == NotificationKind.Error);
 
     public bool IsEmpty => _items.Count == 0;
 
@@ -23,6 +23,6 @@ internal sealed class NotificationContext : INotificationContext
     public void Add(
         string transitionName,
         string message,
-        NotificationKind kind = NotificationKind.ValidationError) =>
+        NotificationKind kind = NotificationKind.Error) =>
         _items.Add(new Notification { TransitionName = transitionName, Message = message, Kind = kind });
 }

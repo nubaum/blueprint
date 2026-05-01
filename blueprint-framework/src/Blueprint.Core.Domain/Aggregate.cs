@@ -13,7 +13,7 @@ where T : Aggregate<T>
     {
         DomainNotifications.Current.Add(new Notification
         {
-            Kind = NotificationKind.ValidationError,
+            Kind = NotificationKind.Error,
             Message = message,
             TransitionName = callerName
         });
