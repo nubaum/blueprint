@@ -8,7 +8,7 @@
       "program": "dotnet",
       "preLaunchTask": "Build Api",
       "args": [
-        "${workspaceFolder}/blueprint-backend/src/Blueprint.Api/bin/Debug/net10.0/win-x64/Blueprint.Api.dll"
+        "${workspaceFolder}/bllueprint-backend/src/Bllueprint.Api/bin/Debug/net10.0/win-x64/Bllueprint.Api.dll"
       ],
       "env": {
         "ASPNETCORE_ENVIRONMENT": "Development",
@@ -28,7 +28,7 @@
       "type": "chrome",
       "request": "launch",
       "url": "http://localhost:4200",
-      "webRoot": "${workspaceFolder}/blueprint-frontend",
+      "webRoot": "${workspaceFolder}/bllueprint-frontend",
       "preLaunchTask": "Build Frontend"
     }
   ],
