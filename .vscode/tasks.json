@@ -7,7 +7,7 @@
       "type": "process",
       "args": [
         "build",
-        "${workspaceFolder}/blueprint-backend/Blueprint.slnx"
+        "${workspaceFolder}/bllueprint-backend/Bllueprint.slnx"
       ],
       "problemMatcher": "$msCompile"
     },
@@ -16,7 +16,7 @@
       "type": "shell",
       "command": "npx ng serve",
       "options": {
-        "cwd": "${workspaceFolder}/blueprint-frontend",
+        "cwd": "${workspaceFolder}/bllueprint-frontend",
         "shell": {
           "executable": "cmd.exe",
           "args": [
@@ -52,7 +52,7 @@
       "type": "shell",
       "command": "npm run dist:win",
       "options": {
-        "cwd": "${workspaceFolder}/blueprint-desktop",
+        "cwd": "${workspaceFolder}/bllueprint-desktop",
         "shell": {
           "executable": "cmd.exe",
           "args": [
